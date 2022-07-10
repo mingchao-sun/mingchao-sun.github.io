@@ -1,7 +1,6 @@
 ---
 title: "Mt. Shakushiyama"
 excerpt: "Short description of portfolio item number 1<br/><img src='/images/sp001.JPG'>" 
-         "Short description of portfolio item number 2<br/><img src='/images/sp003.JPG'>"
 collection: portfolio
 ---
 
