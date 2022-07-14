@@ -3,7 +3,7 @@ title: "Basic Economics"
 collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2019-spring-teaching-1
-venue: "Bunkyo University, Department"
+venue: "Bunkyo University"
 date: 2019-04-01
 location: "Tokyo, Japan"
 ---
