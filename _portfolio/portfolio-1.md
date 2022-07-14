@@ -4,6 +4,6 @@ excerpt: "Climbed Mount Shakushiyama in Fujiyoshida City, Yamanashi Prefecture.<
 collection: portfolio
 ---
 
-Short description of portfolio item number 1<br/><img src='/images/sp001.JPG'>
-Short description of portfolio item number 2<br/><img src='/images/sp002.JPG'>
-Short description of portfolio item number 3<br/><img src='/images/sp003.JPG'>
+ <br/><img src='/images/sp001.JPG'>
+ <br/><img src='/images/sp002.JPG'>
+ <br/><img src='/images/sp003.JPG'>
