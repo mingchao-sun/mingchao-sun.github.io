@@ -1,6 +1,6 @@
 ---
 title: "Kumamoto"
-excerpt: "Attended a conference at Kumamoto University<br/><img src='/images/sp005.JPG'>" 
+excerpt: "Attended a conference at Kumamoto University.<br/><img src='/images/sp005.JPG'>" 
 collection: portfolio
 ---
 
