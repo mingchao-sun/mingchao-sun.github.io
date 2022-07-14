@@ -1,10 +1,9 @@
 ---
 title: "Mt. Shakushiyama"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/sp001.JPG'>" 
+excerpt: "Climbed Mount Shakushiyama in Fujiyoshida City, Yamanashi Prefecture<br/><img src='/images/sp001.JPG'>" 
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. <br/>
 Short description of portfolio item number 1<br/><img src='/images/sp001.JPG'>
 Short description of portfolio item number 2<br/><img src='/images/sp002.JPG'>
 Short description of portfolio item number 3<br/><img src='/images/sp003.JPG'>
