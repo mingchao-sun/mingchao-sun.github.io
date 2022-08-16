@@ -1,5 +1,6 @@
 ---
 title: "Mt. Shakushiyama"
+date: 2020-08-16
 excerpt: "Climbed Mount Shakushiyama in Fujiyoshida City, Yamanashi Prefecture.<br/><img src='/images/sp001.JPG'>" 
 collection: portfolio
 ---
