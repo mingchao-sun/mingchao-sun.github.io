@@ -1,5 +1,6 @@
 ---
 title: "Kumamoto"
+date: 2022-06-25
 excerpt: "Attended a conference at Kumamoto University.<br/><img src='/images/sp005.JPG'>" 
 collection: portfolio
 ---
