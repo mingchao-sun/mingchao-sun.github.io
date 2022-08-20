@@ -1,7 +1,7 @@
 ---
 title: "My Favorites"
 date: 2022-04-13
-excerpt: "<br/><img src='https://webbloggertips.com/top-5-statistics-tools-websites-data-analysis/'>" 
+excerpt: "<br/><img src='https://www.askideas.com/media/14/As-for-me-all-I-know-is-that-I-know-nothing-11.jpg'>" 
 collection: portfolio
 ---
 
