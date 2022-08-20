@@ -1,7 +1,7 @@
 ---
 title: "My Favorites"
 date: 2022-04-13
-excerpt: "<br/><img src='https://www.askideas.com/media/14/As-for-me-all-I-know-is-that-I-know-nothing-11.jpg'>" 
+excerpt: "<br/><img src='https://hastyreader.com/wp-content/uploads/2019/09/I-know-nothing-so-i-cannot-be-wise-1.png'>" 
 collection: portfolio
 ---
 
