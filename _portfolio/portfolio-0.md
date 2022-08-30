@@ -1,5 +1,5 @@
 ---
-title: "My Favorites"
+title: "My Favorite Work Tools"
 date: 2022-04-13
 excerpt: "<br/><img src='https://hastyreader.com/wp-content/uploads/2019/09/I-know-nothing-so-i-cannot-be-wise-1.png'>" 
 collection: portfolio
@@ -17,6 +17,7 @@ collection: portfolio
 ● eReader ([BOOX Note Air](https://shop.boox.com/)) <br />
 
 **Analyzing** <br />
+● Coding ([Stata](https://www.stata.com/), [R](https://www.r-project.org/)) <br />
 ● Graphing ([gnuplot](http://www.gnuplot.info/), [ggplot2](https://ggplot2.tidyverse.org/)) <br />
 ● Mapping ([QGIS](https://qgis.org/ja/site/index.html#), [GeoDa](https://geodacenter.github.io/)) <br />
 
