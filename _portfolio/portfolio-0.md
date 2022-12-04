@@ -14,7 +14,7 @@ collection: portfolio
 **Reading** <br />
 ● Reference management tool ([Readcube Papers](https://www.papersapp.com/), [Endnote](https://endnote.com/), [Paperpile](https://paperpile.com/)) <br />
 ● PDF Reader ([Sumatra PDF](https://www.sumatrapdfreader.org/free-pdf-reader)) <br />
-● eReader ([BOOX Tab Ultra](https://shop.boox.com/)) <br />
+● eReader ([BOOX Tab Ultra](https://shop.boox.com/products/tab/) <br />
 
 **Analyzing** <br />
 ● Coding ([Stata](https://www.stata.com/), [R](https://www.r-project.org/)) <br />
