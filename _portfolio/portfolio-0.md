@@ -5,16 +5,16 @@ excerpt: "<br/><img src='https://hastyreader.com/wp-content/uploads/2019/09/I-kn
 collection: portfolio
 ---
 
-*Last updated on August 21, 2022*
+*Last updated on December 4, 2022*
 
 **Searching** <br />
 ● Retrieves citations ([Publish or Perish](https://harzing.com/resources/publish-or-perish)) <br />
 ● Analyzes citations ([Connected papers](https://www.connectedpapers.com/), [CiteSpace](https://citespace.podia.com/)) <br />
 
 **Reading** <br />
-● Reference management tool ([Endnote](https://endnote.com/), [Paperpile](https://paperpile.com/)) <br />
+● Reference management tool ([Readcube Papers](https://www.papersapp.com/), [Endnote](https://endnote.com/), [Paperpile](https://paperpile.com/)) <br />
 ● PDF Reader ([Sumatra PDF](https://www.sumatrapdfreader.org/free-pdf-reader)) <br />
-● eReader ([BOOX Note Air](https://shop.boox.com/)) <br />
+● eReader ([BOOX Tab Ultra](https://shop.boox.com/)) <br />
 
 **Analyzing** <br />
 ● Coding ([Stata](https://www.stata.com/), [R](https://www.r-project.org/)) <br />
