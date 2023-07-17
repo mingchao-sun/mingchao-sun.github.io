@@ -1,5 +1,5 @@
 ---
-title: "A Method of Measuring Community Status Through Questionnaire (Proc. in Japanese)"
+title: "1. A Method of Measuring Community Status Through Questionnaire (Proc. in Japanese)"
 collection: publications
 permalink: /publication/2017-01-Proceedings
 excerpt: ''
