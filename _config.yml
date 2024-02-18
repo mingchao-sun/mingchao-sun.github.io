@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Mingchao Sun"
 title_separator          : "-"
 name                     : &name "Mingchao Sun"
-description              : &description "Postdoctoral Researcher"
+description              : &description "Researcher"
 url                      : https://mingchao-sun.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "mingchao-sun/mingchao-sun.github.io"
@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Mingchao Sun"
   avatar           : "profile.png"
-  bio              : "Postdoctoral Fellow, Graduate School of Economics, Sophia University"
+  bio              : "Researcher, Sophia Institute for Human Security, Sophia University"
   location         : "Tokyo"
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
