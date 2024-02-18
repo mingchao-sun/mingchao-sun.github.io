@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Thank you for visiting my website! I am a researcher in the [Graduate School of Economics at Sophia University](https://dept.sophia.ac.jp/econ/eng/). I am also a researcher at the [Sophia Institute for Human Security](https://dept.sophia.ac.jp/is/sihs/eng/). I received my master's degree in economics from Sophia University and completed my Ph.D. program in March 2019.
+Thank you for visiting my website! I am a researcher at the [Sophia Institute for Human Security](https://dept.sophia.ac.jp/is/sihs/eng/). I received my master's degree in economics from Sophia University and completed my Ph.D. program in March 2019.
 
 I am an empirical researcher with a broad interest in empirical research. Social capital is the direction that interests me most, and my research tries to explain various socioeconomic phenomena from the perspective of social capital. I also try to measure social capital using a psychological approach. Then, I try to understand the different roles and mechanisms that social capital plays among different populations (e.g., immigrants, ethnic groups, women, job changers).
 
