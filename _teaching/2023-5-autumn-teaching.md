@@ -8,4 +8,4 @@ date: 2023-09-01
 location: "Tokyo, Japan"
 ---
 
-October 2023 - Present
+September 2023 - Present
