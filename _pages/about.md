@@ -14,6 +14,8 @@ I am an empirical researcher with a broad interest in empirical research. Social
 
 Some of my current research focuses on the spatial assimilation of immigrants in Japan, macroeconomic impact of remittance inflows on developing countries and emerging economies, role of social capital in labor markets, immigrants' social capital and social capital scales. My research includes China, Japan, Vietnam, Pakistan, and Timor-Leste. In addition, I have collaborated with other researchers in conflict, sanitaiton and child health. I have teaching experience in introductory economics, public economics, information economics and econometrics.
 
+I also have a [web page](https://researchmap.jp/mingchao_sun) in Japanese.
+
 
 <p align="center" > <b> <i> <big> "I know that I know nothing." </big> </i></b></p>
 <p align="right"> - Socrates </p>
