@@ -23,6 +23,6 @@ I also have a [web page](https://researchmap.jp/mingchao_sun) in Japanese.
 
 ## Recent News
 
- * [Mar 2024] **I published a paper in Economics Bulletin!** A milestone has been achieved, and I will keep fighting for another one 😃.
+ * [Mar 2024] **I published a paper in <i>Economics Bulletin</i>!** A milestone has been achieved, and I will keep fighting for another one 😃.
 
 <p align="right"> Last updated on March 2024</p>
