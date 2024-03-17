@@ -87,8 +87,9 @@ author:
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
-  email            :
+  email            : "mingchao-sun@sophia.ac.jp"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  researchmap      : "https://researchmap.jp/mingchao_sun"
   uri              :
   bitbucket        :
   codepen          :
