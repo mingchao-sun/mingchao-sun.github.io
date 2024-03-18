@@ -7,8 +7,8 @@ author_profile: true
 
 ### Working papers
 
-1. Impacts of Co-ethnic Networks and Socioeconomic Factors on Immigrants’ Residence Choice in Tokyo: A Dynamic Spatial Panel Analysis. ***Sophia Discussion Paper Series*** (Mar 2022). [[PDF]](https://deliverypdf.ssrn.com/delivery.php?ID=808067068026071066069104008119067091035019070001075003096098087108083000105031004002106039102104013096111076011025067071119099126080022051012089126093073093092125030093028080092100002100075114027078102118092002120120030020007067123111026083121126092017&EXT=pdf&INDEX=TRUE)
-
+1. Evaluating the Effectiveness of Non-punitive Approaches on Fare Evasion: A Time Series Analysis Using Smart Card Data. (with Satoshi Kawanishi, in progress).
+2. Impacts of Co-ethnic Networks and Socioeconomic Factors on Immigrants’ Residence Choice in Tokyo: A Dynamic Spatial Panel Analysis. ***Sophia Discussion Paper Series*** (Mar 2022). [[PDF]](https://deliverypdf.ssrn.com/delivery.php?ID=808067068026071066069104008119067091035019070001075003096098087108083000105031004002106039102104013096111076011025067071119099126080022051012089126093073093092125030093028080092100002100075114027078102118092002120120030020007067123111026083121126092017&EXT=pdf&INDEX=TRUE)
 
 ### Publications (peer reviewed)
 
