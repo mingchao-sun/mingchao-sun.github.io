@@ -12,8 +12,8 @@ author_profile: true
 ### Publications (peer reviewed)
 
 1. Did Vietnam’s Market-based Labor Export Policy Affect its Economic Take-off? A Synthetic Control Approach. ***Economics Bulletin*** (Mar 2024). [[PDF]](http://www.accessecon.com/pubs/eb/)
-2. The Impact of Social Networks on Job Changes: Focusing on the Improvement of Wages and Workplace Environment Experienced by Women Post-Transition. (in Japanese), ***J. F. Oberlin University Journal of Advanced Research*** (Mar 2024). [[PDF]](https://obirin.repo.nii.ac.jp/search?page=1&size=50&sort=custom_sort&search_type=2&q=326)
-3. The Effect of NPO Members’ Sense of Community on Their Well-being, Health, and Attachment to Their NPO – The Validity of a Cognitive Social Capital Scale in Organizations Based on the Sense of Community. (with Teruyuki Tamura and Satoshi Kawanishi, in Japanese), ***The Nonprofit Review*** (Feb 2024). [[PDF]](https://www.jstage.jst.go.jp/browse/janpora/-char/en)
+2. The Impact of Social Networks on Job Changes: Focusing on the Improvement of Wages and Workplace Environment Experienced by Women Post-Transition. ***J. F. Oberlin University Journal of Advanced Research*** (in Japanese, Mar 2024). [[PDF]](https://obirin.repo.nii.ac.jp/search?page=1&size=50&sort=custom_sort&search_type=2&q=326)
+3. The Effect of NPO Members’ Sense of Community on Their Well-being, Health, and Attachment to Their NPO – The Validity of a Cognitive Social Capital Scale in Organizations Based on the Sense of Community. ***The Nonprofit Review*** (with Teruyuki Tamura and Satoshi Kawanishi, in Japanese, Feb 2024). [[PDF]](https://www.jstage.jst.go.jp/browse/janpora/-char/en)
 
 
 ### Publications (non-peer review)
