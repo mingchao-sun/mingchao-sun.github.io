@@ -11,7 +11,7 @@ tags:
 ### 1. ***Identifying Research Topics: Choosing a Photography Subject.***
 In empirical economics, the first step is to identify a research topic, similar to how a photographer selects a specific subject from a multitude of possible scenes. This decision is based on the researcher's (or photographer's) interests, gaps in the field (market demand), and available resources (such as time, data, equipment).
 
-2. ***Literature Review: Understanding the Shooting Environment and Techniques.***
+### 2. ***Literature Review: Understanding the Shooting Environment and Techniques.***
 Before embarking on empirical research, scholars conduct a literature review to grasp the existing knowledge within the field, analogous to how photographers need to understand the lighting conditions, background information, and previous photographers' techniques and compositions before shooting.
 
 3. ***Designing Research Methods: Planning Shooting Angles and Equipment Settings.***
