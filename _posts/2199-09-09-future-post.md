@@ -1,7 +1,7 @@
 ---
 title: 'Making photography like empirical research'
-date: 9999-99-99
-permalink: /posts/9999/99/future-post/
+date: 2199-09-09
+permalink: /posts/2199/09/future-post/
 tags:
   - cool posts
   - category1
