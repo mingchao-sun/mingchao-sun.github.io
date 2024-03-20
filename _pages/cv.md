@@ -1,11 +1,24 @@
 ---
 layout: archive
+title: "CV Info"
+permalink: /cv/
+---
+
+A current version of my CV is embedded below. You can also [download the PDF version here](/files/cv.pdf).
+
+<iframe src="https://mingchao-sun.github.io/files/cv.pdf" class="gde-frame" style="height: 1000px; width: 100%; border: none;" scrolling="yes"></iframe>
+
+
+<!--
+---
+layout: archive
 title: "CV"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
+
 
 {% include base_path %}
 
@@ -39,4 +52,5 @@ Teaching
   <ul>{% for post in site.teaching %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
+
+-->
