@@ -4,7 +4,9 @@ title: "CV Info"
 permalink: /cv/
 ---
 
-A current version of my CV is embedded below. You can also [download the PDF version here](/files/cv.pdf).
+A current version of my CV is embedded below. (Last updated: March 20, 2024)
+
+You can also [download the PDF version here](/files/cv.pdf).
 
 <iframe src="https://mingchao-sun.github.io/files/cv.pdf" class="gde-frame" style="height: 1000px; width: 100%; border: none;" scrolling="yes"></iframe>
 
