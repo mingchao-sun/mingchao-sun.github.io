@@ -22,7 +22,7 @@ author_profile: true
 ### Publications (non-peer review)
 
 1. Do Gender Differences Exist in the Relative Importance of the Three Sense of Community Factors? –Statistical validation based on a survey of NPO volunteers. ***Journal of Behavioral Economics and Finance*** (with Teruyuki Tamura and Satoshi Kawanishi, in Japanese, Mar 2023). <a href="https://www.jstage.jst.go.jp/article/jbef/15/Special_issue/15_S26/_pdf/-char/ja" target="_blank">[PDF]</a>
-2. A Bibliometric Analysis of Previous Studies on Open Defecation Using CiteSpace. ***Journal of Public and Private Management*** (in Japanese, Mar 2022). <a href="https://www.bunkyo.ac.jp/faculty/business/feature/journal/pdf/vol8/business_journal_vol8_08.pdf)" target="_blank">[PDF]</a>
+2. A Bibliometric Analysis of Previous Studies on Open Defecation Using CiteSpace. ***Journal of Public and Private Management*** (in Japanese, Mar 2022). <a href="https://www.bunkyo.ac.jp/faculty/business/feature/journal/pdf/vol8/business_journal_vol8_08.pdf" target="_blank">[PDF]</a>
 3. A Method of Measuring Community Status Through Questionnaire. ***Journal of Behavioral Economics and Finance*** (in Japanese, Dec 2017). <a href="https://www.jstage.jst.go.jp/article/jbef/10/Special_issue/10_S29/_pdf/-char/ja" target="_blank">[PDF]</a>
 
 {% if author.googlescholar %}
