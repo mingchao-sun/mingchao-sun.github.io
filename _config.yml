@@ -82,9 +82,9 @@ analytics:
 author:
   name             : "Mingchao Sun"
   avatar           : "profile.png"
-  bio              : "Researcher, Sophia Institute for Human Security"
+  bio              : "Researcher, Sophia Institute for Human Security, Sophia University"
   location         : "Tokyo"
-  employer         : "Sophia University"
+  employer         : 
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
   email            : "mingchao-sun@sophia.ac.jp"
