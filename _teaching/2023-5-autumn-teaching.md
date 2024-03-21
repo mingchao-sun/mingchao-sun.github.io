@@ -4,7 +4,7 @@ collection: teaching
 type: "Undergraduate course"
 permalink: /teaching/2023-5-autumn-teaching
 venue: "J. F. Oberlin University"
-date: 
+date: 2023-09-01
 location: "Tokyo, Japan"
 ---
 
