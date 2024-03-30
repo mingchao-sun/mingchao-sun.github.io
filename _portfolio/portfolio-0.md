@@ -8,7 +8,7 @@ collection: portfolio
 *Last updated on December 4, 2022*
 
 **Searching** <br />
-● Retrieves citations ([Publish or Perish](https://harzing.com/resources/publish-or-perish)) <br />
+● Retrieves citations (<a href="https://harzing.com/resources/publish-or-perish" target="_blank">Publish or Perish</a>) <br /> 
 ● Analyzes citations ([Connected papers](https://www.connectedpapers.com/), [CiteSpace](https://citespace.podia.com/)) <br />
 
 **Reading** <br />
