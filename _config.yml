@@ -9,7 +9,7 @@
 locale                   : "en-US"
 title                    : "Mingchao Sun"
 title_separator          : "-"
-name                     : &name "Mingchao Sun"
+name                     : &name "Mingchao Sun 孫　明超"
 description              : &description "Researcher"
 url                      : https://mingchao-sun.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
