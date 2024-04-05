@@ -19,7 +19,7 @@ redirect_from:
   }
   
   img:hover {
-    transform: scale(1.7); 
+    transform: scale(1.71); 
   }
 </style>
 </head>
