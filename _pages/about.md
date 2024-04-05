@@ -27,7 +27,7 @@ redirect_from:
   <img src="/images/A_Thousand_Li_of_Rivers_and_Mountains.jpg" alt="picture">
 </body>
 </html>
-<b>
+<br>
 Thank you for visiting my website! My name is Mingchao Sun (孫明超). I am a researcher at the <a href="https://dept.sophia.ac.jp/is/sihs/eng/" target="_blank">Sophia Institute for Human Security</a>. I received my master's degree in economics from Sophia University and completed my Ph.D. program in March 2019.
 
 I am an empirical researcher with a broad interest in empirical research. Social capital is the direction that interests me most, and my research tries to explain various socioeconomic phenomena from the perspective of social capital. I also try to measure social capital using a psychological approach. Then, I try to understand the different roles and mechanisms that social capital plays among different populations (e.g., immigrants, ethnic groups, women, job changers).
