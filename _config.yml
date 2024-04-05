@@ -9,7 +9,7 @@
 locale                   : "en-US"
 title                    : "Mingchao Sun"
 title_separator          : "-"
-name                     : &name "Mingchao Sun 孫　明超"
+name                     : &name "Mingchao Sun"
 description              : &description "Researcher"
 url                      : https://mingchao-sun.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -80,7 +80,7 @@ analytics:
 
 # Site Author
 author:
-  name             : "Mingchao Sun"
+  name             : "Mingchao Sun (孫明超)"
   avatar           : "profile.png"
   bio              : "Economics Researcher"
   location         : "Tokyo"
