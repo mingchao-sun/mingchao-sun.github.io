@@ -15,11 +15,11 @@ redirect_from:
 <title>click</title>
 <style>
   img {
-    transition: transform 0.3s ease; /* 添加过渡效果 */
+    transition: transform 0.3s ease; 
   }
   
   img:hover {
-    transform: scale(2); /* 鼠标悬停时放大图片到1.5倍大小 */
+    transform: scale(1.5); 
   }
 </style>
 </head>
