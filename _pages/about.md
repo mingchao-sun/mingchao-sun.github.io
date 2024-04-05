@@ -8,8 +8,6 @@ redirect_from:
   - /about.html
 ---
 
-<br/><img src='/images/A_Thousand_Li_of_Rivers_and_Mountains.jpg'><br/>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
