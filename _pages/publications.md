@@ -12,7 +12,7 @@ author_profile: true
 
 ### Publications (peer reviewed)
 
-1. Did Vietnam’s Market-based Labor Export Policy Affect its Economic Take-off? A Synthetic Control Approach. ***Economics Bulletin*** (Mar 2024). <a href="http://www.accessecon.com/pubs/eb/" target="_blank">[PDF]</a>
+1. Did Vietnam’s Market-based Labor Export Policy Affect its Economic Take-off? A Synthetic Control Approach. ***Economics Bulletin*** (Mar 2024). <a href="http://www.accessecon.com/Pubs/EB/2024/Volume44/EB-24-V44-I1-P20.pdf" target="_blank">[PDF]</a>
 2. The Impact of Social Networks on Job Changes: Focusing on the Improvement of Wages and Workplace Environment Experienced by Women Post-Transition. ***J. F. Oberlin University Journal of Advanced Research*** (in Japanese, Mar 2024). <a href="https://obirin.repo.nii.ac.jp/search?page=1&size=50&sort=custom_sort&search_type=2&q=1710734167002" target="_blank">[Link]</a>
 3. The Effect of NPO Members’ Sense of Community on Their Well-being, Health, and Attachment to Their NPO – The Validity of a Cognitive Social Capital Scale in Organizations Based on the Sense of Community. ***The Nonprofit Review*** (with Teruyuki Tamura and Satoshi Kawanishi, in Japanese, Feb 2024). <a href="https://www.jstage.jst.go.jp/article/janpora/advpub/0/advpub_NPR-D-22-00014/_pdf/-char/en" target="_blank">[PDF]</a>
 4. Impact of Using Social Networks on Wages of Job Changers in Japan. ***The Empirical Economics Letters*** (May 2022). <a href="http://www.eel.my100megs.com/volume-21-number-5.htm" target="_blank">[Link]</a>
