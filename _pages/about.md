@@ -41,6 +41,7 @@ I also have a <a href="https://researchmap.jp/mingchao_sun" target="_blank">web 
 
 ## Recent News
 
+ * [May 2024] **A new paper has been published in <i>Scottish Journal of Political Economy</i>!** A journey of a thousand miles begins with a single step, and on to the next challenge 😃.
  * [Mar 2024] **I published a paper in <i>Economics Bulletin</i>!** A milestone has been achieved, and I will keep fighting for another one 😃.
 
-<p align="right"> Last updated on March 2024</p>
+<p align="right"> Last updated on May 2024</p>
