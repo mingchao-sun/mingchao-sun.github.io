@@ -5,7 +5,7 @@ excerpt: "<br/><img src='https://hastyreader.com/wp-content/uploads/2019/09/I-kn
 collection: portfolio
 ---
 
-*Last updated on December 4, 2022*
+*Last updated on May 18, 2024*
 
 **Searching** <br />
 ● Retrieves citations (<a href="https://harzing.com/resources/publish-or-perish" target="_blank">Publish or Perish</a>) <br /> 
@@ -13,8 +13,9 @@ collection: portfolio
 
 **Reading** <br />
 ● Reference management tool (<a href="https://www.papersapp.com/" target="_blank">Readcube Papers</a>, <a href="https://endnote.com/" target="_blank">Endnote</a>, <a href="https://paperpile.com/" target="_blank">Paperpile</a>) <br /> 
+  &nbsp; &nbsp; *<a href="https://www.zotero.org/" target="_blank">Zotero</a> is also powerful, and I am currently learning to use it.* <br /> 
 ● PDF Reader (<a href="https://www.sumatrapdfreader.org/free-pdf-reader" target="_blank">Sumatra PDF</a>) <br /> 
-● eReader (<a href="https://shop.boox.com/products/tab/" target="_blank">BOOX Tab Ultra</a>) <br />  
+● eReader (<a href="https://shop.boox.com/products/tabultrac" target="_blank">BOOX Tab Ultra C</a>) <br />  
 
 **Analyzing** <br />
 ● Coding (<a href="https://www.stata.com/" target="_blank">Stata</a>, <a href="https://www.r-project.org/" target="_blank">R</a>) <br /> 
