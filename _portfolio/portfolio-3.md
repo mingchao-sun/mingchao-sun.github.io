@@ -1,5 +1,5 @@
 ---
-title: "jamovi (beginner-friendly, classroom-friendly, open statistical software"
+title: "jamovi (beginner-friendly, classroom-friendly, open statistical software)"
 date: 2023-09-1
 excerpt: "<br/><img src='https://www.jamovi.org/assets/main-screenshot-2.png'>" 
 collection: portfolio
