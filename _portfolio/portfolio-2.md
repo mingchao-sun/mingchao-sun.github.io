@@ -5,7 +5,7 @@ excerpt: "<br/><img src='https://raw.githubusercontent.com/rstudio/cheatsheets/m
 collection: portfolio
 ---
 
-***Last updated on May 18, 2024***
+*Last updated on May 18, 2024*
 
 ● <a href="https://hhsievertsen.shinyapps.io/r_introduction/" target="_blank">Introduction to R</a> (by Hans H. Sievertsen) <br>
 ● <a href="https://hhsievertsen.github.io/applied_econ_with_r/" target="_blank">Applied Economics with R</a> (by Hans H. Sievertsen) <br>
