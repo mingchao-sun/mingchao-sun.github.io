@@ -1,7 +1,7 @@
 ---
 title: "Presentations"
 date: 2024-04-13
-excerpt: "<br/><img src='https://upload.wikimedia.org/wikipedia/commons/6/68/EnBiblatexBeamer-0.png'>" 
+excerpt: "<br/><img src='https://i.sstatic.net/xFGkB.png'>" 
 collection: portfolio
 ---
 
