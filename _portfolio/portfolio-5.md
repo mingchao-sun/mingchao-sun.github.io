@@ -1,7 +1,7 @@
 ---
 title: "LaTeX"
-date: 2024-04-013
-excerpt: "<br/><img src='https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/data-visualization.png'>" 
+date: 2024-04-13
+excerpt: "<br/><img src='https://upload.wikimedia.org/wikipedia/commons/b/be/Overleaf_v2_editing_page.jpg'>" 
 collection: portfolio
 ---
 
