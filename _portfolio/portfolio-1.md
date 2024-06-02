@@ -5,10 +5,10 @@ excerpt: "<br/><img src='https://www.stata.com/bookstore/bi/statacheatsheets.png
 collection: portfolio
 ---
 
-● <a href="https://www.stata.com/links/" target="_blank">Resource links</a> (by Stata homepage) <br>
-● <a href="https://www.stata.com/bookstore/stata-cheat-sheets/" target="_blank">Stata cheat sheets</a> (by Tim Essam & Laura Hughes)  <br>
+● <a href="https://www.stata.com/links/" target="_blank">Resource links</a> (by Stata Homepage) <br>
+● <a href="https://www.stata.com/bookstore/stata-cheat-sheets/" target="_blank">Stata Cheat Sheets</a> (by Tim Essam & Laura Hughes)  <br>
 
-● <a href="https://medium.com/the-stata-guide/the-stata-workflow-guide-52418ce35006" target="_blank">Workflow guide</a> (by Asjad Naqvi) <br>
+● <a href="https://medium.com/the-stata-guide/the-stata-workflow-guide-52418ce35006" target="_blank">Workflow Guide</a> (by Asjad Naqvi) <br>
 ● <a href="https://github.com/michaelstepner/healthinequality-code/tree/main/code" target="_blank">Coding Style Guide</a> (by Michael Stepner) <br>
 ● <a href="https://sites.bu.edu/talgross/files/2017/08/good-stata-habits.pdf" target="_blank">Best Practices for Computer Programming in Economics</a> (by Tal Gross) <br>
 
