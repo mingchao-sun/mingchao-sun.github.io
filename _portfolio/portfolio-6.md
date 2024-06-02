@@ -1,7 +1,7 @@
 ---
 title: "Teaching"
 date: 2024-04-13
-excerpt: "<br/><img src='https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/data-visualization.png'>" 
+excerpt: "<br/><img src='https://png.pngtree.com/png-clipart/20210404/original/pngtree-online-classroom-online-teaching-learning-illustration-png-image_6183365.jpg'>" 
 collection: portfolio
 ---
 
