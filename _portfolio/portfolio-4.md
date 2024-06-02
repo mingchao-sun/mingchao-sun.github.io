@@ -1,7 +1,7 @@
 ---
 title: "Presentations"
 date: 2024-04-13
-excerpt: "<br/><img src='https://felix11h.github.io/blog/assets/latex-beamer-minted.png'>" 
+excerpt: "<br/><img src='https://sharelatex-wiki-cdn-671420.c.cdn77.org/learn-scripts/images/8/80/CopenhagenThemeExample.png'>" 
 collection: portfolio
 ---
 
