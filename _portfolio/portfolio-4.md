@@ -1,6 +1,6 @@
 ---
 title: "Presentations"
-date: 2024-04-013
+date: 2024-04-13
 excerpt: "<br/><img src='https://raw.githubusercontent.com/rstudio/cheatsheets/main/pngs/data-visualization.png'>" 
 collection: portfolio
 ---
