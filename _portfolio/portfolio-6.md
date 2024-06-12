@@ -1,7 +1,7 @@
 ---
-title: "Teaching"
+title: "Education"
 date: 2024-04-13
-excerpt: "<br/><img src=''>" 
+excerpt: "<br/><img src='/images/edu.jpg'>" 
 collection: portfolio
 ---
 
