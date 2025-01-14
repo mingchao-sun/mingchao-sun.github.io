@@ -1,7 +1,7 @@
 {
   "name": "Noi Mode by Sun",
   "version": "0.1.0",
-  "sync": "https://github.com/Kabaaaaa/Noi/blob/main/configs/noi.mode.sun.json",
+  "sync": "https://github.com/mingchao-sun/mingchao-sun.github.io/blob/master/files/noi.mode.sun.json",
   "modes": [
     {
       "id": "noi@ai",
