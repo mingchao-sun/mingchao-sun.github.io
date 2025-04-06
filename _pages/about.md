@@ -28,11 +28,15 @@ redirect_from:
 </body>
 </html>
 <br>
-Thank you for visiting my website! My name is Mingchao Sun (孫明超). I am a researcher at the <a href="https://dept.sophia.ac.jp/is/sihs/eng/" target="_blank">Sophia Institute for Human Security</a>.
+Thank you for visiting my website! My name is Mingchao Sun (孫明超). I am a Junior Associate Professor at the <a href="https://www.u-tokai.ac.jp/ud-political-science-and-economics/dpt-economics/" target="_blank">School of Political Science and Economics, Tokai University</a>.
 
-I am an empirical researcher with a broad interest in empirical research. Social capital is the direction that interests me most, and my research tries to explain various socioeconomic phenomena from the perspective of social capital. I also try to measure social capital using a psychological approach. Then, I try to understand the different roles and mechanisms that social capital plays among different populations (e.g., immigrants, ethnic groups, women, job changers).
+I am an applied economist with a broad interest in empirical research, particularly in the intersection of social capital, migration, and transportation. My work uses diverse data sources—including surveys, government statistics, spatial data, and IC card records—to empirically analyze human behavior and social structures. 
 
-Some of my current research focuses on the spatial assimilation of immigrants in Japan, macroeconomic impact of remittance inflows on developing countries and emerging economies, role of social capital in labor markets, immigrants' social capital and social capital scales. My research includes China, Japan, Vietnam, Pakistan, and Timor-Leste. In addition, I have collaborated with other researchers in conflict, sanitaiton and child health. I have teaching experience in introductory economics, public economics, information economics and econometrics.
+My core research direction centers around social capital. I explore how social capital influences various socioeconomic outcomes, and how it functions differently across populations such as immigrants, ethnic minorities, women, and job changers. I also work on developing psychological and behavioral approaches to measure social capital more effectively.
+
+Some of my current projects include the spatial assimilation of immigrants in Japan, the macroeconomic impacts of remittance inflows in developing countries, and the role of social capital in labor markets. My regional focus spans countries such as China, Japan, Vietnam, Pakistan, and Timor-Leste. I have also collaborated on projects related to conflict, sanitation, and child health.
+
+In teaching, I have experience instructing courses in introductory economics, public economics, information economics, and econometrics.
 
 I also have a <a href="https://researchmap.jp/mingchao_sun" target="_blank">web page</a> in Japanese.
 
@@ -41,7 +45,8 @@ I also have a <a href="https://researchmap.jp/mingchao_sun" target="_blank">web 
 
 ## Recent News
 
+ * [April 2025] I have joined the Department of Economics at Tokai University as a Junior Associate Professor 😃.
  * [May 2024] **A new paper has been published in <i>Scottish Journal of Political Economy</i>!** A journey of a thousand miles begins with a single step, and on to the next challenge 😃.
  * [Mar 2024] **I published a paper in <i>Economics Bulletin</i>!** A milestone has been achieved, and I will keep fighting for another one 😃.
 
-<p align="right"> Last updated on May 2024</p>
+<p align="right"> Last updated on April 2025</p>
