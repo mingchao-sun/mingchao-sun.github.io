@@ -8,4 +8,4 @@ date: 2020-010-01
 location: "Tokyo, Japan"
 ---
 
-October 2020 - Present
+October 2020 - March 2025
