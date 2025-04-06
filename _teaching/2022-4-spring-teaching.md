@@ -8,5 +8,5 @@ date: 2022-04-01
 location: "Tokyo, Japan"
 ---
 
-April 2022 - Present
+April 2022 - March 2025
 
