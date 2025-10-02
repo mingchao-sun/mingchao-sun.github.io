@@ -16,7 +16,7 @@ author_profile: true
 
 ### Publications (peer reviewed)
 
-1. Heterogeneous assimilation and the role of co-ethnic networks in immigrant location choices: Evidence from Tokyo ***Cities*** (Sep 2025). <a href="https://www.sciencedirect.com/science/article/pii/S0264275125007656" target="_blank">[Link]</a>
+1. Heterogeneous assimilation and the role of co-ethnic networks in immigrant location choices: Evidence from Tokyo. ***Cities*** (Sep 2025). <a href="https://www.sciencedirect.com/science/article/pii/S0264275125007656" target="_blank">[Link]</a>
 2. Can the military be a better manager of the economy? ***Scottish Journal of Political Economy*** (May 2024). <a href="https://onlinelibrary.wiley.com/doi/10.1111/sjpe.12384" target="_blank">[Link]</a>
 3. Did Vietnam’s market-based labor export policy affect its economic take-off? A synthetic control approach. ***Economics Bulletin*** (Mar 2024). <a href="http://www.accessecon.com/Pubs/EB/2024/Volume44/EB-24-V44-I1-P20.pdf" target="_blank">[PDF]</a>
 4. The impact of social networks on job changes: Focusing on the improvement of wages and workplace environment experienced by women post-transition. ***J. F. Oberlin University Journal of Advanced Research*** (in Japanese, Mar 2024). <a href="https://obirin.repo.nii.ac.jp/search?page=1&size=50&sort=custom_sort&search_type=2&q=1710734167002" target="_blank">[Link]</a>
