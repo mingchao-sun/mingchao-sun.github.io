@@ -9,9 +9,8 @@ author_profile: true
 
 1. Evaluating the effectiveness of non-punitive approaches on fare evasion: A time series analysis using smart card data. (with Satoshi Kawanishi).
 2. Identification of fare evasion based on smart card data. (with Satoshi Kawanishi).
-3. Impacts of co-ethnic networks and socioeconomic factors on immigrants’ residence choice in Tokyo: A dynamic spatial panel analysis. ***Sophia Discussion Paper Series*** (Mar 2022). <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4131923" target="_blank">[Link]</a>
-4. Impact of exposure to open defecation on child health.
-5. Impact of exposure to violence on child health.
+3. Impact of exposure to open defecation on child health.
+4. Impact of exposure to violence on child health.
 
 
 ### Publications (peer reviewed)
