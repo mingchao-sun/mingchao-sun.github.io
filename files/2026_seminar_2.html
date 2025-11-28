@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>漫画でわかる！グラフの嘘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Manga-ish feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Reggae+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --ink-black: #1a1a1a;
+            --paper-white: #fcfcfc;
+            --screen-tone: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzhhYWGMYAEYB8RmROaABADeOQ8CXl/xfgAAAABJRU5ErkJggg==');
+        }
+
+        body {
+            background-color: var(--paper-white);
+            background-image: var(--screen-tone);
+            color: var(--ink-black);
+            font-family: 'Kosugi Maru', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Manga Panel Style */
+        .manga-panel {
+            background: white;
+            border: 3px solid var(--ink-black);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manga-title {
+            font-family: 'Reggae One', cursive;
+            text-shadow: 2px 2px 0px white, 4px 4px 0px var(--ink-black);
+        }
+
+        /* Hand-drawn effect via SVG Filter */
+        .hand-drawn {
+            filter: url(#ink-shake);
+        }
+
+        /* Speech Bubble */
+        .bubble {
+            position: relative;
+            background: #fff;
+            border: 3px solid var(--ink-black);
+            border-radius: 50%;
+            padding: 20px;
+            text-align: center;
+        }
+        .bubble:after {
+            content: '';
+            position: absolute;
+            border-style: solid;
+            border-width: 15px 15px 0;
+            border-color: var(--ink-black) transparent;
+            display: block;
+            width: 0;
+            z-index: 1;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Controls */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            background: var(--ink-black);
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -10px;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+        /* Action Lines Animation -> Changed to Screen Tone Pattern */
+        .action-lines {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            /* 斜線のスクリーントーンに変更 */
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 0, 0, 0.05) 10px,
+                rgba(0, 0, 0, 0.05) 12px
+            );
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 0;
+        }
+        
+        .shock-active {
+            opacity: 1;
+            /* アニメーションも少し控えめに */
+            animation: flash-tone 0.3s linear;
+        }
+        
+        @keyframes flash-tone {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Preset Buttons */
+        .preset-btn {
+            font-family: 'Reggae One', cursive;
+            border: 2px solid var(--ink-black);
+            background: white;
+            transition: all 0.1s;
+            position: relative;
+        }
+        .preset-btn:hover {
+            background: var(--ink-black);
+            color: white;
+        }
+        .preset-btn.active {
+            background: var(--ink-black);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+        }
+        .preset-btn.active::after {
+            content: 'ドン!!'; /* Manga sound effect */
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 1.2rem;
+            color: var(--ink-black);
+            text-shadow: 1px 1px 0 #fff;
+            transform: rotate(15deg);
+            background: white;
+            padding: 0 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 max-w-5xl mx-auto">
+
+    <!-- SVG Filters for Hand-drawn look -->
+    <svg style="display: none;">
+        <defs>
+            <filter id="ink-shake">
+                <feTurbulence type="fractalNoise" baseFrequency="0.002" numOctaves="1" result="warp" />
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="3" in="SourceGraphic" in2="warp" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Header Panel -->
+    <header class="mb-8 text-center relative">
+        <h1 class="text-4xl md:text-6xl manga-title mb-2 transform -rotate-2 inline-block bg-white px-4 border-4 border-black box-decoration-clone">
+            【悲報】グラフは嘘をつく!?
+        </h1>
+        <p class="mt-4 font-bold bg-white inline-block px-2 border border-black">
+            目盛（めもり）のないグラフに騙されるな！
+        </p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left: The Graph (The "Scene") -->
+        <div class="lg:col-span-8">
+            <div class="manga-panel p-2 flex flex-col relative h-full">
+                <!-- Action Lines Overlay -->
+                <div id="action-lines" class="action-lines"></div>
+
+                <!-- Panel Label -->
+                <div class="absolute top-0 left-0 bg-black text-white px-3 py-1 font-bold z-10 text-sm">
+                    孫ゼミ募集資料
+                </div>
+
+                <!-- Graph Container -->
+                <div class="w-full flex-1 min-h-[350px] relative z-10 p-6 md:p-10 hand-drawn">
+                    <svg id="main-chart" viewBox="0 0 500 300" class="w-full h-full overflow-visible">
+                        <!-- Y-Axis Line -->
+                        <line x1="50" y1="20" x2="50" y2="280" stroke="black" stroke-width="4" stroke-linecap="square"/>
+                        <!-- X-Axis Line -->
+                        <line x1="50" y1="280" x2="480" y2="280" stroke="black" stroke-width="4" stroke-linecap="square"/>
+                        
+                        <!-- Axis Labels -->
+                        <text x="-15" y="150" font-family="'Reggae One'" font-size="20" text-anchor="middle" transform="rotate(-90, -15, 150)">経済成長率 (%)</text>
+                        <text x="265" y="315" font-family="'Reggae One'" font-size="20" text-anchor="middle">時間 (Time)</text>
+
+                        <!-- The Data Line -->
+                        <path id="data-line" fill="none" stroke="black" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+
+                        <!-- Grid/Scales (Hidden by default) -->
+                        <g id="grid-lines" class="opacity-0 transition-opacity duration-300">
+                            <!-- Populated by JS -->
+                        </g>
+
+                        <!-- "Break" Symbol on Y-axis (for deceptive graphs) -->
+                        <path id="break-symbol" d="M 40 260 L 60 255 L 40 250 L 60 245" fill="none" stroke="black" stroke-width="2" class="opacity-0 transition-opacity duration-300"/>
+                    </svg>
+                </div>
+
+                <!-- Sound Effect Text (Dynamic) -->
+                <div id="sfx-text" class="absolute top-10 right-10 font-bold text-5xl md:text-7xl pointer-events-none select-none transition-transform duration-100 opacity-0" style="font-family: 'Reggae One'">
+                    ガタガタ...
+                </div>
+
+                <!-- Explanation Box -->
+                <div class="border-t-4 border-black border-double mt-2 pt-4 px-4 pb-4 bg-yellow-50 relative z-20 mx-2 mb-2">
+                    <div class="absolute -top-3 left-4 bg-black text-white px-2 text-xs font-bold transform -rotate-1">
+                        💡 解説：なぜ形が変わる？
+                    </div>
+                    <p class="text-sm font-bold mb-2">どちらも「同じデータ（1%〜5%の推移）」です。</p>
+                    <ul class="list-disc list-inside space-y-1 text-xs md:text-sm text-gray-800">
+                        <li><strong>急成長:</strong> 下部（0%付近）をカットし、上昇部分だけを拡大して急角度に見せています。</li>
+                        <li><strong>停滞:</strong> Y軸の最大値を極端に大きく設定（例: 20%）することで、小さな成長がかき消されています。</li>
+                    </ul>
+                    <p class="mt-2 text-xs text-gray-500 text-right">※現実のニュースや広告でもよく使われる手法です。目盛には気をつけよう！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Controls (The "Cockpit") -->
+        <div class="lg:col-span-4 flex flex-col gap-4">
+            
+            <!-- Character Bubble -->
+            <div class="flex flex-col items-center mb-2">
+                <div class="bubble w-full md:w-3/4 mb-4 shadow-lg">
+                    <p id="narrator-text" class="font-bold text-lg leading-tight">
+                        同じデータでも、<br>Y軸を変えれば<br>印象は操作できるのだ！
+                    </p>
+                </div>
+                <div class="w-20 h-20 rounded-full bg-black border-4 border-white shadow-md overflow-hidden relative">
+                    <!-- Simple CSS Avatar -->
+                    <div class="absolute top-4 left-4 w-4 h-4 bg-white rounded-full"></div>
+                    <div class="absolute top-4 right-4 w-4 h-4 bg-white rounded-full"></div>
+                    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-10 h-5 bg-white rounded-b-full"></div>
+                    <div class="absolute top-8 left-2 w-16 h-2 bg-white transform rotate-0 opacity-20"></div> <!-- Glasses reflection -->
+                </div>
+                <span class="font-bold mt-1 bg-black text-white px-2 text-sm">悪のコンサルタント</span>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="manga-panel p-4 flex-1">
+                <div class="absolute top-0 left-0 bg-black text-white px-3 py-1 font-bold text-sm">
+                    印象操作パネル
+                </div>
+
+                <div class="mt-6 space-y-6">
+                    
+                    <!-- Presets -->
+                    <div>
+                        <label class="block font-bold mb-2 border-b-2 border-black inline-block">① プリセット選択</label>
+                        <div class="grid grid-cols-1 gap-2">
+                            <button onclick="setMode('growth')" class="preset-btn py-3 px-4 text-left font-bold text-lg" id="btn-growth">
+                                🚀 急成長
+                                <span class="text-xs font-normal block text-gray-600">都合よく切り取る (Bottom Cut)</span>
+                            </button>
+                            <button onclick="setMode('slow')" class="preset-btn py-3 px-4 text-left font-bold text-lg" id="btn-slow">
+                                😴 停滞
+                                <span class="text-xs font-normal block text-gray-600">変化を隠す (Zoom Out)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Manual Slider -->
+                    <div>
+                        <label class="block font-bold mb-2 border-b-2 border-black inline-block">② Y軸の範囲 (Zoom)</label>
+                        <div class="flex items-center gap-2 mb-1">
+                            <!-- Swapped labels to match logic: Left=Wide(Zoom Out), Right=Narrow(Zoom In) -->
+                            <span class="text-xs font-bold">広</span>
+                            <input type="range" id="zoom-slider" min="0" max="100" value="50" oninput="handleSlider(this.value)">
+                            <span class="text-xs font-bold">狭</span>
+                        </div>
+                        <p class="text-xs text-right text-gray-500 font-mono">
+                            Y-Min: <span id="val-min">0</span> / Y-Max: <span id="val-max">100</span>
+                        </p>
+                    </div>
+
+                    <!-- Toggle Truth -->
+                    <div class="pt-4 border-t-2 border-dashed border-gray-400">
+                        <button onclick="toggleGrid()" id="btn-grid" class="w-full border-2 border-black bg-yellow-300 hover:bg-yellow-400 font-bold py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+                            <i class="fa-solid fa-eye"></i> 真実（目盛）を見る
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- Data Generation ---
+    // Economic Growth Rate Data (Small percentages)
+    // Trend: Increasing from ~1% to ~5%
+    const fixedData = [1.2, 1.8, 0.9, 2.1, 1.5, 3.2, 2.8, 4.5, 3.8, 5.5];
+    const DATA = fixedData;
+    
+    const DATA_MIN = Math.min(...DATA); // 0.9
+    const DATA_MAX = Math.max(...DATA); // 5.5
+    
+    // --- Canvas/SVG Setup ---
+    const svg = document.getElementById('main-chart');
+    const pathLine = document.getElementById('data-line');
+    const gridGroup = document.getElementById('grid-lines');
+    const breakSymbol = document.getElementById('break-symbol');
+    
+    // Chart Dimensions (internal SVG coords)
+    const CHART_X_START = 50;
+    const CHART_X_END = 480;
+    const CHART_Y_START = 280; // Bottom
+    const CHART_Y_END = 20;    // Top
+    const CHART_WIDTH = CHART_X_END - CHART_X_START;
+    const CHART_HEIGHT = CHART_Y_START - CHART_Y_END;
+
+    // State
+    let yMin = 0;
+    let yMax = 10;
+    let showGrid = false;
+
+    // --- Render Function ---
+    function renderGraph() {
+        // 1. Map Data to SVG Coordinates
+        const points = DATA.map((val, index) => {
+            const x = CHART_X_START + (index / (DATA.length - 1)) * CHART_WIDTH;
+            // Normalize Y based on current min/max window
+            let normalizedY = (val - yMin) / (yMax - yMin);
+            const y = CHART_Y_START - (normalizedY * CHART_HEIGHT);
+            return `${x},${y}`;
+        }).join(" ");
+
+        // 2. Update Path
+        pathLine.setAttribute("d", `M ${points}`);
+
+        // 3. Update Grid (Truth)
+        renderGrid();
+
+        // 4. Update UI labels
+        document.getElementById('val-min').innerText = yMin.toFixed(1);
+        document.getElementById('val-max').innerText = yMax.toFixed(1);
+
+        // 5. Break Symbol Logic
+        // If yMin is significantly > 0 (relative to scale), show symbol
+        // e.g. if we cut off more than 0.5%
+        if (yMin > 0.5) {
+            breakSymbol.classList.remove('opacity-0');
+        } else {
+            breakSymbol.classList.add('opacity-0');
+        }
+    }
+
+    function renderGrid() {
+        gridGroup.innerHTML = '';
+        if (!showGrid) return;
+
+        // Calculate nice ticks
+        const range = yMax - yMin;
+        const tickCount = 5;
+        const step = range / tickCount;
+
+        for (let i = 0; i <= tickCount; i++) {
+            const val = yMin + (step * i);
+            const y = CHART_Y_START - ((val - yMin) / range) * CHART_HEIGHT;
+            
+            // Grid line
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", CHART_X_START);
+            line.setAttribute("y1", y);
+            line.setAttribute("x2", CHART_X_END);
+            line.setAttribute("y2", y);
+            line.setAttribute("stroke", "#ccc");
+            line.setAttribute("stroke-dasharray", "4");
+            
+            // Text
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", CHART_X_START - 10);
+            text.setAttribute("y", y + 5);
+            text.setAttribute("text-anchor", "end");
+            text.setAttribute("font-family", "'Kosugi Maru'");
+            text.setAttribute("font-size", "12");
+            text.textContent = val.toFixed(1) + "%";
+
+            gridGroup.appendChild(line);
+            gridGroup.appendChild(text);
+        }
+    }
+
+    // --- Interaction Modes ---
+    const MODES = {
+        growth: { 
+            // Fit perfectly from bottom-left to top-right
+            min: 0.5, 
+            max: 5.8, 
+            sfx: "ギュイーン!!", 
+            narrator: "底をカットしつつ<br>全体を枠に収めて<br>きれいな右肩上がりに！",
+            color: "text-red-600"
+        },
+        slow: { 
+            min: 0, 
+            max: 20, // High ceiling for % (20% is huge growth)
+            sfx: "シ〜ン...", 
+            narrator: "上限を高くすれば<br>どんな変化も<br>誤差に見える...",
+            color: "text-gray-500"
+        }
+    };
+
+    function setMode(modeName) {
+        const config = MODES[modeName];
+        
+        // Update State
+        yMin = config.min;
+        yMax = config.max;
+        
+        // Update Buttons UI
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${modeName}`).classList.add('active');
+
+        // Update Narrator
+        const narrator = document.getElementById('narrator-text');
+        narrator.innerHTML = config.narrator;
+        
+        // Update Slider
+        if(modeName === 'growth') document.getElementById('zoom-slider').value = 75;
+        if(modeName === 'slow') document.getElementById('zoom-slider').value = 10;
+
+        // SFX & Action Lines
+        showSFX(config.sfx, config.color);
+        triggerActionLines();
+
+        renderGraph();
+    }
+
+    // Slider Handler (Manual Mode)
+    function handleSlider(val) {
+        // Map slider 0-100 to Range size
+        // 100 -> Tight range (approx 3% range)
+        // 0 -> Huge range (approx 20% range)
+        
+        // Desired Range Size
+        const minRange = (DATA_MAX - DATA_MIN) + 0.5; // Tightest (~5)
+        const maxRange = 25; // Widest
+        
+        // Invert val: high slider = small range
+        const percent = (100 - val) / 100; 
+        const currentRange = minRange + (percent * (maxRange - minRange));
+        
+        // Center the view
+        const dataAvg = (DATA_MIN + DATA_MAX) / 2;
+        
+        let targetCenter = dataAvg;
+        if (val < 50) {
+            // As we zoom out, shift center down so we see 0
+            const ratio = (50 - val) / 50; // 0 to 1
+            targetCenter = dataAvg * (1-ratio) + (currentRange/2) * ratio;
+        }
+
+        yMin = targetCenter - (currentRange / 2);
+        yMax = targetCenter + (currentRange / 2);
+        
+        // Clamp min to 0 if it gets close
+        if (yMin < 0) yMin = 0;
+
+        // Remove active state from presets
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('narrator-text').innerHTML = "手動操作中...<br>どこを切り取る？";
+
+        renderGraph();
+    }
+
+    // --- Visual Effects ---
+    function showSFX(text, colorClass) {
+        const el = document.getElementById('sfx-text');
+        el.innerText = text;
+        el.className = `absolute top-10 right-10 font-bold text-5xl md:text-7xl pointer-events-none select-none transition-all duration-200 transform scale-150 opacity-0 ${colorClass}`;
+        
+        void el.offsetWidth;
+        
+        el.classList.remove('scale-150', 'opacity-0');
+        el.classList.add('scale-100', 'opacity-100', 'rotate-12');
+    }
+
+    function triggerActionLines() {
+        const el = document.getElementById('action-lines');
+        el.classList.remove('shock-active');
+        void el.offsetWidth;
+        el.classList.add('shock-active');
+    }
+
+    function toggleGrid() {
+        showGrid = !showGrid;
+        const btn = document.getElementById('btn-grid');
+        const lines = document.getElementById('grid-lines');
+        
+        if (showGrid) {
+            lines.classList.remove('opacity-0');
+            btn.innerHTML = '<i class="fa-solid fa-eye-slash"></i> 目盛を隠す';
+            btn.classList.add('bg-white', 'text-black');
+            btn.classList.remove('bg-yellow-300');
+        } else {
+            lines.classList.add('opacity-0');
+            btn.innerHTML = '<i class="fa-solid fa-eye"></i> 真実（目盛）を見る';
+            btn.classList.remove('bg-white', 'text-black');
+            btn.classList.add('bg-yellow-300');
+        }
+        renderGrid();
+    }
+
+    // Init
+    setMode('growth'); 
+
+</script>
+</body>
+</html>

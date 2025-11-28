@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>孫ゼミ マンガスライド</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200">
+
+  <!-- コンテナ -->
+  <div class="w-full h-auto mx-auto bg-gray-100 p-4 md:p-8 font-sans text-gray-900 flex flex-col items-center shadow-xl max-w-screen-lg">
+
+    <!-- プレゼン用ヘッダー -->
+    <div class="w-full max-w-5xl bg-white border-b-4 border-black p-4 mb-6 shadow-lg flex justify-between items-center">
+      <h1 class="text-xl md:text-2xl font-black tracking-tighter">
+        <span class="bg-yellow-400 px-2 mr-2 border-2 border-black transform -skew-x-12 inline-block">孫ゼミ</span>
+        募集説明会資料
+      </h1>
+      <div class="hidden md:block text-xs md:text-sm font-bold border-2 border-black px-3 py-1 rounded-full bg-gray-50">
+        テーマ：見せかけの相関（擬似相関）
+      </div>
+    </div>
+
+    <!-- マンガエリア -->
+    <div class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-min">
+
+      <!-- コマ1: 導入 -->
+      <div class="bg-white border-4 border-black p-1 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group hover:-translate-y-1 transition-transform duration-200">
+        <div class="absolute top-0 left-0 bg-black text-white px-3 py-1 font-bold text-sm z-10">SCENE 1</div>
+        <div class="p-6 flex flex-col items-center justify-center h-full pt-12 pb-8">
+          <div class="w-full text-center">
+            <div class="bg-white border-2 border-black rounded-[40px] p-6 relative shadow-md inline-block max-w-xs md:max-w-sm">
+              <p class="font-bold text-lg leading-tight">
+                不真面目先輩：おい2年生の皆さん！<br/>
+                <span class="text-purple-600 text-xl md:text-2xl font-black">「春生まれの星座」</span>は<br/>
+                優秀なリーダーの星回りなんだぜ！
+              </p>
+              <!-- 吹き出しのしっぽ -->
+              <div class="absolute bottom-[-14px] right-[40%] w-6 h-6 bg-white border-r-2 border-b-2 border-black transform rotate-45"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- コマ2: グラフ提示 -->
+      <div class="bg-white border-4 border-black p-1 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative md:row-span-2 group hover:-translate-y-1 transition-transform duration-200">
+        <div class="absolute top-0 left-0 bg-black text-white px-3 py-1 font-bold text-sm z-10">SCENE 2</div>
+        <div class="absolute top-0 right-0 bg-blue-600 text-white px-3 py-1 font-bold text-sm z-10">データ分析結果</div>
+
+        <div class="p-4 h-full flex flex-col pt-10">
+          <h3 class="text-lg font-black text-center mb-1 leading-tight">
+            確かに「4-6月生まれ」は成績が良い！？
+          </h3>
+          <p class="text-xs text-center text-gray-500 mb-6">
+            縦軸：学力スコア / 横軸：月齢（右に行くほど月齢が高い）
+          </p>
+
+          <!-- グラフエリア -->
+          <div class="flex-grow relative border-l-2 border-b-2 border-gray-400 ml-8 mr-4 mb-8 min-h-[300px] bg-gray-50/50">
+
+            <!-- 軸ラベル -->
+            <div class="absolute -left-12 top-1/2 transform -translate-y-1/2 -rotate-90 text-base md:text-lg font-bold text-gray-700 whitespace-nowrap">
+              学力・運動能力
+            </div>
+            <div class="absolute bottom-[-40px] left-1/2 transform -translate-x-1/2 text-base md:text-lg font-bold text-gray-700 whitespace-nowrap">
+              月齢
+            </div>
+
+            <!-- グリッド線 -->
+            <div class="absolute w-full border-t border-gray-200 border-dashed" style="bottom:0%;"></div>
+            <div class="absolute w-full border-t border-gray-200 border-dashed" style="bottom:25%;"></div>
+            <div class="absolute w-full border-t border-gray-200 border-dashed" style="bottom:50%;"></div>
+            <div class="absolute w-full border-t border-gray-200 border-dashed" style="bottom:75%;"></div>
+            <div class="absolute w-full border-t border-gray-200 border-dashed" style="bottom:100%;"></div>
+
+            <!-- SVG グラフ -->
+            <svg class="absolute inset-0 w-full h-full overflow-visible">
+
+              <!-- タイトル -->
+              <text
+                x="50%"
+                y="8%"
+                text-anchor="middle"
+                font-size="16"
+                font-weight="bold"
+                fill="#374151"
+                class="text-sm md:text-lg"
+              >
+                <tspan x="50%" dy="0">中学生3年生の生まれ月ごとの</tspan>
+                <tspan x="50%" dy="1.5em">平均点を比較してみると...</tspan>
+              </text>
+
+              <!-- データポイント (中3) -->
+              <!-- 正規化後の座標をあらかじめ計算 -->
+              <!-- i = 0..11, cx = 32 + 4i, cy = 70 - 3i -->
+              <g>
+                <circle cx="32%" cy="70%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="36%" cy="67%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="40%" cy="64%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="44%" cy="61%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="48%" cy="58%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="52%" cy="55%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="56%" cy="52%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="60%" cy="49%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="64%" cy="46%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="68%" cy="43%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="72%" cy="40%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+                <circle cx="76%" cy="37%" r="6" fill="#854d0e"
+                        class="opacity-90 hover:opacity-100 transition-all drop-shadow-sm"
+                        stroke="white" stroke-width="2" />
+              </g>
+
+              <!-- 4月生まれ（右端の点） -->
+              <g>
+                <line
+                  x1="78%"
+                  y1="32%"
+                  x2="76%"
+                  y2="37%"
+                  stroke="#ef4444"
+                  stroke-width="3"
+                  marker-end="url(#arrowhead-red)"
+                ></line>
+                <text
+                  x="78%"
+                  y="30%"
+                  font-size="14"
+                  fill="#ef4444"
+                  font-weight="bold"
+                  text-anchor="start"
+                  style="text-shadow:1px 1px 0 #fff;"
+                >
+                  4月生まれ
+                </text>
+              </g>
+
+              <!-- 3月生まれ（左端の点） -->
+              <g>
+                <line
+                  x1="30%"
+                  y1="75%"
+                  x2="32%"
+                  y2="70%"
+                  stroke="#ef4444"
+                  stroke-width="3"
+                  marker-end="url(#arrowhead-red)"
+                ></line>
+                <text
+                  x="30%"
+                  y="78%"
+                  font-size="14"
+                  fill="#ef4444"
+                  font-weight="bold"
+                  text-anchor="end"
+                  style="text-shadow:1px 1px 0 #fff;"
+                >
+                  3月生まれ
+                </text>
+              </g>
+
+              <!-- 矢じり定義 -->
+              <defs>
+                <marker id="arrowhead-red" markerWidth="10" markerHeight="7"
+                        refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"></polygon>
+                </marker>
+              </defs>
+            </svg>
+
+            <!-- 注釈ボックス -->
+            <div class="absolute bottom-2 right-2 bg-white/95 border-2 border-black p-3 rounded-lg shadow-md max-w-[200px] z-20">
+              <p class="text-sm md:text-base font-bold leading-tight">
+                <span class="text-red-600 block mb-1">相関関係はある！</span>
+                先輩の言う通り、4月生まれ（おひつじ座・おうし座）の方が数値が高い…
+              </p>
+              <!-- 吹き出ししっぽ -->
+              <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[10px] border-b-black"></div>
+              <div class="absolute -top-[9px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-white"></div>
+            </div>
+
+          </div>
+
+          <!-- 出典 -->
+          <div class="text-[11px] text-gray-500 text-right mt-1 whitespace-nowrap transform scale-90 origin-right w-full">
+            出典：
+            <a href="https://www.rieti.go.jp/jp/publications/nts/20e079.html"
+               target="_blank" rel="noopener noreferrer"
+               class="underline text-blue-600">
+              https://www.rieti.go.jp/jp/publications/nts/20e079.html
+            </a>
+            より、著者作成。
+          </div>
+        </div>
+      </div>
+
+      <!-- コマ3: 見せかけ相関の解説 -->
+      <div class="bg-white border-4 border-black p-1 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative group hover:-translate-y-1 transition-transform duration-200">
+        <div class="absolute top-0 left-0 bg-black text-white px-3 py-1 font-bold text-sm z-10">SCENE 3</div>
+
+        <div class="p-3 md:p-4 h-full flex flex-col pt-16">
+          <div class="flex-grow">
+
+            <!-- タイトル -->
+            <div class="flex items-center justify-center mb-3 mt-6">
+              <div class="bg-green-600 text-white p-2 mr-2 rounded-full flex-shrink-0 flex items-center justify-center">
+                <!-- Bookアイコン代替 -->
+                <span class="text-white text-lg font-bold">📖</span>
+              </div>
+              <h4 class="font-black text-lg text-green-800 border-b-2 border-green-200 inline-block">
+                先生：騙されるな！「潜伏変数」を探せ
+              </h4>
+            </div>
+
+            <!-- 構造図解 -->
+            <div class="bg-gray-100 border-2 border-black p-4 rounded-2xl mb-4 relative flex flex-col mt-8 w-full">
+
+              <!-- 上段 X と Y -->
+              <div class="flex items-start justify-between space-x-2 relative z-10">
+
+                <!-- X: 星座・運勢 -->
+                <div class="w-24 h-24 md:w-26 md:h-26 bg-white border-2 border-purple-500 rounded-full p-2 shadow-md flex flex-col items-center justify-center text-center">
+                  <div class="text-purple-700 text-sm md:text-base font-black leading-tight">
+                    星座<br/>運勢
+                  </div>
+                  <div class="text-[10px] text-purple-500 mt-1">(変数 X)</div>
+                </div>
+
+                <!-- X と Y の間: 関係なし（バツ印） -->
+                <div class="flex-1 flex flex-col items-center justify-center pt-8">
+                  <div class="border-t-4 border-dotted border-gray-400 w-full relative">
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 px-2 rounded-full border-2 border-red-100 shadow-sm flex items-center justify-center">
+                      <!-- Xアイコン代替 -->
+                      <span class="text-red-600 text-4xl font-black drop-shadow-md">×</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Y: 学力・体力 -->
+                <div class="w-24 h-24 md:w-26 md:h-26 bg-white border-2 border-blue-500 rounded-full p-2 shadow-md flex flex-col items-center justify-center text-center">
+                  <div class="text-blue-700 text-sm md:text-base font-black leading-tight">
+                    学力<br/>体力
+                  </div>
+                  <div class="text-[10px] text-blue-500 mt-1">(変数 Y)</div>
+                </div>
+              </div>
+
+              <!-- 中段: 真の原因 Z -->
+              <div class="flex justify-center -mt-2 mb-4 relative z-10">
+                <div class="w-32 h-32 bg-yellow-100 border-4 border-red-500 rounded-full shadow-lg flex flex-col items-center justify-center text-center relative">
+                  <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-full border-2 border-white whitespace-nowrap">
+                    真の原因 (変数 Z)
+                  </div>
+                  <p class="font-black text-lg text-red-900 leading-tight">
+                    月齢<br/><span class="text-xs font-normal">(生後経過日数)</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- 下段: 解釈 -->
+              <div class="bg-white border-2 border-gray-400 border-dashed rounded-xl p-3 relative z-10 w-full text-center">
+                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gray-600 text-white text-[10px] font-bold px-3 py-0.5 rounded">
+                  解釈
+                </div>
+                <p class="text-sm text-gray-800 font-bold leading-snug mt-1">
+                  4月生まれは3月生まれより<br/>
+                  <span class="bg-yellow-200 px-1">約1年も長く生きている</span>。<br/>
+                  だから体が大きく、勉強も進んでいるだけ！
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
