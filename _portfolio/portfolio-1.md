@@ -1,7 +1,7 @@
 ---
 title: "Stata Programming"
 date: 2022-08-16
-excerpt: "<br/><img src='https://www.stata.com/bookstore/bi/statacheatsheets.png'>" 
+excerpt: "<br/><img src='https://www.stata.com/flyers/i/statacheatsheets.png'>" 
 collection: portfolio
 ---
 
