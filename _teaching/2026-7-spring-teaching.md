@@ -10,5 +10,5 @@ location: "Tokyo, Japan"
 
 April 2026
 
-● <a href="file/2026_seminar_1.html" target="_blank">Handout 1</a> (by M. Sun) <br>
-● <a href="file/2026_seminar_2.html" target="_blank">Handout 2</a> (by M. Sun) 
+● <a href="/file/2026_seminar_1.html" target="_blank">Handout 1</a> (by M. Sun) <br>
+● <a href="/file/2026_seminar_2.html" target="_blank">Handout 2</a> (by M. Sun) 
