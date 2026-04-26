@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ミクロ経済学入門：企業はいつ生産をやめるのか？</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --tc-color: #9333ea;
+            --mc-color: #f59e0b;
+            --ac-color: #3b82f6;
+            --avc-color: #10b981;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        h2 { border-left: 5px solid #1e293b; padding-left: 15px; color: #1e293b; }
+        .controls {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: #fff;
+            padding: 15px;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .slider-box { flex-grow: 1; display: flex; align-items: center; gap: 10px; }
+        input[type=range] { width: 100%; cursor: pointer; }
+
+        .chart-formula-row {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 16px;
+            align-items: start;
+        }
+        .chart { height: 420px; width: 100%; }
+
+        .formula-panel {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            height: 420px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .formula-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .calc-block {
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ccc;
+            font-size: 13.5px;
+        }
+        .calc-block.tc-block  { border-left-color: #9333ea; }
+        .calc-block.mc-block  { border-left-color: #f59e0b; }
+        .calc-block.ac-block  { border-left-color: #3b82f6; }
+        .calc-block.avc-block { border-left-color: #10b981; }
+        .calc-block.vc-block  { border-left-color: #06b6d4; }
+        .calc-block.fc-block  { border-left-color: #94a3b8; }
+        .calc-block .label { font-weight: bold; font-size: 12px; margin-bottom: 4px; display: block; }
+        .calc-block .label.tc-label  { color: #9333ea; }
+        .calc-block .label.mc-label  { color: #b45309; }
+        .calc-block .label.ac-label  { color: #1d4ed8; }
+        .calc-block .label.avc-label { color: #065f46; }
+        .calc-block .label.vc-label  { color: #0891b2; }
+        .calc-block .label.fc-label  { color: #64748b; }
+        .calc-line {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            color: #334155;
+            line-height: 1.8;
+        }
+        .calc-line .eq { color: #6b7280; }
+        .calc-line .result { font-weight: bold; font-size: 14px; color: #111; }
+        .verdict {
+            margin-top: 8px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: bold;
+        }
+        .verdict.down  { background: #d1fae5; color: #065f46; }
+        .verdict.up    { background: #fee2e2; color: #991b1b; }
+        .verdict.equal { background: #e0f2fe; color: #075985; }
+
+        .profit-box {
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+        .profit-box.profit   { background: #d1fae5; color: #065f46; border: 2px solid #10b981; }
+        .profit-box.loss-op  { background: #fef9c3; color: #713f12; border: 2px solid #eab308; }
+        .profit-box.shutdown { background: #fee2e2; color: #991b1b; border: 2px solid #ef4444; }
+
+        .step4-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff7ed;
+            border: 2px solid #f97316;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+        }
+        .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .box { padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .mc-box  { background-color: #fffbeb; border-left: 4px solid var(--mc-color); }
+        .ac-box  { background-color: #eff6ff; border-left: 4px solid var(--ac-color); }
+        .avc-box { background-color: #ecfdf5; border-left: 4px solid var(--avc-color); }
+        .highlight { font-weight: bold; }
+        .three-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <p style="text-align:left; font-size:12px; opacity:0.75; margin:0 0 8px 0; letter-spacing:0.03em;">2026年度春学期　ミクロ経済学入門　「供給の理論」補足資料</p>
+        <h1>企業はいつ生産をやめるのか？— 費用曲線から読み解く操業判断</h1>
+        <p>数学が苦手でも大丈夫。スライダーを動かして、「傾き」が「費用」に変わる瞬間を体験しましょう。</p>
+        <p>東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </div>
+
+    <div class="controls">
+        <div class="slider-box">
+            <span class="highlight">生産量 (q): <span id="q-val">3.0</span></span>
+            <input type="range" id="q-slider" min="0.5" max="9.5" step="0.1" value="3">
+        </div>
+        <span style="font-size:12px; color:#64748b; white-space:nowrap;">← STEP 1〜3 で使用</span>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="section">
+        <h2>STEP 1: 総費用 (TC) から「動き」を読み取る</h2>
+        <p>上図の総費用曲線に対して、2つの視覚的な「傾き」を考えます。</p>
+
+        <div class="chart-formula-row">
+            <div id="tc-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📐 計算の過程（q = <span class="q-disp">3.0</span> のとき）</h4>
+                <div class="calc-block tc-block">
+                    <span class="label tc-label">① 総費用 TC(q)</span>
+                    <div class="calc-line">
+                        TC(q) = 0.4q³ − 3q² + 12q + 15<br>
+                        <span class="eq">= 0.4×<span id="tc-q3"></span> − 3×<span id="tc-q2"></span> + 12×<span id="tc-q1"></span> + 15</span><br>
+                        <span class="eq">= <span id="tc-a"></span> − <span id="tc-b"></span> + <span id="tc-c"></span> + 15</span><br>
+                        <span class="result">= <span id="tc-result"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">② 限界費用 MC(q)（接線の傾き）</span>
+                    <div class="calc-line">
+                        MC = dTC/dq = 1.2q² − 6q + 12<br>
+                        <span class="eq">= 1.2×<span id="mc-q2"></span> − 6×<span id="mc-q1"></span> + 12</span><br>
+                        <span class="eq">= <span id="mc-a"></span> − <span id="mc-b"></span> + 12</span><br>
+                        <span class="result">= <span id="mc-result"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">③ 平均費用 AC(q)（原点からの傾き）</span>
+                    <div class="calc-line">
+                        AC(q) = TC(q) ÷ q<br>
+                        <span class="eq">= <span id="ac-tc"></span> ÷ <span class="q-disp">3.0</span></span><br>
+                        <span class="result">= <span id="ac-result"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation-grid">
+            <div class="box mc-box">
+                <h3 style="color:#b45309;">1. 接線の傾き (Marginal Cost)</h3>
+                <p>オレンジ色の<b>接線</b>に注目してください。この傾斜は「あと1単位追加で生産した時、いくらコストが増えるか」を表します。</p>
+            </div>
+            <div class="box ac-box">
+                <h3 style="color:#1d4ed8;">2. 原点からの線の傾き (Average Cost)</h3>
+                <p>青色の<b>点線</b>に注目してください。原点と結んだこの線の傾斜は「製品1個あたりの平均コスト」を表します。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="section">
+        <h2>STEP 2: 単位あたり費用の可視化 (MC & AC)</h2>
+        <p>上の図で読み取った「傾きの値」をグラフにプロットすると、私たちがよく見る費用曲線が現れます。</p>
+
+        <div class="chart-formula-row">
+            <div id="unit-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📊 現在の値の比較（q = <span class="q-disp">3.0</span> のとき）</h4>
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">限界費用 MC</span>
+                    <div class="calc-line">
+                        MC = 1.2q² − 6q + 12<br>
+                        <span class="eq">= 1.2×<span id="u-mc-q2"></span> − 6×<span id="u-mc-q1"></span> + 12</span><br>
+                        <span class="result">= <span id="u-mc-result"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">平均費用 AC</span>
+                    <div class="calc-line">
+                        AC = TC ÷ q<br>
+                        <span class="eq">= <span id="u-ac-tc"></span> ÷ <span class="q-disp">3.0</span></span><br>
+                        <span class="result">= <span id="u-ac-result"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block" id="compare-block">
+                    <span class="label" id="compare-label">MC と AC の比較</span>
+                    <div class="calc-line">
+                        MC = <span id="cmp-mc"></span> 　AC = <span id="cmp-ac"></span><br>
+                        <span id="cmp-relation"></span>
+                    </div>
+                    <div class="verdict" id="verdict-box"></div>
+                </div>
+                <div class="calc-block" style="border-left-color:#94a3b8; background:#f1f5f9;">
+                    <span class="label" style="color:#475569;">💡 AC 最小点に近づくには？</span>
+                    <div class="calc-line" style="font-size:12px; color:#475569;">
+                        AC が最小になるのは MC = AC のとき。<br>
+                        現在 q = <span class="q-disp">3.0</span>。<br>
+                        <span id="min-hint"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:20px; padding:15px; background:#f8fafc; border-radius:8px;">
+            <h3>💡 重要な発見 (ここがテストに出る！)</h3>
+            <ul>
+                <li><b>MC = AC の地点：</b> MCがACを突き抜ける時、ACは必ず<span style="color:red; font-weight:bold;">最小値</span>になります。</li>
+                <li><b>なぜ？：</b> 「追加の1個(MC)」が「平均(AC)」より安ければ平均は下がり、高ければ上がります。テストの点数と同じ原理です。</li>
+                <li><b>損益分岐点：</b> ACの最小点は、企業が赤字にならないギリギリの価格を示します。</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="section">
+        <h2>STEP 3: 費用の分解 — 固定費用・可変費用・平均可変費用 (FC, VC, AVC)</h2>
+        <p>総費用は <b>固定費用 (FC)</b> と <b>可変費用 (VC)</b> に分解できます。VC曲線の「原点からの傾き」が <b>平均可変費用 (AVC)</b> です。</p>
+
+        <div class="chart-formula-row">
+            <div id="vc-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📐 費用の分解（q = <span class="q-disp">3.0</span> のとき）</h4>
+                <div class="calc-block tc-block">
+                    <span class="label tc-label">① 総費用 TC(q)</span>
+                    <div class="calc-line">
+                        TC = 0.4q³ − 3q² + 12q + 15<br>
+                        <span class="result">= <span id="s3-tc"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block fc-block">
+                    <span class="label fc-label">② 固定費用 FC（生産量に無関係）</span>
+                    <div class="calc-line">
+                        FC = <span class="result">15</span>（常に一定）
+                    </div>
+                </div>
+                <div class="calc-block vc-block">
+                    <span class="label vc-label">③ 可変費用 VC = TC − FC</span>
+                    <div class="calc-line">
+                        VC = 0.4q³ − 3q² + 12q<br>
+                        <span class="eq">= <span id="s3-tc-val"></span> − 15</span><br>
+                        <span class="result">= <span id="s3-vc"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block avc-block">
+                    <span class="label avc-label">④ 平均可変費用 AVC = VC ÷ q</span>
+                    <div class="calc-line">
+                        AVC = 0.4q² − 3q + 12<br>
+                        <span class="eq">= <span id="s3-vc-val"></span> ÷ <span class="q-disp">3.0</span></span><br>
+                        <span class="result">= <span id="s3-avc"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">⑤ 平均固定費用 AFC = FC ÷ q</span>
+                    <div class="calc-line">
+                        AFC = 15 ÷ <span class="q-disp">3.0</span><br>
+                        <span class="result">= <span id="s3-afc"></span></span><br>
+                        <span style="font-size:11.5px; color:#6b7280;">AC = AVC + AFC = <span id="s3-avc2"></span> + <span id="s3-afc2"></span> = <span id="s3-ac-check"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="three-grid">
+            <div class="box fc-block" style="border-left:4px solid #94a3b8; background:#f8fafc;">
+                <h3 style="color:#475569;">固定費用 (FC)</h3>
+                <p>家賃・設備投資など、<b>生産量に関わらず</b>発生するコスト。グラフでは TC と VC の縦の差（常に15）として現れます。</p>
+            </div>
+            <div class="box vc-block" style="border-left:4px solid #06b6d4; background:#ecfeff;">
+                <h3 style="color:#0891b2;">可変費用 (VC)</h3>
+                <p>原材料・労働賃金など、<b>生産量に比例</b>して変化するコスト。VC = TC − FC。原点を通る曲線になります。</p>
+            </div>
+            <div class="box avc-box">
+                <h3 style="color:#065f46;">平均可変費用 (AVC)</h3>
+                <p>VC曲線の「原点からの傾き」＝ AVC。<b>MC = AVC の地点</b>でAVCは最小となります（操業停止点の基準）。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="section">
+        <h2>STEP 4: 損益分岐点と操業停止点</h2>
+        <p>市場価格 <b>P</b> が与えられたとき、企業は <b>P = MC</b> となる生産量 q* を選びます。そのとき利益が出るか・損失でも操業するか・廃業するかは、P と AC・AVC の最小値の比較で決まります。</p>
+
+        <div class="step4-slider-row">
+            <span class="highlight" style="white-space:nowrap;">市場価格 (P): <span id="p-val">12.0</span></span>
+            <input type="range" id="p-slider" min="2" max="20" step="0.1" value="12" style="flex:1;">
+            <span style="font-size:12px; color:#92400e; white-space:nowrap;">← STEP 4 で使用</span>
+        </div>
+
+        <div class="chart-formula-row">
+            <div id="decision-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>💹 意思決定の計算（P = <span id="p-disp">12.0</span> のとき）</h4>
+
+                <div class="calc-block" style="border-left-color:#ef4444;">
+                    <span class="label" style="color:#dc2626;">最適生産量 q*（P = MC）</span>
+                    <div class="calc-line">
+                        P = MC(q*)<br>
+                        <span class="eq">→ q* = </span><span class="result" id="s4-qstar">—</span>
+                    </div>
+                </div>
+
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">収入と費用</span>
+                    <div class="calc-line">
+                        TR = P × q* = <span id="s4-tr">—</span><br>
+                        TC = <span id="s4-tc">—</span><br>
+                        VC = <span id="s4-vc">—</span>
+                    </div>
+                </div>
+
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">単位あたり費用との比較</span>
+                    <div class="calc-line">
+                        AC(q*) = <span id="s4-ac">—</span><br>
+                        AVC(q*) = <span id="s4-avc">—</span><br>
+                        <span style="font-size:11.5px; color:#6b7280;">
+                            損益分岐点 AC_min ≈ 9.93<br>
+                            操業停止点 AVC_min = 6.38
+                        </span>
+                    </div>
+                </div>
+
+                <div class="calc-block" style="border-left-color:#8b5cf6;">
+                    <span class="label" style="color:#7c3aed;">利益の計算</span>
+                    <div class="calc-line">
+                        利益 = TR − TC<br>
+                        <span class="eq">= (P − AC) × q*</span><br>
+                        <span class="eq">= (<span id="s4-p-minus-ac">—</span>) × <span id="s4-qstar2">—</span></span><br>
+                        <span class="result">= <span id="s4-profit">—</span></span>
+                    </div>
+                </div>
+
+                <div class="profit-box" id="s4-verdict"></div>
+            </div>
+        </div>
+
+        <div class="three-grid">
+            <div class="box" style="border-left:4px solid #10b981; background:#ecfdf5;">
+                <h3 style="color:#065f46;">① P ≥ AC最小値（≈9.93）</h3>
+                <p><b>超過利潤または損益分岐</b><br>収入が全費用をカバー。利益 ≥ 0。企業は操業を続けます。</p>
+                <p style="font-size:12px; color:#065f46;">損益分岐点 = AC曲線の最小点（★）</p>
+            </div>
+            <div class="box" style="border-left:4px solid #eab308; background:#fefce8;">
+                <h3 style="color:#713f12;">② 6.38 ≤ P ＜ 9.93</h3>
+                <p><b>損失あり・操業継続</b><br>変動費はカバーできるので、操業した方が廃業より損失が小さい（固定費の回収）。</p>
+                <p style="font-size:12px; color:#713f12;">操業停止点 = AVC曲線の最小点（▼）</p>
+            </div>
+            <div class="box" style="border-left:4px solid #ef4444; background:#fef2f2;">
+                <h3 style="color:#991b1b;">③ P ＜ AVC最小値（6.38）</h3>
+                <p><b>操業停止</b><br>変動費すら回収できない。生産しても損失が拡大するため、q = 0 が最適。</p>
+                <p style="font-size:12px; color:#991b1b;">損失 = FC = 15（操業停止時の損失）</p>
+            </div>
+        </div>
+
+        <div style="margin-top:20px; padding:15px; background:#f8fafc; border-radius:8px;">
+            <h3>💡 供給曲線との関係</h3>
+            <ul>
+                <li><b>企業の供給曲線</b>は、AVC最小点以上の MC 曲線の部分そのものです（P = MC の関係から）。</li>
+                <li><b>スライダーで確認：</b> P を 6.38 前後に動かすと、操業停止の瞬間がわかります。P を 9.93 に合わせると損益分岐点で利益がほぼゼロになることを確認してください。</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    const a = 0.4, b = -3, c = 12, FC = 15;
+
+    const getTC  = (q) => a*q**3 + b*q**2 + c*q + FC;
+    const getMC  = (q) => 3*a*q**2 + 2*b*q + c;
+    const getAC  = (q) => getTC(q) / q;
+    const getVC  = (q) => getTC(q) - FC;
+    const getAVC = (q) => getVC(q) / q;
+    const getAFC = (q) => FC / q;
+
+    // Known critical points
+    const AVC_MIN_Q = 3.75;
+    const AVC_MIN   = 6.375;
+    const AC_MIN_Q  = 4.63;
+    const AC_MIN    = 9.93;
+
+    const qs = [];
+    for (let i = 0; i <= 100; i++) qs.push(i * 0.1);
+    const tcs  = qs.map(getTC);
+    const mcs  = qs.map(getMC);
+    const acs  = qs.map(getAC);
+    const vcs  = qs.map(getVC);
+    const avcs = qs.map(q => q > 0 ? getAVC(q) : null);
+
+    const slider  = document.getElementById('q-slider');
+    const qLabel  = document.getElementById('q-val');
+    const pSlider = document.getElementById('p-slider');
+    const pLabel  = document.getElementById('p-val');
+
+    function fmt(v, d=2) { return v.toFixed(d); }
+
+    // Find q* where MC(q) = P on ascending portion (q >= 2.5)
+    function findOptimalQ(P) {
+        if (P < AVC_MIN) return 0;
+        let lo = 2.5, hi = 10;
+        for (let i = 0; i < 80; i++) {
+            const mid = (lo + hi) / 2;
+            if (getMC(mid) < P) lo = mid; else hi = mid;
+        }
+        return (lo + hi) / 2;
+    }
+
+    function updateFormulas(q) {
+        const curTC  = getTC(q);
+        const curMC  = getMC(q);
+        const curAC  = getAC(q);
+        const curVC  = getVC(q);
+        const curAVC = getAVC(q);
+        const curAFC = getAFC(q);
+
+        document.querySelectorAll('.q-disp').forEach(el => el.textContent = fmt(q, 1));
+
+        // STEP 1 panel
+        const q3 = fmt(q**3), q2 = fmt(q**2), q1 = fmt(q, 1);
+        document.getElementById('tc-q3').textContent = q3;
+        document.getElementById('tc-q2').textContent = q2;
+        document.getElementById('tc-q1').textContent = q1;
+        document.getElementById('tc-a').textContent  = fmt(0.4*q**3);
+        document.getElementById('tc-b').textContent  = fmt(3*q**2);
+        document.getElementById('tc-c').textContent  = fmt(12*q);
+        document.getElementById('tc-result').textContent = fmt(curTC);
+        document.getElementById('mc-q2').textContent = q2;
+        document.getElementById('mc-q1').textContent = q1;
+        document.getElementById('mc-a').textContent  = fmt(1.2*q**2);
+        document.getElementById('mc-b').textContent  = fmt(6*q);
+        document.getElementById('mc-result').textContent = fmt(curMC);
+        document.getElementById('ac-tc').textContent = fmt(curTC);
+        document.getElementById('ac-result').textContent = fmt(curAC);
+
+        // STEP 2 panel
+        document.getElementById('u-mc-q2').textContent  = q2;
+        document.getElementById('u-mc-q1').textContent  = q1;
+        document.getElementById('u-mc-result').textContent = fmt(curMC);
+        document.getElementById('u-ac-tc').textContent  = fmt(curTC);
+        document.getElementById('u-ac-result').textContent = fmt(curAC);
+
+        document.getElementById('cmp-mc').textContent = fmt(curMC);
+        document.getElementById('cmp-ac').textContent = fmt(curAC);
+        const diff = curMC - curAC;
+        const relEl     = document.getElementById('cmp-relation');
+        const verdictEl = document.getElementById('verdict-box');
+        if (Math.abs(diff) < 0.5) {
+            relEl.textContent     = 'MC ≈ AC';
+            verdictEl.className   = 'verdict equal';
+            verdictEl.textContent = '→ ACはほぼ最小値付近です！';
+        } else if (diff < 0) {
+            relEl.textContent     = `MC < AC　（差：${fmt(Math.abs(diff))}）`;
+            verdictEl.className   = 'verdict down';
+            verdictEl.textContent = '→ 追加1単位が安い → ACはまだ下がります ↓';
+        } else {
+            relEl.textContent     = `MC > AC　（差：${fmt(diff)}）`;
+            verdictEl.className   = 'verdict up';
+            verdictEl.textContent = '→ 追加1単位が高い → ACは上がり始めます ↑';
+        }
+
+        const minHintEl = document.getElementById('min-hint');
+        if (q < 4.4)       minHintEl.textContent = '→ qをもっと増やすとACの最小点に近づきます。';
+        else if (q > 4.9)  minHintEl.textContent = '→ qを減らすとACの最小点に近づきます。';
+        else               minHintEl.textContent = '→ この付近がACの最小点です！MC ≈ AC を確認してください。';
+
+        // STEP 3 panel
+        document.getElementById('s3-tc').textContent      = fmt(curTC);
+        document.getElementById('s3-tc-val').textContent  = fmt(curTC);
+        document.getElementById('s3-vc').textContent      = fmt(curVC);
+        document.getElementById('s3-vc-val').textContent  = fmt(curVC);
+        document.getElementById('s3-avc').textContent     = fmt(curAVC);
+        document.getElementById('s3-afc').textContent     = fmt(curAFC);
+        document.getElementById('s3-avc2').textContent    = fmt(curAVC);
+        document.getElementById('s3-afc2').textContent    = fmt(curAFC);
+        document.getElementById('s3-ac-check').textContent = fmt(curAVC + curAFC);
+    }
+
+    function updateStep4(P) {
+        pLabel.textContent = fmt(P, 1);
+        document.getElementById('p-disp').textContent = fmt(P, 1);
+
+        const qstar = findOptimalQ(P);
+        const isShutdown = qstar === 0;
+
+        if (isShutdown) {
+            document.getElementById('s4-qstar').textContent  = '0（操業停止）';
+            document.getElementById('s4-qstar2').textContent = '0';
+            document.getElementById('s4-tr').textContent     = '0';
+            document.getElementById('s4-tc').textContent     = fmt(FC) + '（固定費のみ）';
+            document.getElementById('s4-vc').textContent     = '0';
+            document.getElementById('s4-ac').textContent     = '—';
+            document.getElementById('s4-avc').textContent    = '—';
+            document.getElementById('s4-p-minus-ac').textContent = '—';
+            document.getElementById('s4-profit').textContent = `−${fmt(FC)}（固定費 = 損失）`;
+            const v = document.getElementById('s4-verdict');
+            v.className   = 'profit-box shutdown';
+            v.innerHTML   = `🚫 操業停止<br>P = ${fmt(P,2)} ＜ AVC最小値 ${fmt(AVC_MIN)}<br>変動費も回収不能 → 生産量 = 0<br>損失 = FC = ${FC}`;
+        } else {
+            const curTC  = getTC(qstar);
+            const curAC  = getAC(qstar);
+            const curAVC = getAVC(qstar);
+            const tr     = P * qstar;
+            const vc     = getVC(qstar);
+            const profit = tr - curTC;
+
+            document.getElementById('s4-qstar').textContent  = fmt(qstar);
+            document.getElementById('s4-qstar2').textContent = fmt(qstar);
+            document.getElementById('s4-tr').textContent     = fmt(tr);
+            document.getElementById('s4-tc').textContent     = fmt(curTC);
+            document.getElementById('s4-vc').textContent     = fmt(vc);
+            document.getElementById('s4-ac').textContent     = fmt(curAC);
+            document.getElementById('s4-avc').textContent    = fmt(curAVC);
+            document.getElementById('s4-p-minus-ac').textContent = fmt(P - curAC);
+            document.getElementById('s4-profit').textContent = fmt(profit);
+
+            const v = document.getElementById('s4-verdict');
+            if (P >= AC_MIN - 0.15) {
+                v.className = 'profit-box profit';
+                v.innerHTML = `✅ 超過利潤（または損益分岐）<br>P = ${fmt(P,2)} ≥ AC_min ≈ ${AC_MIN}<br>利益 = ${fmt(profit)} ≥ 0`;
+            } else {
+                v.className = 'profit-box loss-op';
+                v.innerHTML = `⚠️ 損失あり・操業継続<br>AVC_min(${fmt(AVC_MIN)}) ≤ P(${fmt(P,2)}) ＜ AC_min(${AC_MIN})<br>利益 = ${fmt(profit)}（マイナスだが操業した方が得）`;
+            }
+        }
+
+        // Decision chart
+        const traceMC  = { x: qs, y: mcs,  name: '限界費用 MC',   line: {color: '#f59e0b', width: 3} };
+        const traceAC  = { x: qs, y: acs,  name: '平均費用 AC',   line: {color: '#3b82f6', width: 3} };
+        const traceAVC = { x: qs, y: avcs, name: '平均可変費用 AVC', line: {color: '#10b981', width: 3} };
+        const priceLineX = [0, 10];
+        const traceP   = { x: priceLineX, y: [P, P], name: `市場価格 P = ${fmt(P,1)}`, line: {color: '#ef4444', width: 2.5, dash: 'dash'} };
+
+        const traces = [traceMC, traceAC, traceAVC, traceP];
+
+        // Highlight current points
+        if (!isShutdown) {
+            const curAC  = getAC(qstar);
+            const curAVC = getAVC(qstar);
+            traces.push({ x: [qstar], y: [P],      mode: 'markers', marker: {size: 10, color: '#ef4444'},  showlegend: false });
+            traces.push({ x: [qstar], y: [curAC],  mode: 'markers', marker: {size: 10, color: '#3b82f6'},  showlegend: false });
+            traces.push({ x: [qstar], y: [curAVC], mode: 'markers', marker: {size: 10, color: '#10b981'},  showlegend: false });
+        }
+
+        // Key threshold markers
+        traces.push({ x: [AC_MIN_Q],  y: [AC_MIN],  mode: 'markers+text', marker: {size: 14, color: '#1d4ed8', symbol: 'star'}, text: ['損益分岐点★'], textposition: 'top right', showlegend: false, textfont: {size: 11, color: '#1d4ed8'} });
+        traces.push({ x: [AVC_MIN_Q], y: [AVC_MIN], mode: 'markers+text', marker: {size: 14, color: '#065f46', symbol: 'triangle-down'}, text: ['操業停止点▼'], textposition: 'bottom right', showlegend: false, textfont: {size: 11, color: '#065f46'} });
+
+        const shapes = [
+            { type: 'line', x0: 0, y0: AC_MIN,  x1: 10, y1: AC_MIN,  line: {color: '#3b82f6', width: 1, dash: 'dot'} },
+            { type: 'line', x0: 0, y0: AVC_MIN, x1: 10, y1: AVC_MIN, line: {color: '#10b981', width: 1, dash: 'dot'} },
+        ];
+
+        // Profit/loss shading rectangle
+        if (!isShutdown) {
+            const curAC = getAC(qstar);
+            const yLow  = Math.min(P, curAC);
+            const yHigh = Math.max(P, curAC);
+            const fillColor = P >= curAC ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.12)';
+            shapes.push({
+                type: 'rect',
+                x0: 0, x1: qstar,
+                y0: yLow, y1: yHigh,
+                fillcolor: fillColor,
+                line: { width: 0 }
+            });
+            shapes.push({ type: 'line', x0: qstar, y0: 0, x1: qstar, y1: 28, line: {color: '#cbd5e1', width: 1, dash: 'dash'} });
+        }
+
+        Plotly.newPlot('decision-chart', traces, {
+            xaxis: { title: '生産量 q', range: [0, 10] },
+            yaxis: { title: '価格・費用 ($)', range: [0, 28] },
+            margin: { t: 40, b: 40, l: 60, r: 20 },
+            legend: { orientation: 'h', y: 1.12 },
+            shapes: shapes
+        }, { responsive: true, displayModeBar: false });
+    }
+
+    function update() {
+        const q = parseFloat(slider.value);
+        qLabel.innerText = fmt(q, 1);
+        const curTC  = getTC(q);
+        const curMC  = getMC(q);
+        const curAC  = getAC(q);
+        const curVC  = getVC(q);
+        const curAVC = getAVC(q);
+
+        updateFormulas(q);
+
+        // TC Chart (STEP 1)
+        const traceTC    = { x: qs, y: tcs, name: '総費用 (TC)', line: {color: '#9333ea', width: 4} };
+        const traceTan   = { x: [q-1.5, q+1.5], y: [curTC - curMC*1.5, curTC + curMC*1.5], name: '限界コスト(MC)の傾き', line: {color: '#f59e0b', width: 2} };
+        const traceRay   = { x: [0, q], y: [0, curTC], name: '平均コスト(AC)の傾き', line: {color: '#3b82f6', width: 2, dash: 'dot'} };
+        const tracePoint = { x: [q], y: [curTC], mode: 'markers', marker: {size: 10, color: '#1e293b'}, showlegend: false };
+
+        Plotly.newPlot('tc-chart', [traceTC, traceTan, traceRay, tracePoint], {
+            xaxis: { title: '生産量 q', range: [0, 10] },
+            yaxis: { title: '総費用 ($)', range: [0, 250] },
+            margin: { t: 40, b: 40, l: 60, r: 20 },
+            legend: { orientation: 'h', y: 1.1 }
+        }, { responsive: true, displayModeBar: false });
+
+        // Unit Chart (STEP 2)
+        const traceMC2 = { x: qs, y: mcs, name: '限界費用 (MC)', line: {color: '#f59e0b', width: 3} };
+        const traceAC2 = { x: qs, y: acs, name: '平均費用 (AC)', line: {color: '#3b82f6', width: 3} };
+        Plotly.newPlot('unit-chart', [traceMC2, traceAC2,
+            { x: [q], y: [curMC], mode: 'markers', marker: {size: 10, color: '#f59e0b'}, showlegend: false },
+            { x: [q], y: [curAC], mode: 'markers', marker: {size: 10, color: '#3b82f6'}, showlegend: false }
+        ], {
+            xaxis: { title: '生産量 q', range: [0, 10] },
+            yaxis: { title: '単位あたり費用 ($)', range: [0, 30] },
+            margin: { t: 40, b: 40, l: 60, r: 20 },
+            legend: { orientation: 'h', y: 1.1 },
+            shapes: [{ type: 'line', x0: q, y0: 0, x1: q, y1: 30, line: {color: '#cbd5e1', width: 1, dash: 'dash'} }]
+        }, { responsive: true, displayModeBar: false });
+
+        // VC Decomposition Chart (STEP 3)
+        const traceTC3   = { x: qs, y: tcs, name: '総費用 TC', line: {color: '#9333ea', width: 3} };
+        const traceVC3   = { x: qs, y: vcs, name: '可変費用 VC', line: {color: '#06b6d4', width: 3} };
+        const traceFC3   = { x: [0, 10], y: [FC, FC], name: `固定費用 FC = ${FC}`, line: {color: '#94a3b8', width: 2, dash: 'dot'} };
+        const traceRayVC = { x: [0, q], y: [0, curVC], name: 'AVC の傾き（VC原点からの線）', line: {color: '#10b981', width: 2, dash: 'dot'} };
+        const ptTC3  = { x: [q], y: [curTC], mode: 'markers', marker: {size: 10, color: '#9333ea'}, showlegend: false };
+        const ptVC3  = { x: [q], y: [curVC], mode: 'markers', marker: {size: 10, color: '#06b6d4'}, showlegend: false };
+
+        Plotly.newPlot('vc-chart', [traceTC3, traceVC3, traceFC3, traceRayVC, ptTC3, ptVC3], {
+            xaxis: { title: '生産量 q', range: [0, 10] },
+            yaxis: { title: '費用 ($)', range: [0, 250] },
+            margin: { t: 40, b: 40, l: 60, r: 20 },
+            legend: { orientation: 'h', y: 1.12 },
+            shapes: [
+                { type: 'line', x0: q, y0: curVC, x1: q, y1: curTC,
+                  line: {color: '#94a3b8', width: 2} }
+            ],
+            annotations: [{
+                x: q + 0.15, y: (curTC + curVC) / 2,
+                text: `FC=${FC}`, showarrow: false,
+                font: {size: 11, color: '#64748b'}
+            }]
+        }, { responsive: true, displayModeBar: false });
+    }
+
+    slider.oninput = () => update();
+    pSlider.oninput = () => updateStep4(parseFloat(pSlider.value));
+    window.onload = () => { update(); updateStep4(parseFloat(pSlider.value)); };
+</script>
+</body>
+</html>
