@@ -30,13 +30,13 @@ redirect_from:
 <br>
 Thank you for visiting my website! My name is Mingchao Sun (孫明超). I am a Junior Associate Professor at the <a href="https://www.u-tokai.ac.jp/ud-political-science-and-economics/dpt-economics/" target="_blank">School of Political Science and Economics, Tokai University</a>.
 
-I am an applied economist with a broad interest in empirical research, particularly in the intersection of social capital, migration, and transportation. My work uses diverse data sources—including surveys, government statistics, spatial data, and IC card records—to empirically analyze human behavior and social structures. 
+I am an applied microeconomist and computational social scientist whose research focuses on human behavior, social networks, and institutions using large-scale behavioral and transactional data. My work combines economics, data science, and computational methods to study migration, transportation systems, social capital, and sports analytics.
 
-My core research direction centers around social capital. I explore how social capital influences various socioeconomic outcomes, and how it functions differently across populations such as immigrants, ethnic minorities, women, and job changers. I also work on developing psychological and behavioral approaches to measure social capital more effectively.
+A central theme of my research is social capital and its role in shaping socioeconomic outcomes across different populations, including immigrants, ethnic minorities, women, and labor market participants. I am also interested in developing behavioral and computational approaches to measuring social capital.
 
-Some of my current projects include the spatial assimilation of immigrants in Japan, the macroeconomic impacts of remittance inflows in developing countries, and the role of social capital in labor markets. My regional focus spans countries such as China, Japan, Vietnam, Pakistan, and Timor-Leste. I have also collaborated on projects related to conflict, sanitation, and child health.
+I work with diverse data sources, including transportation smart-card records, large-scale sports match databases, government statistics, spatial data, and surveys. My recent research examines fare evasion behavior using railway IC card transaction data in Japan and develops longitudinal badminton match datasets for reproducible research on competitive performance and ranking dynamics.
 
-In teaching, I have experience instructing courses in introductory economics, public economics, information economics, and econometrics.
+Methodologically, I am interested in causal inference, high-dimensional panel data analysis, spatial analysis, and reproducible computational workflows. In teaching, I have experience instructing introductory microeconomics, introductory macroeconomics, econometrics, and data analysis.
 
 I also have a <a href="https://researchmap.jp/mingchao_sun" target="_blank">web page</a> in Japanese.
 
