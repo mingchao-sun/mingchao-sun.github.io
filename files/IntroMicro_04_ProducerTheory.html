@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ミクロ経済学入門：生産関数・費用最小化・利潤最大化</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg: #ffffff;
+            --tc-color: #9333ea;
+            --mc-color: #f59e0b;
+            --ac-color: #3b82f6;
+            --avc-color: #10b981;
+        }
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        h2 { border-left: 5px solid #1e293b; padding-left: 15px; color: #1e293b; }
+        .controls {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: #fff;
+            padding: 15px;
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .slider-box { flex-grow: 1; display: flex; align-items: center; gap: 10px; }
+        input[type=range] { width: 100%; cursor: pointer; }
+
+        .chart-formula-row {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 16px;
+            align-items: start;
+        }
+        .chart { height: 420px; width: 100%; }
+
+        .formula-panel {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            height: 420px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        .formula-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+        .calc-block {
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ccc;
+            font-size: 13.5px;
+        }
+        .calc-block.tc-block  { border-left-color: #9333ea; }
+        .calc-block.mc-block  { border-left-color: #f59e0b; }
+        .calc-block.ac-block  { border-left-color: #3b82f6; }
+        .calc-block.avc-block { border-left-color: #10b981; }
+        .calc-block .label { font-weight: bold; font-size: 12px; margin-bottom: 4px; display: block; }
+        .calc-block .label.tc-label  { color: #9333ea; }
+        .calc-block .label.mc-label  { color: #b45309; }
+        .calc-block .label.ac-label  { color: #1d4ed8; }
+        .calc-block .label.avc-label { color: #065f46; }
+        .calc-line {
+            font-family: 'Courier New', monospace;
+            font-size: 12.5px;
+            color: #334155;
+            line-height: 1.8;
+        }
+        .calc-line .eq { color: #6b7280; }
+        .calc-line .result { font-weight: bold; font-size: 14px; color: #111; }
+
+        .explanation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .box { padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .mc-box  { background-color: #fffbeb; border-left: 4px solid var(--mc-color); }
+        .ac-box  { background-color: #eff6ff; border-left: 4px solid var(--ac-color); }
+        .avc-box { background-color: #ecfdf5; border-left: 4px solid var(--avc-color); }
+        .highlight { font-weight: bold; }
+        .three-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; }
+
+        .step-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff7ed;
+            border: 2px solid #f97316;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+        }
+        .dual-slider-row {
+            display: flex;
+            gap: 20px;
+            background: #f0fdf4;
+            border: 2px solid #10b981;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 18px;
+        }
+        .dual-slider-row .slider-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .profit-box {
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+        .profit-box.profit   { background: #d1fae5; color: #065f46; border: 2px solid #10b981; }
+        .profit-box.loss-op  { background: #fef9c3; color: #713f12; border: 2px solid #eab308; }
+        .profit-box.shutdown { background: #fee2e2; color: #991b1b; border: 2px solid #ef4444; }
+        .sub-chart { height: 420px; width: 100%; margin-top: 20px; }
+        .insight-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <p style="text-align:left; font-size:12px; opacity:0.75; margin:0 0 8px 0; letter-spacing:0.03em;">2026年度春学期　ミクロ経済学入門　「生産者行動の理論」補足資料</p>
+        <h1>なぜ企業は P = MC で生産するのか？</h1>
+        <p>生産関数 → 収穫逓減 → 費用最小化 → 利潤最大化の「つながり」をスライダーで体験しましょう。</p>
+        <p>東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </div>
+
+    <!-- ======== STEP 1 ======== -->
+    <div class="section">
+        <h2>STEP 1: 生産関数とは？— 労働から生産量へ</h2>
+        <p>企業は <b>労働 L</b> を投入して <b>生産量 Y</b> を生産します。この関係を <b>生産関数 Y = F(L)</b> と呼びます。</p>
+        <ul>
+            <li>曲線に引いた<b>接線の傾き</b>＝「もう1単位労働を追加したとき増える生産量」＝ <b>限界生産物 MP</b></li>
+            <li><b>原点から点までの直線の傾き</b>＝「労働1単位あたりの平均生産量」＝ <b>平均生産物 AP</b></li>
+        </ul>
+
+        <div class="controls">
+            <div class="slider-box">
+                <span class="highlight">労働量 (L)：<span id="l-val">9</span></span>
+                <input type="range" id="l-slider" min="0.5" max="25" step="0.1" value="9">
+            </div>
+            <span style="font-size:12px; color:#64748b; white-space:nowrap;">← STEP 1〜2 で使用</span>
+        </div>
+
+        <div class="chart-formula-row">
+            <div id="pf-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📐 計算の過程（L = <span class="l-disp">9</span> のとき）</h4>
+                <div class="calc-block tc-block">
+                    <span class="label tc-label">① 生産量 Y = F(L)</span>
+                    <div class="calc-line">
+                        Y = 10√L<br>
+                        <span class="eq">= 10 × √<span id="pf-l1"></span></span><br>
+                        <span class="eq">= 10 × <span id="pf-sqrt1"></span></span><br>
+                        <span class="result">= <span id="pf-y1"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">② 限界生産物 MP（接線の傾き）</span>
+                    <div class="calc-line">
+                        MP = dF/dL = 5 / √L<br>
+                        <span class="eq">= 5 ÷ √<span id="pf-l2"></span></span><br>
+                        <span class="eq">= 5 ÷ <span id="pf-sqrt2"></span></span><br>
+                        <span class="result">= <span id="pf-mp"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">③ 平均生産物 AP（原点からの傾き）</span>
+                    <div class="calc-line">
+                        AP = Y ÷ L<br>
+                        <span class="eq">= <span id="pf-y2"></span> ÷ <span class="l-disp">9</span></span><br>
+                        <span class="result">= <span id="pf-ap"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block" style="border-left-color:#94a3b8; background:#f1f5f9;">
+                    <span class="label" style="color:#475569;">💡 収穫逓減の確認</span>
+                    <div class="calc-line" style="font-size:12px; color:#475569;">
+                        L を増やすと…<br>
+                        MP = <span id="pf-mp2"></span>（接線がなだらかになる）<br>
+                        AP = <span id="pf-ap2"></span>（原点からの線もなだらか）<br>
+                        → これが「<b>収穫逓減の法則</b>」です。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="explanation-grid">
+            <div class="box mc-box">
+                <h3 style="color:#b45309;">限界生産物 MP（接線の傾き）</h3>
+                <p>労働を1単位追加したとき生産量がどれだけ増えるかを表します。<br>
+                <b>MP = dF/dL = 5/√L</b><br>
+                スライダーで L を大きくすると、<b>接線の傾きがどんどん緩やか</b>になることを確認しましょう。</p>
+            </div>
+            <div class="box ac-box">
+                <h3 style="color:#1d4ed8;">平均生産物 AP（原点からの傾き）</h3>
+                <p>労働1単位あたりの平均生産量を表します。<br>
+                <b>AP = F(L)/L = 10/√L</b><br>
+                Y = 10√L の場合は常に AP = 2 × MP。原点からの直線の傾きにも注目しましょう。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== STEP 2 ======== -->
+    <div class="section">
+        <h2>STEP 2: 収穫逓減の法則 — MP はなぜ下がり続けるのか？</h2>
+        <p>L が増えるほど MP（限界生産物）が小さくなるのが <b>収穫逓減の法則</b>です。このことが、企業の費用曲線の形を決めます。</p>
+
+        <div class="chart-formula-row">
+            <div id="mp-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📊 収穫逓減と費用曲線の関係（L = <span class="l-disp">9</span>）</h4>
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">現在の限界生産物 MP</span>
+                    <div class="calc-line">
+                        MP = 5/√L = 5/√<span class="l-disp">9</span><br>
+                        <span class="result">= <span id="mp2-mp"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">現在の平均生産物 AP</span>
+                    <div class="calc-line">
+                        AP = 10/√L = 10/√<span class="l-disp">9</span><br>
+                        <span class="result">= <span id="mp2-ap"></span></span>
+                    </div>
+                </div>
+                <div class="calc-block" style="border-left-color:#8b5cf6;">
+                    <span class="label" style="color:#7c3aed;">💡 費用曲線とのつながり（MC = w / MP）</span>
+                    <div class="calc-line" style="font-size:12px; color:#334155; line-height:2;">
+                        生産量を1単位増やすには<br>
+                        追加労働 ΔL = 1/MP が必要<br>
+                        → コスト増 = w × ΔL = <b>w / MP</b><br><br>
+                        ∴ <b>MC = w / MP</b><br><br>
+                        例）賃金率 w = 5 のとき<br>
+                        MC = 5 ÷ <span id="mp2-mp2"></span><br>
+                        <span class="result" style="font-size:13px;">= <span id="mp2-mc"></span></span><br>
+                        <span style="color:#6b7280;">（MP↓ なら MC↑　← 収穫逓減の反映）</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>💡 生産関数 → 費用曲線の「翻訳」</h3>
+            <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:center; text-align:center; margin-top:10px;">
+                <div style="background:#fffbeb; border:2px solid #f59e0b; border-radius:8px; padding:12px;">
+                    <b style="color:#b45309;">生産関数の世界</b><br>
+                    収穫逓減<br>（L が増えると MP ↓）
+                </div>
+                <div style="font-size:24px; color:#64748b;">→</div>
+                <div style="background:#eff6ff; border:2px solid #3b82f6; border-radius:8px; padding:12px;">
+                    <b style="color:#1d4ed8;">費用関数の世界</b><br>
+                    限界費用逓増<br>（q が増えると MC ↑）
+                </div>
+            </div>
+            <p style="margin-top:12px;">収穫逓減（MP↓）があるから <b>MC = w/MP が増加</b> し、総費用曲線は「S字型」に上に凸になります。これが費用曲線の形状の根本的な理由です。</p>
+        </div>
+    </div>
+
+    <!-- ======== STEP 3 ======== -->
+    <div class="section">
+        <h2>STEP 3: 費用最小化 — 等産出量曲線と等費用線</h2>
+        <p>企業が労働 L と資本 K の 2 つの投入物を使う場合、<b>同じ生産量を達成する</b>中で費用が最小になる組み合わせを選びます。</p>
+        <p>生産関数：<b>Y = L<sup>0.5</sup> × K<sup>0.5</sup></b>（コブ＝ダグラス型）　利子率 r = 1（固定）</p>
+
+        <div class="dual-slider-row">
+            <div class="slider-item">
+                <span class="highlight" style="white-space:nowrap;">賃金率 w：<span id="w-val">2.0</span></span>
+                <input type="range" id="w-slider" min="0.5" max="4" step="0.1" value="2" style="flex:1;">
+            </div>
+            <div class="slider-item">
+                <span class="highlight" style="white-space:nowrap;">目標生産量 Y₀：<span id="y0-val">4.0</span></span>
+                <input type="range" id="y0-slider" min="1" max="8" step="0.5" value="4" style="flex:1;">
+            </div>
+        </div>
+
+        <div class="chart-formula-row">
+            <div id="iso-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>📐 費用最小化の計算（w = <span id="w-disp">2.0</span>, r = 1, Y₀ = <span id="y0-disp">4.0</span>）</h4>
+
+                <div class="calc-block avc-block">
+                    <span class="label avc-label">① 等産出量曲線（Isoquant）</span>
+                    <div class="calc-line">
+                        Y₀ = L<sup>0.5</sup> × K<sup>0.5</sup><br>
+                        → K = Y₀² / L<br>
+                        <span class="eq">= <span id="iso-y0sq"></span> / L</span><br>
+                        <span style="font-size:11px; color:#6b7280;">（グラフ：緑の曲線）</span>
+                    </div>
+                </div>
+
+                <div class="calc-block ac-block">
+                    <span class="label ac-label">② 費用最小化の条件</span>
+                    <div class="calc-line">
+                        等産出量曲線の傾き = 等費用線の傾き<br>
+                        MRTS = w/r<br>
+                        <span class="eq">K/L = <span id="iso-wr"></span></span><br>
+                        → K = <span id="iso-wr2"></span> × L
+                    </div>
+                </div>
+
+                <div class="calc-block mc-block">
+                    <span class="label mc-label">③ 最適投入量 (L*, K*)</span>
+                    <div class="calc-line">
+                        L* = Y₀ × √(r/w)<br>
+                        <span class="eq">= <span id="iso-y0a"></span> × √(<span id="iso-rw"></span>)</span><br>
+                        <span class="eq">= <span id="iso-y0a2"></span> × <span id="iso-sqrt-rw"></span></span><br>
+                        <span class="result">= <span id="iso-lstar"></span></span><br><br>
+                        K* = Y₀ × √(w/r)<br>
+                        <span class="eq">= <span id="iso-y0b"></span> × √(<span id="iso-wr3"></span>)</span><br>
+                        <span class="eq">= <span id="iso-y0b2"></span> × <span id="iso-sqrt-wr"></span></span><br>
+                        <span class="result">= <span id="iso-kstar"></span></span>
+                    </div>
+                </div>
+
+                <div class="calc-block" style="border-left-color:#8b5cf6;">
+                    <span class="label" style="color:#7c3aed;">④ 最小費用 C*</span>
+                    <div class="calc-line">
+                        C* = w×L* + r×K*<br>
+                        <span class="eq">= <span id="iso-w-disp"></span>×<span id="iso-lstar2"></span> + <span id="iso-r-disp"></span>×<span id="iso-kstar2"></span></span><br>
+                        <span class="eq">= <span id="iso-wlstar"></span> + <span id="iso-rkstar"></span></span><br>
+                        <span class="result">= <span id="iso-cstar"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="three-grid">
+            <div class="box" style="border-left:4px solid #10b981; background:#ecfdf5;">
+                <h3 style="color:#065f46;">等産出量曲線（Isoquant）</h3>
+                <p>同じ生産量 Y₀ を達成できる (L, K) の組み合わせを結んだ曲線。<b>グラフの緑の曲線</b>です。</p>
+                <p style="font-size:12px; color:#065f46;">式：K = Y₀² / L</p>
+            </div>
+            <div class="box ac-box">
+                <h3 style="color:#1d4ed8;">等費用線（Isocost Line）</h3>
+                <p>同じ費用 C で購入できる (L, K) の組み合わせ。<b>グラフの青い直線</b>。傾きは −w/r。</p>
+                <p style="font-size:12px; color:#1d4ed8;">式：K = C/r − (w/r)×L</p>
+            </div>
+            <div class="box" style="border-left:4px solid #8b5cf6; background:#f5f3ff;">
+                <h3 style="color:#6d28d9;">費用最小点 E（接点）</h3>
+                <p>等産出量曲線と等費用線が<b>接する点 E</b> が費用最小点。<br><b>MRTS = w/r</b> が成立します。</p>
+                <p style="font-size:12px; color:#6d28d9;">w を変えると E が動くことを確認！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======== STEP 4 ======== -->
+    <div class="section">
+        <h2>STEP 4: 利潤最大化 — なぜ P = MC が最適なのか？</h2>
+        <p>企業の利潤：<b>π = TR − TC = p×q − TC(q)</b>。利潤を最大にする生産量 q* を求めます。</p>
+        <p>価格スライダーを動かして、TR 直線と TC 曲線の「開き具合（= 利潤）」が最大になる点を探してみましょう。</p>
+
+        <div class="step-slider-row">
+            <span class="highlight" style="white-space:nowrap;">市場価格 (P)：<span id="p4-val">12.0</span></span>
+            <input type="range" id="p4-slider" min="5" max="20" step="0.1" value="12" style="flex:1;">
+            <span style="font-size:12px; color:#92400e; white-space:nowrap;">← STEP 4 で使用</span>
+        </div>
+
+        <div class="chart-formula-row">
+            <div id="trtc-chart" class="chart"></div>
+            <div class="formula-panel">
+                <h4>💹 利潤の計算（P = <span id="p4-disp">12.0</span> のとき）</h4>
+
+                <!-- ① 与えられた式 -->
+                <div class="calc-block tc-block">
+                    <span class="label tc-label">① 与えられた式</span>
+                    <div class="calc-line">
+                        TC(q) = 0.4q³ − 3q² + 12q + 15<br>
+                        TR(q) = P × q = <span id="p4-p-a">12.0</span> × q<br>
+                        MC(q) = dTC/dq = 1.2q² − 6q + 12
+                    </div>
+                </div>
+
+                <!-- ② 最適生産量 q* -->
+                <div class="calc-block" style="border-left-color:#ef4444;">
+                    <span class="label" style="color:#dc2626;">② 最適生産量 q*（P = MC の条件）</span>
+                    <div class="calc-line">
+                        P = MC → <span id="p4-p-b">12.0</span> = 1.2q*² − 6q* + 12<br>
+                        <span class="result">→ q* = <span id="p4-qstar">—</span></span>
+                    </div>
+                </div>
+
+                <!-- ③ TR の計算 -->
+                <div class="calc-block" style="border-left-color:#ef4444; background:#fff5f5;">
+                    <span class="label" style="color:#dc2626;">③ 総収入 TR</span>
+                    <div class="calc-line">
+                        TR = P × q*<br>
+                        <span class="eq">= <span id="p4-p-c">—</span> × <span id="p4-qstar2">—</span></span><br>
+                        <span class="result">= <span id="p4-tr">—</span></span>
+                    </div>
+                </div>
+
+                <!-- ④ TC の計算 -->
+                <div class="calc-block tc-block">
+                    <span class="label tc-label">④ 総費用 TC（q* を代入）</span>
+                    <div class="calc-line" id="p4-tc-block-normal">
+                        TC = 0.4q*³ − 3q*² + 12q* + 15<br>
+                        <span class="eq">q*² = <span id="p4-qstar-sq">—</span>　q*³ = <span id="p4-qstar-cu">—</span></span><br>
+                        <span class="eq">= 0.4×<span id="p4-qstar-cu2">—</span> − 3×<span id="p4-qstar-sq2">—</span> + 12×<span id="p4-qstar5">—</span> + 15</span><br>
+                        <span class="eq">= <span id="p4-tc-a">—</span> − <span id="p4-tc-b">—</span> + <span id="p4-tc-c">—</span> + 15</span><br>
+                        <span class="result">= <span id="p4-tc">—</span></span>
+                    </div>
+                    <div class="calc-line" id="p4-tc-block-shutdown" style="display:none;">
+                        q* = 0 なので VC = 0<br>
+                        TC = FC = <span class="result">15</span>
+                    </div>
+                </div>
+
+                <!-- ⑤ 利潤 -->
+                <div class="calc-block" style="border-left-color:#8b5cf6;">
+                    <span class="label" style="color:#7c3aed;">⑤ 利潤 π = TR − TC</span>
+                    <div class="calc-line">
+                        π = <span id="p4-tr2">—</span> − <span id="p4-tc2">—</span><br>
+                        <span class="result">= <span id="p4-profit">—</span></span>
+                    </div>
+                </div>
+
+                <div class="profit-box" id="p4-verdict"></div>
+
+                <div class="calc-block" style="border-left-color:#94a3b8; background:#f1f5f9; margin-top:8px;">
+                    <span class="label" style="color:#475569;">💡 今の状況</span>
+                    <div class="calc-line" style="font-size:12px; color:#475569;" id="p4-hint"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profit function chart -->
+        <div style="margin-top:24px;">
+            <h3 style="color:#1e293b; margin-bottom:4px;">利潤関数 π(q) — どこで最大になるか？</h3>
+            <p style="margin-top:0; font-size:14px; color:#475569;">上の TR と TC の縦の差が利潤 π です。下のグラフで利潤関数 π(q) の形を直接確認できます。頂点（最大点）での接線の傾き = 0 → <b>dπ/dq = p − MC = 0 → p = MC</b></p>
+            <div id="pi-chart" class="sub-chart"></div>
+        </div>
+
+        <!-- MR vs MC chart -->
+        <div style="margin-top:24px;">
+            <h3 style="color:#1e293b; margin-bottom:4px;">限界収入（MR = P）vs 限界費用（MC）— 操業の「羅針盤」</h3>
+            <p style="margin-top:0; font-size:14px; color:#475569;">価格競争市場では <b>MR = P（水平線）</b>。MC 曲線との交点が最適生産量 q* です。</p>
+            <div id="mreq-chart" class="sub-chart"></div>
+        </div>
+
+        <!-- Profit envelope chart -->
+        <div style="margin-top:24px;">
+            <h3 style="color:#1e293b; margin-bottom:4px;">P と最大利潤 π*(P) の関係 — 価格が上がると利潤はずっと増える？</h3>
+            <p style="margin-top:0; font-size:14px; color:#475569;">
+                各価格 P で企業が最適な q* を選んだときの利潤 π*(P) を描いたグラフです。<br>
+                <b>P スライダーを動かして</b>、赤点がどこに移動するか確認しましょう。このモデルでは P が上がるほど π* は単調増加し、「ピーク → 下降」はありません。
+            </p>
+            <div id="pistar-chart" class="sub-chart"></div>
+            <div style="margin-top:12px; padding:14px; background:#f8fafc; border-radius:8px; font-size:13.5px;">
+                <b>💡 なぜピークがないのか？（包絡線定理）</b><br>
+                企業は常に P = MC となる q* を選ぶため、どんな価格でも「最適に対応」できます。<br>
+                dπ*/dP = q* &gt; 0 &nbsp;→&nbsp; P が上がれば q* も増え、利潤は必ず増加します。<br>
+                ただし現実には<b>設備・資源に上限（容量制約）</b>があり、それを超えると利潤が減少に転じます。このモデルはその制約を省略した単純化です。
+            </div>
+        </div>
+
+        <div class="three-grid" style="margin-top:20px;">
+            <div class="box" style="border-left:4px solid #10b981; background:#ecfdf5;">
+                <h3 style="color:#065f46;">① P &gt; MC のとき（q < q*）</h3>
+                <p>収入の増加 &gt; 費用の増加<br>→ <b>もっと生産すれば利潤が増える</b><br>→ 生産量を増やすべき ▶</p>
+            </div>
+            <div class="box ac-box">
+                <h3 style="color:#1d4ed8;">② P = MC のとき（q = q*）</h3>
+                <p>収入の増加 = 費用の増加<br>→ <b>これ以上増やしても利潤は増えない</b><br>→ 利潤最大点 q* ★</p>
+            </div>
+            <div class="box" style="border-left:4px solid #ef4444; background:#fef2f2;">
+                <h3 style="color:#991b1b;">③ P &lt; MC のとき（q > q*）</h3>
+                <p>収入の増加 &lt; 費用の増加<br>→ <b>生産するほど利潤が減る</b><br>→ 生産量を減らすべき ◀</p>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>💡 微分で見る利潤最大化（数学が得意な人向け）</h3>
+            <p>π(q) = p·q − TC(q) を q で微分してゼロとおく：</p>
+            <div style="background:#1e293b; color:#e2e8f0; font-family:monospace; padding:12px 16px; border-radius:8px; font-size:14px; line-height:2;">
+                dπ/dq = p − dTC/dq = 0<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑TR の傾き　↑TC の傾き<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= MR（=P）&nbsp;&nbsp;= MC<br>
+                → <span style="color:#fbbf24; font-weight:bold;">P = MC</span>
+            </div>
+            <p style="margin-top:10px;">つまり「利潤最大化条件 P = MC」は、<b>利潤関数の傾きがゼロになる点</b>を求めているだけです。グラフで確認してください！</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ===== 生産関数 =====
+const getY_pf  = (L) => 10 * Math.sqrt(L);
+const getMP_pf = (L) => 5  / Math.sqrt(L);
+const getAP_pf = (L) => 10 / Math.sqrt(L);
+
+// ===== 費用関数（供給理論ファイルと共通） =====
+const a_tc = 0.4, b_tc = -3, c_tc = 12, FC = 15;
+const getTC  = (q) => a_tc*q**3 + b_tc*q**2 + c_tc*q + FC;
+const getMC  = (q) => 3*a_tc*q**2 + 2*b_tc*q + c_tc;
+const getAC  = (q) => getTC(q) / q;
+const getVC  = (q) => getTC(q) - FC;
+const getAVC = (q) => getVC(q) / q;
+
+const AVC_MIN_Q = 3.75, AVC_MIN = 6.375;
+const AC_MIN_Q  = 4.63, AC_MIN  = 9.93;
+
+function findOptimalQ(P) {
+    if (P < AVC_MIN) return 0;
+    let lo = 2.5, hi = 10;
+    for (let i = 0; i < 80; i++) {
+        const mid = (lo + hi) / 2;
+        if (getMC(mid) < P) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+}
+
+function fmt(v, d = 2) { return v.toFixed(d); }
+
+// ===== サンプル点 =====
+const Ls_pf = [];
+for (let i = 1; i <= 500; i++) Ls_pf.push(i * 0.05);
+const Ys_pf  = Ls_pf.map(getY_pf);
+const MPs_pf = Ls_pf.map(getMP_pf);
+const APs_pf = Ls_pf.map(getAP_pf);
+
+const qs_tc = [];
+for (let i = 0; i <= 100; i++) qs_tc.push(i * 0.1);
+const tcs_arr  = qs_tc.map(getTC);
+const mcs_arr  = qs_tc.map(getMC);
+const acs_arr  = qs_tc.map(getAC);
+const avcs_arr = qs_tc.map(q => q > 0 ? getAVC(q) : null);
+
+// ===== STEP 1 & 2: 生産関数 =====
+const lSlider = document.getElementById('l-slider');
+const lLabel  = document.getElementById('l-val');
+
+function updatePF(L) {
+    lLabel.textContent = fmt(L, 1);
+    document.querySelectorAll('.l-disp').forEach(el => el.textContent = fmt(L, 1));
+
+    const Y  = getY_pf(L);
+    const MP = getMP_pf(L);
+    const AP = getAP_pf(L);
+    const sq = Math.sqrt(L);
+
+    // STEP 1 formula panel
+    document.getElementById('pf-l1').textContent    = fmt(L, 1);
+    document.getElementById('pf-sqrt1').textContent = fmt(sq);
+    document.getElementById('pf-y1').textContent    = fmt(Y);
+    document.getElementById('pf-l2').textContent    = fmt(L, 1);
+    document.getElementById('pf-sqrt2').textContent = fmt(sq);
+    document.getElementById('pf-mp').textContent    = fmt(MP);
+    document.getElementById('pf-y2').textContent    = fmt(Y);
+    document.getElementById('pf-ap').textContent    = fmt(AP);
+    document.getElementById('pf-mp2').textContent   = fmt(MP);
+    document.getElementById('pf-ap2').textContent   = fmt(AP);
+
+    // STEP 2 formula panel
+    document.getElementById('mp2-mp').textContent  = fmt(MP);
+    document.getElementById('mp2-ap').textContent  = fmt(AP);
+    document.getElementById('mp2-mp2').textContent = fmt(MP);
+    document.getElementById('mp2-mc').textContent  = fmt(5 / MP);
+
+    // --- 生産関数グラフ ---
+    const δ = 3.5;
+    const x0 = Math.max(0.1, L - δ);
+    const x1 = Math.min(25,  L + δ);
+    const tanX = [x0, x1];
+    const tanY = [Y + MP * (x0 - L), Y + MP * (x1 - L)];
+
+    Plotly.newPlot('pf-chart', [
+        { x: Ls_pf, y: Ys_pf,
+          name: 'Y = F(L) = 10√L', line: {color: '#9333ea', width: 4} },
+        { x: tanX, y: tanY,
+          name: `接線（傾き = MP = ${fmt(MP)}）`, line: {color: '#f59e0b', width: 2.5} },
+        { x: [0, L], y: [0, Y],
+          name: `原点からの線（傾き = AP = ${fmt(AP)}）`, line: {color: '#3b82f6', width: 2, dash: 'dot'} },
+        { x: [L], y: [Y], mode: 'markers',
+          marker: {size: 12, color: '#ef4444'}, name: `現在地 (${fmt(L,1)}, ${fmt(Y)})` }
+    ], {
+        xaxis: { title: '労働量 L', range: [0, 25] },
+        yaxis: { title: '生産量 Y', range: [0, 55] },
+        margin: { t: 40, b: 40, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.15 }
+    }, { responsive: true, displayModeBar: false });
+
+    // --- MP / AP グラフ ---
+    Plotly.newPlot('mp-chart', [
+        { x: Ls_pf, y: MPs_pf, name: '限界生産物 MP = 5/√L',  line: {color: '#f59e0b', width: 3} },
+        { x: Ls_pf, y: APs_pf, name: '平均生産物 AP = 10/√L', line: {color: '#3b82f6', width: 3} },
+        { x: [L], y: [MP], mode: 'markers', marker: {size: 10, color: '#f59e0b'}, showlegend: false },
+        { x: [L], y: [AP], mode: 'markers', marker: {size: 10, color: '#3b82f6'}, showlegend: false }
+    ], {
+        xaxis: { title: '労働量 L', range: [0, 25] },
+        yaxis: { title: 'MP / AP', range: [0, 11] },
+        margin: { t: 40, b: 40, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.1 },
+        shapes: [
+            { type: 'line', x0: L, y0: 0, x1: L, y1: 11,
+              line: {color: '#cbd5e1', width: 1, dash: 'dash'} }
+        ]
+    }, { responsive: true, displayModeBar: false });
+}
+
+// ===== STEP 3: 費用最小化 =====
+const wSlider  = document.getElementById('w-slider');
+const y0Slider = document.getElementById('y0-slider');
+const r_iso    = 1;
+
+function updateIso() {
+    const w  = parseFloat(wSlider.value);
+    const Y0 = parseFloat(y0Slider.value);
+
+    document.getElementById('w-val').textContent   = fmt(w, 1);
+    document.getElementById('y0-val').textContent  = fmt(Y0, 1);
+    document.getElementById('w-disp').textContent  = fmt(w, 1);
+    document.getElementById('y0-disp').textContent = fmt(Y0, 1);
+
+    const Lstar = Y0 * Math.sqrt(r_iso / w);
+    const Kstar = Y0 * Math.sqrt(w / r_iso);
+    const Cstar = 2 * Y0 * Math.sqrt(w * r_iso);
+
+    const sqrtRW = Math.sqrt(r_iso / w);
+    const sqrtWR = Math.sqrt(w / r_iso);
+
+    document.getElementById('iso-y0sq').textContent   = fmt(Y0 ** 2, 2);
+    document.getElementById('iso-wr').textContent     = fmt(w / r_iso, 2);
+    document.getElementById('iso-wr2').textContent    = fmt(w / r_iso, 2);
+    document.getElementById('iso-y0a').textContent    = fmt(Y0, 1);
+    document.getElementById('iso-y0a2').textContent   = fmt(Y0, 1);
+    document.getElementById('iso-rw').textContent     = fmt(r_iso / w, 2);
+    document.getElementById('iso-sqrt-rw').textContent = fmt(sqrtRW);
+    document.getElementById('iso-lstar').textContent  = fmt(Lstar);
+    document.getElementById('iso-y0b').textContent    = fmt(Y0, 1);
+    document.getElementById('iso-y0b2').textContent   = fmt(Y0, 1);
+    document.getElementById('iso-wr3').textContent    = fmt(w / r_iso, 2);
+    document.getElementById('iso-sqrt-wr').textContent = fmt(sqrtWR);
+    document.getElementById('iso-kstar').textContent  = fmt(Kstar);
+    document.getElementById('iso-w-disp').textContent = fmt(w, 1);
+    document.getElementById('iso-r-disp').textContent = fmt(r_iso, 1);
+    document.getElementById('iso-lstar2').textContent = fmt(Lstar);
+    document.getElementById('iso-kstar2').textContent = fmt(Kstar);
+    document.getElementById('iso-wlstar').textContent = fmt(w * Lstar);
+    document.getElementById('iso-rkstar').textContent = fmt(r_iso * Kstar);
+    document.getElementById('iso-cstar').textContent  = fmt(Cstar);
+
+    // 等産出量曲線: K = Y0²/L（高解像度）
+    const maxK = Math.max(Kstar * 2.6, 12);
+    const maxL = Math.max(Lstar * 3.2, 10);
+
+    const isoX = [], isoY = [];
+    for (let i = 1; i <= 2000; i++) {
+        const l = i * 0.008;
+        const k = Y0 ** 2 / l;
+        if (l <= maxL && k <= maxK) { isoX.push(l); isoY.push(k); }
+    }
+
+    // 等費用線: K=0 になる L 点で正しく止める
+    const C1 = Cstar * 0.58;
+    const C2 = Cstar;
+    const C3 = Cstar * 1.5;
+
+    function makeIsocost(C) {
+        const Lzero = C / w;           // K=0 になる点
+        const Lend  = Math.min(maxL, Lzero);
+        const pts   = 80;
+        const xs = [], ys = [];
+        for (let i = 0; i <= pts; i++) {
+            const l = (i / pts) * Lend;
+            xs.push(l);
+            ys.push(C / r_iso - (w / r_iso) * l);
+        }
+        return { x: xs, y: ys };
+    }
+
+    const ic1 = makeIsocost(C1);
+    const ic2 = makeIsocost(C2);
+    const ic3 = makeIsocost(C3);
+
+    // 接点Eでの傾きを確認（MRTS = K*/L* = w/r であることを注釈表示）
+    const mrts = Kstar / Lstar;
+    const annot = {
+        x: Lstar, y: Kstar,
+        ax: 55, ay: -55,
+        axref: 'pixel', ayref: 'pixel',
+        text: `接点 E<br>MRTS = K*/L* = ${fmt(mrts, 2)}<br>= w/r = ${fmt(w / r_iso, 2)} ✓`,
+        showarrow: true, arrowhead: 2, arrowcolor: '#dc2626',
+        font: {size: 11, color: '#6d28d9'},
+        bgcolor: '#f5f3ff', bordercolor: '#8b5cf6', borderpad: 4
+    };
+
+    Plotly.newPlot('iso-chart', [
+        { x: isoX, y: isoY,
+          name: `等産出量曲線 Y₀ = ${fmt(Y0,1)}`,
+          line: {color: '#10b981', width: 3} },
+        { x: ic1.x, y: ic1.y,
+          name: `C₁ = ${fmt(C1,1)}（届かない）`,
+          line: {color: '#94a3b8', width: 1.5, dash: 'dot'} },
+        { x: ic2.x, y: ic2.y,
+          name: `C* = ${fmt(C2,1)}（最小費用・接線）`,
+          line: {color: '#3b82f6', width: 3} },
+        { x: ic3.x, y: ic3.y,
+          name: `C₃ = ${fmt(C3,1)}（通り越す）`,
+          line: {color: '#94a3b8', width: 1.5, dash: 'dot'} },
+        { x: [Lstar], y: [Kstar],
+          mode: 'markers',
+          marker: {size: 14, color: '#ef4444', symbol: 'circle'},
+          name: `費用最小化点 E (L*=${fmt(Lstar)}, K*=${fmt(Kstar)})` }
+    ], {
+        xaxis: { title: '労働 L', range: [0, maxL] },
+        yaxis: { title: '資本 K', range: [0, maxK] },
+        margin: { t: 40, b: 40, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.15 },
+        annotations: [annot],
+        shapes: [
+            { type: 'line', x0: Lstar, y0: 0,     x1: Lstar, y1: Kstar,
+              line: {color: '#cbd5e1', width: 1.5, dash: 'dash'} },
+            { type: 'line', x0: 0,     y0: Kstar,  x1: Lstar, y1: Kstar,
+              line: {color: '#cbd5e1', width: 1.5, dash: 'dash'} }
+        ]
+    }, { responsive: true, displayModeBar: false });
+}
+
+// ===== STEP 4: 利潤最大化 =====
+const p4Slider = document.getElementById('p4-slider');
+
+// π*(P) 包絡線データ（P = 5〜20 を事前計算）
+const P_envelope     = Array.from({length: 151}, (_, i) => 5 + i * 0.1);
+const piStar_envelope = P_envelope.map(p => {
+    const q = findOptimalQ(p);
+    return q === 0 ? -FC : p * q - getTC(q);
+});
+
+function updateProfit(P) {
+    document.getElementById('p4-val').textContent  = fmt(P, 1);
+    document.getElementById('p4-disp').textContent = fmt(P, 1);
+
+    // ① 与えられた式のP表示
+    document.getElementById('p4-p-a').textContent = fmt(P, 1);
+    document.getElementById('p4-p-b').textContent = fmt(P, 1);
+
+    const qstar      = findOptimalQ(P);
+    const isShutdown = qstar === 0;
+
+    const normalBlock   = document.getElementById('p4-tc-block-normal');
+    const shutdownBlock = document.getElementById('p4-tc-block-shutdown');
+
+    if (isShutdown) {
+        normalBlock.style.display   = 'none';
+        shutdownBlock.style.display = 'block';
+
+        document.getElementById('p4-qstar').textContent  = '0（操業停止）';
+        document.getElementById('p4-p-c').textContent    = fmt(P, 1);
+        document.getElementById('p4-qstar2').textContent = '0';
+        document.getElementById('p4-tr').textContent     = '0';
+        document.getElementById('p4-tc').textContent     = `${FC}（固定費のみ）`;
+        document.getElementById('p4-tr2').textContent    = '0';
+        document.getElementById('p4-tc2').textContent    = `${FC}`;
+        document.getElementById('p4-profit').textContent = `−${FC}`;
+        document.getElementById('p4-hint').innerHTML =
+            `P = ${fmt(P,1)} ＜ AVC最小値 ${fmt(AVC_MIN)}<br>変動費も回収できないため<br><b>生産しない方が損失が少ない</b>。`;
+        const v = document.getElementById('p4-verdict');
+        v.className = 'profit-box shutdown';
+        v.innerHTML = `🚫 操業停止<br>損失 = FC = ${FC}`;
+    } else {
+        normalBlock.style.display   = 'block';
+        shutdownBlock.style.display = 'none';
+
+        const tc_q   = getTC(qstar);
+        const tr_q   = P * qstar;
+        const pi_q   = tr_q - tc_q;
+        const qsq    = qstar ** 2;
+        const qcu    = qstar ** 3;
+        const tc_a   = 0.4 * qcu;
+        const tc_b   = 3   * qsq;
+        const tc_c   = 12  * qstar;
+
+        // ② q*
+        document.getElementById('p4-qstar').textContent   = fmt(qstar);
+        // ③ TR
+        document.getElementById('p4-p-c').textContent     = fmt(P, 1);
+        document.getElementById('p4-qstar2').textContent  = fmt(qstar);
+        document.getElementById('p4-tr').textContent      = fmt(tr_q);
+        // ④ TC 中間計算（q*², q*³ を明示）
+        document.getElementById('p4-qstar-sq').textContent  = fmt(qsq);
+        document.getElementById('p4-qstar-cu').textContent  = fmt(qcu);
+        document.getElementById('p4-qstar-cu2').textContent = fmt(qcu);
+        document.getElementById('p4-qstar-sq2').textContent = fmt(qsq);
+        document.getElementById('p4-qstar5').textContent    = fmt(qstar);
+        document.getElementById('p4-tc-a').textContent      = fmt(tc_a);
+        document.getElementById('p4-tc-b').textContent      = fmt(tc_b);
+        document.getElementById('p4-tc-c').textContent      = fmt(tc_c);
+        document.getElementById('p4-tc').textContent        = fmt(tc_q);
+        // ⑤ 利潤
+        document.getElementById('p4-tr2').textContent     = fmt(tr_q);
+        document.getElementById('p4-tc2').textContent     = fmt(tc_q);
+        document.getElementById('p4-profit').textContent  = fmt(pi_q);
+
+        const v    = document.getElementById('p4-verdict');
+        const hint = document.getElementById('p4-hint');
+
+        if (P >= AC_MIN - 0.15) {
+            v.className = 'profit-box profit';
+            v.innerHTML = `✅ 超過利潤<br>P = ${fmt(P,1)} ≥ AC_min ≈ ${AC_MIN}<br>利潤 = ${fmt(pi_q)}`;
+            hint.innerHTML = `P = ${fmt(P,1)} ≥ AC_min ≈ ${AC_MIN}<br><b>収入が全費用を上回っています。</b>`;
+        } else {
+            v.className = 'profit-box loss-op';
+            v.innerHTML = `⚠️ 損失あり・操業継続<br>AVC_min ≤ P &lt; AC_min<br>利潤 = ${fmt(pi_q)}`;
+            hint.innerHTML = `AVC_min(${fmt(AVC_MIN)}) ≤ P(${fmt(P,1)}) &lt; AC_min(${AC_MIN})<br>変動費は回収できるが固定費を一部カバーできない。<br><b>操業した方が廃業より損失が少ない。</b>`;
+        }
+    }
+
+    // --- TR-TC グラフ ---
+    const trs_arr = qs_tc.map(q => P * q);
+    const piArr   = qs_tc.map(q => P * q - getTC(q));
+
+    const trtcTraces = [
+        { x: qs_tc, y: trs_arr, name: `総収入 TR = ${fmt(P,1)}×q`, line: {color: '#ef4444', width: 3} },
+        { x: qs_tc, y: tcs_arr, name: '総費用 TC', line: {color: '#9333ea', width: 3} }
+    ];
+
+    const trtcAnnotations = [];
+    const trtcShapes = [];
+
+    if (!isShutdown) {
+        const tc_q = getTC(qstar);
+        const tr_q = P * qstar;
+        const pi_q = tr_q - tc_q;
+        trtcTraces.push({
+            x: [qstar, qstar], y: [tc_q, tr_q],
+            mode: 'lines', line: {color: '#10b981', width: 5},
+            name: `利潤 π = ${fmt(pi_q)}`
+        });
+        trtcTraces.push({
+            x: [qstar], y: [tr_q],
+            mode: 'markers', marker: {size: 12, color: '#ef4444'}, showlegend: false
+        });
+        trtcTraces.push({
+            x: [qstar], y: [tc_q],
+            mode: 'markers', marker: {size: 12, color: '#9333ea'}, showlegend: false
+        });
+        trtcShapes.push({
+            type: 'line', x0: qstar, y0: 0, x1: qstar, y1: 200,
+            line: {color: '#cbd5e1', width: 1, dash: 'dash'}
+        });
+        trtcAnnotations.push({
+            x: qstar + 0.35, y: (tr_q + tc_q) / 2,
+            text: `π = ${fmt(pi_q)}`, showarrow: false,
+            font: {size: 13, color: '#065f46'}, bgcolor: '#d1fae5', borderpad: 4
+        });
+        trtcAnnotations.push({
+            x: qstar, y: -18, text: `q* = ${fmt(qstar)}`,
+            showarrow: false, font: {size: 12, color: '#ef4444'}, bgcolor: '#fff'
+        });
+    }
+
+    Plotly.newPlot('trtc-chart', trtcTraces, {
+        xaxis: { title: '生産量 q', range: [0, 10] },
+        yaxis: { title: '収入・費用 ($)', range: [0, 200] },
+        margin: { t: 40, b: 50, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.15 },
+        shapes: trtcShapes,
+        annotations: trtcAnnotations
+    }, { responsive: true, displayModeBar: false });
+
+    // --- 利潤関数 π(q) グラフ ---
+    const piMin = Math.min(...piArr, -FC - 5);
+    const piMax = Math.max(...piArr, 5);
+    const piTraces = [
+        { x: qs_tc, y: piArr,
+          name: 'π(q) = TR − TC', line: {color: '#10b981', width: 3},
+          fill: 'tozeroy', fillcolor: 'rgba(16,185,129,0.08)' }
+    ];
+    const piShapes = [
+        { type: 'line', x0: 0, y0: 0, x1: 10, y1: 0, line: {color: '#334155', width: 1.5} }
+    ];
+    const piAnnotations = [];
+
+    if (!isShutdown) {
+        const pi_q = P * qstar - getTC(qstar);
+        piTraces.push({
+            x: [qstar], y: [pi_q],
+            mode: 'markers+text',
+            marker: {size: 14, color: '#10b981'},
+            text: [`  q* = ${fmt(qstar)}（π最大）`],
+            textposition: 'top right',
+            textfont: {size: 12, color: '#065f46'},
+            showlegend: false
+        });
+        piShapes.push({
+            type: 'line', x0: qstar, y0: piMin - 5, x1: qstar, y1: piMax + 5,
+            line: {color: '#cbd5e1', width: 1, dash: 'dash'}
+        });
+        // Tangent at q* is horizontal (slope = 0)
+        piTraces.push({
+            x: [Math.max(0, qstar - 1.5), Math.min(10, qstar + 1.5)],
+            y: [pi_q, pi_q],
+            mode: 'lines', line: {color: '#ef4444', width: 2, dash: 'dash'},
+            name: '頂点での接線（傾き = 0）'
+        });
+        piAnnotations.push({
+            x: qstar - 1, y: pi_q + 3,
+            text: '傾き = 0', showarrow: false,
+            font: {size: 11, color: '#ef4444'}
+        });
+    }
+
+    Plotly.newPlot('pi-chart', piTraces, {
+        xaxis: { title: '生産量 q', range: [0, 10] },
+        yaxis: { title: '利潤 π ($)', range: [piMin - 5, piMax + 10] },
+        margin: { t: 20, b: 40, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.15 },
+        shapes: piShapes,
+        annotations: piAnnotations
+    }, { responsive: true, displayModeBar: false });
+
+    // --- MR = MC グラフ ---
+    const mrTraces = [
+        { x: qs_tc, y: mcs_arr,  name: '限界費用 MC',       line: {color: '#f59e0b', width: 3} },
+        { x: qs_tc, y: acs_arr,  name: '平均費用 AC',       line: {color: '#3b82f6', width: 2} },
+        { x: qs_tc, y: avcs_arr, name: '平均可変費用 AVC',  line: {color: '#10b981', width: 2} },
+        { x: [0, 10], y: [P, P], name: `市場価格（MR）= P = ${fmt(P,1)}`,
+          line: {color: '#ef4444', width: 2.5} }
+    ];
+
+    // ── 3 価格帯の背景色 ──────────────────────────────
+    const mrShapes = [
+        // ① 利潤プラス帯（P ≥ AC最小値）
+        { type: 'rect', x0: 0, x1: 10, y0: AC_MIN,  y1: 28,
+          fillcolor: 'rgba(16,185,129,0.10)', line: {width: 0} },
+        // ② 損失・操業継続帯（AVC最小値 ≤ P < AC最小値）
+        { type: 'rect', x0: 0, x1: 10, y0: AVC_MIN, y1: AC_MIN,
+          fillcolor: 'rgba(234,179,8,0.10)', line: {width: 0} },
+        // ③ 操業停止帯（P < AVC最小値）
+        { type: 'rect', x0: 0, x1: 10, y0: 0, y1: AVC_MIN,
+          fillcolor: 'rgba(239,68,68,0.08)', line: {width: 0} },
+        // 境界線（AC最小値）
+        { type: 'line', x0: 0, y0: AC_MIN, x1: 10, y1: AC_MIN,
+          line: {color: '#3b82f6', width: 1.5, dash: 'dot'} },
+        // 境界線（AVC最小値）
+        { type: 'line', x0: 0, y0: AVC_MIN, x1: 10, y1: AVC_MIN,
+          line: {color: '#10b981', width: 1.5, dash: 'dot'} }
+    ];
+
+    // ── 価格帯ラベル（右端）＋境界値ラベル（左端）──────
+    const mrAnnotations = [
+        // 価格帯の説明（右端）
+        { x: 9.9, y: (AC_MIN + 28) / 2, xanchor: 'right',
+          text: '✅ 利潤プラス<br>P ≥ AC最小値',
+          showarrow: false, font: {size: 10, color: '#065f46'},
+          bgcolor: 'rgba(209,250,229,0.85)', borderpad: 3 },
+        { x: 9.9, y: (AVC_MIN + AC_MIN) / 2, xanchor: 'right',
+          text: '⚠️ 損失・操業継続<br>AVC最小 ≤ P < AC最小',
+          showarrow: false, font: {size: 10, color: '#713f12'},
+          bgcolor: 'rgba(254,249,195,0.85)', borderpad: 3 },
+        { x: 9.9, y: AVC_MIN / 2, xanchor: 'right',
+          text: '🚫 操業停止<br>P < AVC最小値',
+          showarrow: false, font: {size: 10, color: '#991b1b'},
+          bgcolor: 'rgba(254,226,226,0.85)', borderpad: 3 },
+        // 境界値ラベル（左端）
+        { x: 0.1, y: AC_MIN, xanchor: 'left', yanchor: 'bottom',
+          text: `損益分岐点 AC最小 ≈ ${AC_MIN}`,
+          showarrow: false, font: {size: 10, color: '#1d4ed8'},
+          bgcolor: 'rgba(255,255,255,0.85)', borderpad: 2 },
+        { x: 0.1, y: AVC_MIN, xanchor: 'left', yanchor: 'bottom',
+          text: `操業停止点 AVC最小 = ${fmt(AVC_MIN)}`,
+          showarrow: false, font: {size: 10, color: '#065f46'},
+          bgcolor: 'rgba(255,255,255,0.85)', borderpad: 2 }
+    ];
+
+    // ── 特殊点マーカー ────────────────────────────────
+    mrTraces.push({
+        x: [AC_MIN_Q],  y: [AC_MIN],
+        mode: 'markers', marker: {size: 12, color: '#1d4ed8', symbol: 'star'},
+        name: `損益分岐点 (q≈${AC_MIN_Q}, P≈${AC_MIN})`, showlegend: true
+    });
+    mrTraces.push({
+        x: [AVC_MIN_Q], y: [AVC_MIN],
+        mode: 'markers', marker: {size: 12, color: '#065f46', symbol: 'triangle-down'},
+        name: `操業停止点 (q=${AVC_MIN_Q}, P=${fmt(AVC_MIN)})`, showlegend: true
+    });
+
+    // ── q* 動的要素 ───────────────────────────────────
+    if (!isShutdown) {
+        mrTraces.push({
+            x: [qstar], y: [P],
+            mode: 'markers', marker: {size: 14, color: '#ef4444', symbol: 'circle'},
+            name: `最適点 q* = ${fmt(qstar)}`, showlegend: true
+        });
+        mrShapes.push({
+            type: 'line', x0: qstar, y0: 0, x1: qstar, y1: 28,
+            line: {color: '#ef4444', width: 1, dash: 'dash'}
+        });
+        mrAnnotations.push({
+            x: qstar, y: P + 1.8, xanchor: 'center',
+            text: `q* = ${fmt(qstar)}<br>P = MC`,
+            showarrow: false, font: {size: 11, color: '#dc2626'},
+            bgcolor: 'rgba(255,255,255,0.9)', borderpad: 3
+        });
+        // ①②領域ラベル（q* 前後）
+        if (qstar > 1) {
+            mrAnnotations.push({
+                x: qstar / 2, y: 2, xanchor: 'center',
+                text: '① MR > MC<br>→ 増産で利潤増',
+                showarrow: false, font: {size: 10, color: '#065f46'},
+                bgcolor: 'rgba(209,250,229,0.8)', borderpad: 3
+            });
+        }
+        if (qstar < 8.5) {
+            mrAnnotations.push({
+                x: (qstar + 10) / 2, y: 2, xanchor: 'center',
+                text: '③ MR < MC<br>→ 増産で利潤減',
+                showarrow: false, font: {size: 10, color: '#991b1b'},
+                bgcolor: 'rgba(254,226,226,0.8)', borderpad: 3
+            });
+        }
+    }
+
+    Plotly.newPlot('mreq-chart', mrTraces, {
+        xaxis: { title: '生産量 q', range: [0, 10] },
+        yaxis: { title: '価格・費用 ($)', range: [0, 28] },
+        margin: { t: 20, b: 40, l: 60, r: 20 },
+        legend: { orientation: 'h', y: 1.22 },
+        shapes: mrShapes,
+        annotations: mrAnnotations
+    }, { responsive: true, displayModeBar: false });
+
+    // --- π*(P) 包絡線グラフ ---
+    const pistar_q   = findOptimalQ(P);
+    const pistar_val = pistar_q === 0 ? -FC : P * pistar_q - getTC(pistar_q);
+
+    const pistarTraces = [
+        {
+            x: P_envelope,
+            y: piStar_envelope,
+            name: 'π*(P)（各価格での最大利潤）',
+            line: { color: '#6366f1', width: 3 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(99,102,241,0.08)'
+        },
+        {
+            x: [P],
+            y: [pistar_val],
+            mode: 'markers+text',
+            marker: { size: 14, color: '#ef4444' },
+            text: [`  P = ${fmt(P,1)}（π* = ${fmt(pistar_val)}）`],
+            textposition: 'top right',
+            textfont: { size: 12, color: '#dc2626' },
+            showlegend: false
+        }
+    ];
+
+    const pistarShapes = [
+        { type: 'line', x0: 5, y0: 0, x1: 20, y1: 0,
+          line: { color: '#334155', width: 1.5 } },
+        { type: 'line', x0: AVC_MIN, y0: -FC - 10, x1: AVC_MIN, y1: 120,
+          line: { color: '#10b981', width: 1.5, dash: 'dot' } },
+        { type: 'line', x0: AC_MIN,  y0: -FC - 10, x1: AC_MIN,  y1: 120,
+          line: { color: '#3b82f6', width: 1.5, dash: 'dot' } }
+    ];
+
+    const pistarAnnotations = [
+        { x: AVC_MIN, y: -FC - 8, xanchor: 'center',
+          text: `操業停止点<br>P = ${fmt(AVC_MIN)}`,
+          showarrow: false, font: { size: 10, color: '#065f46' },
+          bgcolor: 'rgba(255,255,255,0.85)', borderpad: 2 },
+        { x: AC_MIN, y: -FC - 8, xanchor: 'center',
+          text: `損益分岐点<br>P ≈ ${AC_MIN}`,
+          showarrow: false, font: { size: 10, color: '#1d4ed8' },
+          bgcolor: 'rgba(255,255,255,0.85)', borderpad: 2 },
+        { x: 18, y: 90, xanchor: 'right',
+          text: 'dπ*/dP = q* > 0<br>→ 単調増加、ピークなし',
+          showarrow: false, font: { size: 11, color: '#4f46e5' },
+          bgcolor: 'rgba(238,242,255,0.9)', borderpad: 4 }
+    ];
+
+    Plotly.newPlot('pistar-chart', pistarTraces, {
+        xaxis: { title: '市場価格 P', range: [5, 20] },
+        yaxis: { title: '最大利潤 π* ($)', range: [-FC - 12, 130] },
+        margin: { t: 20, b: 50, l: 65, r: 20 },
+        legend: { orientation: 'h', y: 1.12 },
+        shapes: pistarShapes,
+        annotations: pistarAnnotations
+    }, { responsive: true, displayModeBar: false });
+}
+
+// ===== イベントリスナー =====
+lSlider.oninput  = () => updatePF(parseFloat(lSlider.value));
+wSlider.oninput  = updateIso;
+y0Slider.oninput = updateIso;
+p4Slider.oninput = () => updateProfit(parseFloat(p4Slider.value));
+
+window.onload = () => {
+    updatePF(parseFloat(lSlider.value));
+    updateIso();
+    updateProfit(parseFloat(p4Slider.value));
+};
+</script>
+</body>
+</html>
