@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミクロ経済学入門 第5回：弾力性の諸概念</title>
+    <style>
+        :root {
+            --bg: #eef3f7;
+            --paper: #ffffff;
+            --ink: #183044;
+            --muted: #5d6d7e;
+            --line: #d8e1ea;
+            --navy: #1e293b;
+            --blue: #2563eb;
+            --green: #059669;
+            --orange: #d97706;
+            --red: #dc2626;
+            --violet: #7c3aed;
+            --teal: #0f766e;
+            --soft-blue: #eaf2ff;
+            --soft-green: #e9f8f1;
+            --soft-orange: #fff4df;
+            --soft-red: #feecec;
+            --shadow: 0 16px 40px rgba(24, 48, 68, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.7;
+        }
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 44px;
+        }
+
+        header {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .meta {
+            margin: 0 0 8px;
+            color: #dbeafe;
+            font-size: 0.88rem;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 2.65rem);
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        .promise {
+            margin: 12px 0 0;
+            color: #e5edf6;
+            font-size: 1rem;
+        }
+
+        .instructor {
+            margin: 10px 0 0;
+            color: #dbeafe;
+            text-align: center;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .section {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 18px 0;
+            box-shadow: 0 8px 22px rgba(24, 48, 68, 0.05);
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            background: var(--navy);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        h2 {
+            margin: 12px 0 8px;
+            font-size: clamp(1.28rem, 2vw, 1.65rem);
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+
+        p { margin: 8px 0; }
+
+        .lead {
+            color: var(--muted);
+            max-width: 900px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+            gap: 18px;
+            align-items: start;
+            margin-top: 16px;
+        }
+
+        .wide-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 16px;
+        }
+
+        .panel h3 {
+            margin: 0 0 12px;
+            font-size: 1rem;
+            color: var(--ink);
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 132px minmax(0, 1fr) 74px;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        label {
+            font-weight: 700;
+            color: #31475f;
+            font-size: 0.92rem;
+        }
+
+        input[type="range"] { width: 100%; accent-color: var(--blue); }
+
+        input[type="number"] {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 8px;
+            font: inherit;
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .segmented {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            border-radius: 6px;
+            padding: 9px 12px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        button:hover { transform: translateY(-1px); border-color: #9fb4c8; }
+        button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+        button.good { background: var(--soft-green); border-color: #8fd8b5; color: #075f45; }
+        button.bad { background: var(--soft-red); border-color: #f0aaa9; color: #991b1b; }
+
+        .formula {
+            background: #0f172a;
+            color: #f8fafc;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 0.92rem;
+            overflow-x: auto;
+        }
+
+        .formula strong { color: #bfdbfe; }
+
+        .calc-note {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: #26384d;
+        }
+
+        .calc-note strong {
+            color: var(--navy);
+        }
+
+        .result-box {
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 12px;
+            border: 1px solid var(--line);
+            background: var(--soft-blue);
+        }
+
+        .result-box.elastic { background: var(--soft-orange); border-color: #f4c77b; }
+        .result-box.inelastic { background: var(--soft-green); border-color: #99d9b8; }
+        .result-box.warning { background: var(--soft-red); border-color: #f0aaa9; }
+
+        .big-number {
+            display: block;
+            font-size: clamp(1.55rem, 3vw, 2.2rem);
+            line-height: 1.2;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .svg-wrap {
+            width: 100%;
+            min-height: 360px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 8px;
+        }
+
+        .svg-wrap .calc-note {
+            margin: 8px 10px 10px;
+        }
+
+        .pricing-chart-wrap {
+            min-height: 0;
+        }
+
+        .mini-svg-wrap {
+            width: 100%;
+            min-height: 240px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 8px;
+            margin-top: 12px;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .axis { stroke: #334155; stroke-width: 2; }
+        .grid-line { stroke: #e2e8f0; stroke-width: 1; }
+        .demand { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linecap: round; }
+        .demand2 { fill: none; stroke: var(--orange); stroke-width: 4; stroke-linecap: round; }
+        .price-line { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 5 5; }
+        .point-a { fill: var(--blue); }
+        .point-b { fill: var(--red); }
+        .revenue-before { fill: rgba(37, 99, 235, 0.18); stroke: rgba(37, 99, 235, 0.55); }
+        .revenue-after { fill: rgba(220, 38, 38, 0.16); stroke: rgba(220, 38, 38, 0.55); }
+        .label-small { font-size: 13px; fill: #334155; font-weight: 700; }
+        .label-muted { font-size: 12px; fill: #64748b; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .scenario h3 {
+            margin: 0 0 8px;
+            font-size: 1.02rem;
+        }
+
+        .scenario .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            min-height: 48px;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .type-board {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .type-card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .type-card strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--navy);
+        }
+
+        .drop-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 150px;
+            gap: 8px;
+            align-items: center;
+            border-top: 1px solid var(--line);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            font: inherit;
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .score {
+            font-weight: 800;
+            color: var(--blue);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--line);
+            padding: 8px;
+            text-align: right;
+        }
+
+        th:first-child, td:first-child { text-align: left; }
+        th { color: #475569; background: #f8fafc; }
+
+        .challenge-readout {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .metric {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 12px;
+        }
+
+        .metric span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 1.25rem;
+            color: var(--navy);
+        }
+
+        .insight {
+            border-left: 5px solid var(--teal);
+            background: #ecfeff;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 14px;
+        }
+
+        .final {
+            background: #102033;
+            color: #f8fafc;
+        }
+
+        .final .lead { color: #dbeafe; }
+
+        .final .lead { max-width: none; }
+
+        @media (max-width: 820px) {
+            .page { width: min(100% - 20px, 1180px); padding-top: 10px; }
+            header, .section { padding: 16px; }
+            .grid, .wide-grid, .cards, .type-board, .challenge-readout {
+                grid-template-columns: 1fr;
+            }
+            .control-row {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            .drop-row { grid-template-columns: 1fr; }
+            .scenario .choices { grid-template-columns: 1fr; }
+            .svg-wrap { min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+<main class="page">
+    <header>
+        <p class="meta">2026年度春学期　ミクロ経済学入門　「弾力性の諸概念」補足資料</p>
+        <h1>弾力性は「傾き」ではなく「何％反応したか」で考える</h1>
+        <p class="promise">牛丼の値下げ、売上の変化、商品の性質、価格差別をつなげて、弾力性を計算の暗記ではなく意思決定の道具として扱います。</p>
+        <p class="instructor">東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </header>
+
+    <section class="section" id="step1">
+        <span class="step-label">STEP 1</span>
+        <h2>需要の価格弾力性を、変化「量」ではなく変化「率」で計算する</h2>
+        <p class="lead">講義の牛丼の例を動かして、同じ 120 円の値下げでも、元の価格と元の需要量が変わると弾力性が変わることを確認します。</p>
+        <div class="grid">
+            <div class="panel">
+                <h3>価格と需要量を動かす</h3>
+                <div class="control-row">
+                    <label for="oldPrice">元の価格 P</label>
+                    <input id="oldPrice" type="range" min="200" max="900" step="10" value="400">
+                    <input id="oldPriceNum" type="number" min="200" max="900" step="10" value="400">
+                </div>
+                <div class="control-row">
+                    <label for="newPrice">新しい価格 P'</label>
+                    <input id="newPrice" type="range" min="100" max="900" step="10" value="280">
+                    <input id="newPriceNum" type="number" min="100" max="900" step="10" value="280">
+                </div>
+                <div class="control-row">
+                    <label for="oldQty">元の需要量 X</label>
+                    <input id="oldQty" type="range" min="100" max="1200" step="10" value="500">
+                    <input id="oldQtyNum" type="number" min="100" max="1200" step="10" value="500">
+                </div>
+                <div class="control-row">
+                    <label for="newQty">新しい需要量 X'</label>
+                    <input id="newQty" type="range" min="100" max="1500" step="10" value="750">
+                    <input id="newQtyNum" type="number" min="100" max="1500" step="10" value="750">
+                </div>
+                <div class="result-box" id="elasticityVerdict"></div>
+                <div class="result-box" id="slopeVerdict"></div>
+                <div class="result-box" id="demandFormulaVerdict"></div>
+            </div>
+            <div class="panel">
+                <h3>計算の過程</h3>
+                <div class="formula" id="formulaStep1"></div>
+                <table>
+                    <tbody>
+                    <tr><th>価格の変化率</th><td id="priceRate"></td></tr>
+                    <tr><th>需要の変化率</th><td id="qtyRate"></td></tr>
+                    <tr><th>需要曲線の傾き ΔP/ΔX</th><td id="demandSlope"></td></tr>
+                    <tr><th>元の売上 P×X</th><td id="oldRevenue"></td></tr>
+                    <tr><th>新しい売上 P'×X'</th><td id="newRevenue"></td></tr>
+                    </tbody>
+                </table>
+                <div class="mini-svg-wrap">
+                    <svg id="step1DemandSvg" viewBox="0 0 620 300" role="img" aria-label="入力値に連動する需要曲線"></svg>
+                </div>
+            </div>
+        </div>
+        <div class="insight">需要曲線が右下がりなので、価格変化率と需要変化率の符号は逆になります。需要の価格弾力性では正の値で読みたいので、式の前にマイナスをつけます。</div>
+    </section>
+
+    <section class="section" id="step2">
+        <span class="step-label">STEP 2</span>
+        <h2>価格を下げたら売上は増える？ 先に予想してから確かめる</h2>
+        <p class="lead">弾力的な需要では値下げが売上増につながりやすく、非弾力的な需要では値下げが売上減につながりやすい。直感がぶれやすいところなので、予想してから表示します。</p>
+        <div class="grid">
+            <div class="svg-wrap">
+                <svg id="revenueSvg" viewBox="0 0 620 390" role="img" aria-label="需要曲線と売上面積"></svg>
+                <div class="calc-note" id="revenueCalcBox">結果を表示すると、ここに弾力性の計算過程が出ます。</div>
+            </div>
+            <div class="panel">
+                <h3>需要曲線を選び、価格変化を予想する</h3>
+                <div class="segmented" aria-label="需要タイプ">
+                    <button id="elasticCurve" class="active" type="button">弾力的な需要</button>
+                    <button id="inelasticCurve" type="button">非弾力的な需要</button>
+                </div>
+                <div class="segmented" aria-label="予想">
+                    <button data-predict="up" type="button">売上は増える</button>
+                    <button data-predict="down" type="button">売上は減る</button>
+                </div>
+                <button id="revealRevenue" type="button">結果を表示</button>
+                <div class="result-box" id="revenueVerdict">まず予想を選んでから、結果を表示してください。</div>
+                <table>
+                    <tbody>
+                    <tr><th>値下げ前</th><td id="revBeforeText"></td></tr>
+                    <tr><th>値下げ後</th><td id="revAfterText"></td></tr>
+                    <tr><th>弾力性</th><td id="revElasticityText"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="insight">「売上 = 価格 × 需要量」なので、価格が下がる効果と需要量が増える効果のどちらが大きいかが勝負です。その大小関係を一つの数にまとめたものが需要の価格弾力性です。</div>
+    </section>
+
+    <section class="section" id="step3">
+        <span class="step-label">STEP 3</span>
+        <h2>弾力性を左右する要因を、商品ペアで判定する</h2>
+        <p class="lead">演習講義の「期間の長さ」「必要度」「商品の限定度」「支出割合」を、暗記ではなく比較問題として解きます。</p>
+        <div class="cards" id="factorCards"></div>
+        <div class="result-box">
+            正解数：<span class="score" id="factorScore">0</span> / 4　
+            <span id="factorMessage">各カードで「どちらがより弾力的か」を選んでください。</span>
+        </div>
+    </section>
+
+    <section class="section" id="step4">
+        <span class="step-label">STEP 4</span>
+        <h2>所得弾力性・交差価格弾力性・供給の価格弾力性を分類する</h2>
+        <p class="lead">式は似ていますが、符号と解釈が違います。下のケースを分類して、どの言葉を使うべきか確認します。</p>
+        <div class="type-board">
+            <div class="type-card">
+                <strong>ケース A：所得が 10% 増えたら、需要が 18% 増えた</strong>
+                <div class="drop-row">
+                    <span>所得弾力性 η = 1.8</span>
+                    <select data-answer="luxury">
+                        <option value="">分類を選ぶ</option>
+                        <option value="normal">正常財</option>
+                        <option value="inferior">劣等財</option>
+                        <option value="luxury">奢侈品</option>
+                        <option value="necessity">必需品</option>
+                    </select>
+                </div>
+                <p class="feedback"></p>
+            </div>
+            <div class="type-card">
+                <strong>ケース B：所得が 10% 増えたら、需要が 3% 減った</strong>
+                <div class="drop-row">
+                    <span>所得弾力性 η = -0.3</span>
+                    <select data-answer="inferior">
+                        <option value="">分類を選ぶ</option>
+                        <option value="normal">正常財</option>
+                        <option value="inferior">劣等財</option>
+                        <option value="luxury">奢侈品</option>
+                        <option value="necessity">必需品</option>
+                    </select>
+                </div>
+                <p class="feedback"></p>
+            </div>
+            <div class="type-card">
+                <strong>ケース C：肉の価格が上がると、魚の需要が増えた</strong>
+                <div class="drop-row">
+                    <span>交差価格弾力性 ε &gt; 0</span>
+                    <select data-answer="substitute">
+                        <option value="">分類を選ぶ</option>
+                        <option value="substitute">粗代替財</option>
+                        <option value="complement">粗補完財</option>
+                        <option value="short">短期で非弾力的</option>
+                        <option value="long">長期で弾力的</option>
+                    </select>
+                </div>
+                <p class="feedback"></p>
+            </div>
+            <div class="type-card">
+                <strong>ケース D：生産設備を増やせる長期では供給量が大きく反応した</strong>
+                <div class="drop-row">
+                    <span>供給の価格弾力性が大きい</span>
+                    <select data-answer="long">
+                        <option value="">分類を選ぶ</option>
+                        <option value="substitute">粗代替財</option>
+                        <option value="complement">粗補完財</option>
+                        <option value="short">短期で非弾力的</option>
+                        <option value="long">長期で弾力的</option>
+                    </select>
+                </div>
+                <p class="feedback"></p>
+            </div>
+        </div>
+        <div class="result-box">分類スコア：<span class="score" id="typeScore">0</span> / 4</div>
+    </section>
+
+    <section class="section" id="step5">
+        <span class="step-label">STEP 5</span>
+        <h2>価格差別の発想：弾力的な顧客には低く、非弾力的な顧客には高く</h2>
+        <p class="lead">映画料金のように、学生と一般客で需要の価格弾力性が違うとき、同じ価格をつけるよりも分けて価格をつけた方が収入を増やせる場合があります。</p>
+        <div class="grid">
+            <div class="panel">
+                <h3>2つの価格を設定する</h3>
+                <div class="control-row">
+                    <label for="studentPrice">学生価格</label>
+                    <input id="studentPrice" type="range" min="600" max="2200" step="50" value="1100">
+                    <input id="studentPriceNum" type="number" min="600" max="2200" step="50" value="1100">
+                </div>
+                <div class="control-row">
+                    <label for="adultPrice">一般価格</label>
+                    <input id="adultPrice" type="range" min="600" max="2600" step="50" value="1900">
+                    <input id="adultPriceNum" type="number" min="600" max="2600" step="50" value="1900">
+                </div>
+                <div class="challenge-readout">
+                    <div class="metric"><span>学生需要</span><strong id="studentDemand"></strong></div>
+                    <div class="metric"><span>一般需要</span><strong id="adultDemand"></strong></div>
+                    <div class="metric"><span>合計売上</span><strong id="totalDiscriminationRevenue"></strong></div>
+                </div>
+                <div class="result-box" id="pricingVerdict"></div>
+                <div class="calc-note" id="pricingCalcBox"></div>
+            </div>
+            <div class="panel">
+                <h3>均一価格との比較</h3>
+                <div class="svg-wrap pricing-chart-wrap">
+                    <svg id="pricingSvg" viewBox="0 0 620 300" role="img" aria-label="価格差別と均一価格の売上比較"></svg>
+                </div>
+                <table>
+                    <tbody>
+                    <tr><th>均一価格の最適値</th><td id="uniformBest"></td></tr>
+                    <tr><th>価格差別の目安</th><td id="separateBest"></td></tr>
+                    <tr><th>あなたの設定</th><td id="yourPrices"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="insight">価格差別の要点は「払える人から多く取る」ではなく、価格に敏感な層と敏感でない層で、価格を変えたときの需要反応が違うことを利用する点です。</div>
+    </section>
+
+    <section class="section final">
+        <span class="step-label">まとめ</span>
+        <h2>弾力性は、変化への反応を読むための共通言語</h2>
+        <p class="lead">需要の価格弾力性は売上の方向を読む道具です。所得弾力性は財の性質を、交差価格弾力性は財どうしの関係を、供給の価格弾力性は生産側の調整しやすさを示します。式の形は似ていますが、「何が変化し、何が反応したか」を先に言葉で確認すると混乱しにくくなります。</p>
+    </section>
+</main>
+
+<script>
+    const yen = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
+    const num = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 1 });
+
+    function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function syncRangeNumber(rangeId, numberId, callback) {
+        const range = document.getElementById(rangeId);
+        const number = document.getElementById(numberId);
+        const apply = (source) => {
+            const min = Number(range.min);
+            const max = Number(range.max);
+            const value = clamp(Number(source.value), min, max);
+            range.value = value;
+            number.value = value;
+            callback();
+        };
+        range.addEventListener("input", () => apply(range));
+        number.addEventListener("input", () => apply(number));
+    }
+
+    function getValue(id) {
+        return Number(document.getElementById(id).value);
+    }
+
+    function pct(value) {
+        return `${(value * 100).toFixed(1)}%`;
+    }
+
+    function lineSegmentThroughPoints(q0, p0, q1, p1, qMin, qMax, pMin, pMax) {
+        if (q0 === q1) {
+            return { qStart: q0, pStart: pMin, qEnd: q1, pEnd: pMax };
+        }
+        const slope = (p1 - p0) / (q1 - q0);
+        const intercept = p0 - slope * q0;
+        const candidates = [
+            { q: qMin, p: intercept + slope * qMin },
+            { q: qMax, p: intercept + slope * qMax }
+        ];
+        if (slope !== 0) {
+            candidates.push({ q: (pMin - intercept) / slope, p: pMin });
+            candidates.push({ q: (pMax - intercept) / slope, p: pMax });
+        }
+        const inside = candidates.filter((pt) =>
+            pt.q >= qMin - 0.001 && pt.q <= qMax + 0.001 &&
+            pt.p >= pMin - 0.001 && pt.p <= pMax + 0.001
+        );
+        inside.sort((a, b) => a.q - b.q);
+        if (inside.length >= 2) {
+            return {
+                qStart: inside[0].q,
+                pStart: inside[0].p,
+                qEnd: inside[inside.length - 1].q,
+                pEnd: inside[inside.length - 1].p
+            };
+        }
+        return { qStart: q0, pStart: p0, qEnd: q1, pEnd: p1 };
+    }
+
+    function drawStep1DemandSvg(p0, p1, q0, q1, elasticity) {
+        const svg = document.getElementById("step1DemandSvg");
+        const slope = q1 === q0 ? Infinity : (p1 - p0) / (q1 - q0);
+        const qMax = Math.max(1000, q0, q1) * 1.12;
+        const pMax = Math.max(650, p0, p1) * 1.12;
+        const left = 58;
+        const right = 575;
+        const top = 28;
+        const bottom = 252;
+        const x = (q) => left + (q / qMax) * (right - left);
+        const y = (p) => bottom - (p / pMax) * (bottom - top);
+        const seg = lineSegmentThroughPoints(q0, p0, q1, p1, 0, qMax, 0, pMax);
+        const sameQty = q0 === q1;
+        const samePrice = p0 === p1;
+        const curveClass = sameQty || samePrice ? "demand2" : "demand";
+        svg.innerHTML = `
+            <line class="axis" x1="${left}" y1="${top}" x2="${left}" y2="${bottom}" />
+            <line class="axis" x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}" />
+            <text class="label-small" x="18" y="32">価格</text>
+            <text class="label-small" x="536" y="282">需要量</text>
+            <line class="price-line" x1="${left}" y1="${y(p0)}" x2="${x(q0)}" y2="${y(p0)}" />
+            <line class="price-line" x1="${x(q0)}" y1="${y(p0)}" x2="${x(q0)}" y2="${bottom}" />
+            <line class="price-line" x1="${left}" y1="${y(p1)}" x2="${x(q1)}" y2="${y(p1)}" />
+            <line class="price-line" x1="${x(q1)}" y1="${y(p1)}" x2="${x(q1)}" y2="${bottom}" />
+            <path class="${curveClass}" d="M ${x(seg.qStart)} ${y(seg.pStart)} L ${x(seg.qEnd)} ${y(seg.pEnd)}" />
+            <circle class="point-a" cx="${x(q0)}" cy="${y(p0)}" r="7" />
+            <circle class="point-b" cx="${x(q1)}" cy="${y(p1)}" r="7" />
+            <text class="label-muted" x="14" y="${y(p0) + 4}">P=${p0}</text>
+            <text class="label-muted" x="14" y="${y(p1) + 4}">P'=${p1}</text>
+            <text class="label-muted" x="${Math.max(left, x(q0) - 22)}" y="274">X=${q0}</text>
+            <text class="label-muted" x="${Math.max(left, x(q1) - 24)}" y="292">X'=${q1}</text>
+            <text class="label-small" x="${Math.min(x(q0) + 10, 520)}" y="${Math.max(y(p0) - 10, 20)}">元の点</text>
+            <text class="label-small" x="${Math.min(x(q1) + 10, 520)}" y="${Math.min(y(p1) + 22, 246)}">新しい点</text>
+            <text class="label-muted" x="74" y="54">2点を結ぶ需要曲線</text>
+            <text class="label-muted" x="74" y="74">弾力性: ${Number.isFinite(elasticity) ? elasticity.toFixed(2) : "計算不可"}</text>
+            <text class="label-muted" x="74" y="94">傾き: ${Number.isFinite(slope) ? slope.toFixed(3) : "垂直"}</text>
+        `;
+    }
+
+    function updateStep1() {
+        const p0 = getValue("oldPrice");
+        const p1 = getValue("newPrice");
+        const q0 = getValue("oldQty");
+        const q1 = getValue("newQty");
+        const priceRate = (p1 - p0) / p0;
+        const qtyRate = (q1 - q0) / q0;
+        const elasticity = priceRate === 0 ? Infinity : -qtyRate / priceRate;
+        const slope = q1 === q0 ? Infinity : (p1 - p0) / (q1 - q0);
+        const intercept = Number.isFinite(slope) ? p0 - slope * q0 : Infinity;
+        const oldRev = p0 * q0;
+        const newRev = p1 * q1;
+
+        document.getElementById("priceRate").textContent = pct(priceRate);
+        document.getElementById("qtyRate").textContent = pct(qtyRate);
+        document.getElementById("demandSlope").textContent = Number.isFinite(slope) ? slope.toFixed(3) : "垂直";
+        document.getElementById("oldRevenue").textContent = yen.format(oldRev);
+        document.getElementById("newRevenue").textContent = yen.format(newRev);
+        document.getElementById("formulaStep1").innerHTML =
+            `価格の変化率 = (${p1} - ${p0}) / ${p0} = <strong>${pct(priceRate)}</strong><br>` +
+            `需要の変化率 = (${q1} - ${q0}) / ${q0} = <strong>${pct(qtyRate)}</strong><br>` +
+            `需要の価格弾力性 = - (${pct(qtyRate)} / ${pct(priceRate)}) = <strong>${Number.isFinite(elasticity) ? elasticity.toFixed(2) : "計算不可"}</strong><br>` +
+            `需要曲線の傾き = ΔP / ΔX = (${p1} - ${p0}) / (${q1} - ${q0}) = <strong>${Number.isFinite(slope) ? slope.toFixed(3) : "垂直"}</strong>`;
+
+        const verdict = document.getElementById("elasticityVerdict");
+        verdict.className = "result-box";
+        if (!Number.isFinite(elasticity)) {
+            verdict.innerHTML = `<span class="big-number">価格変化率が 0</span>価格が変わらないので、価格弾力性としては計算できません。`;
+            verdict.classList.add("warning");
+        } else if (elasticity > 1) {
+            verdict.innerHTML = `<span class="big-number">弾力性 = ${elasticity.toFixed(2)}</span>1 より大きいので、需要は価格に対して弾力的です。`;
+            verdict.classList.add("elastic");
+        } else if (elasticity < 1) {
+            verdict.innerHTML = `<span class="big-number">弾力性 = ${elasticity.toFixed(2)}</span>1 より小さいので、需要は価格に対して非弾力的です。`;
+            verdict.classList.add("inelastic");
+        } else {
+            verdict.innerHTML = `<span class="big-number">弾力性 = 1.00</span>価格の効果と需要量の効果がちょうど釣り合う単位弾力的なケースです。`;
+        }
+
+        const slopeVerdict = document.getElementById("slopeVerdict");
+        slopeVerdict.className = "result-box";
+        if (Number.isFinite(slope)) {
+            slopeVerdict.innerHTML = `<span class="big-number">傾き = ${slope.toFixed(3)}</span>需要曲線上で、需要量が 1 増えたとき価格がどれだけ変わるかを表します。弾力性とは違い、単位の取り方に影響されます。`;
+        } else {
+            slopeVerdict.innerHTML = `<span class="big-number">傾き = 垂直</span>需要量が変わらないため、2 点を結ぶ線は垂直になります。`;
+            slopeVerdict.classList.add("warning");
+        }
+
+        const formulaVerdict = document.getElementById("demandFormulaVerdict");
+        formulaVerdict.className = "result-box";
+        if (Number.isFinite(slope)) {
+            const sign = slope >= 0 ? "+" : "-";
+            formulaVerdict.innerHTML = `<span class="big-number">P = ${intercept.toFixed(1)} ${sign} ${Math.abs(slope).toFixed(3)}X</span>2 点を通る直線の需要曲線です。通常の需要曲線では、傾きがマイナスになります。`;
+        } else {
+            formulaVerdict.innerHTML = `<span class="big-number">X = ${q0}</span>需要量が変わらない垂直な需要曲線です。`;
+            formulaVerdict.classList.add("warning");
+        }
+        drawStep1DemandSvg(p0, p1, q0, q1, elasticity);
+    }
+
+    ["oldPrice", "newPrice", "oldQty", "newQty"].forEach((id) => {
+        syncRangeNumber(id, `${id}Num`, updateStep1);
+    });
+
+    const revenueCases = {
+        elastic: {
+            p0: 500, p1: 400, q0: 100, q1: 150,
+            label: "弾力的な需要",
+            explanation: "価格は 20% 下がり、需要量は 50% 増えました。需要量の増加が価格低下を上回るため、売上は増えます。"
+        },
+        inelastic: {
+            p0: 500, p1: 400, q0: 100, q1: 112,
+            label: "非弾力的な需要",
+            explanation: "価格は 20% 下がりましたが、需要量は 12% しか増えません。価格低下の効果が大きいため、売上は減ります。"
+        }
+    };
+    let revenueType = "elastic";
+    let revenuePrediction = "";
+    let revenueRevealed = false;
+
+    function sx(q) { return 58 + q * 2.7; }
+    function sy(p) { return 330 - p * 0.50; }
+
+    function drawRevenueSvg() {
+        const data = revenueCases[revenueType];
+        const svg = document.getElementById("revenueSvg");
+        const beforeRev = data.p0 * data.q0;
+        const afterRev = data.p1 * data.q1;
+        const priceRate = (data.p1 - data.p0) / data.p0;
+        const qtyRate = (data.q1 - data.q0) / data.q0;
+        const elastic = -qtyRate / priceRate;
+        const x0 = sx(data.q0), y0 = sy(data.p0);
+        const x1 = sx(data.q1), y1 = sy(data.p1);
+        const baseY = sy(0);
+        const leftX = sx(0);
+        const show = revenueRevealed;
+        const seg = lineSegmentThroughPoints(data.q0, data.p0, data.q1, data.p1, 60, 190, 260, 620);
+        svg.innerHTML = `
+            <line class="axis" x1="${leftX}" y1="30" x2="${leftX}" y2="${baseY}" />
+            <line class="axis" x1="${leftX}" y1="${baseY}" x2="575" y2="${baseY}" />
+            <text class="label-small" x="30" y="38">価格</text>
+            <text class="label-small" x="550" y="360">需要量</text>
+            <line class="grid-line" x1="${leftX}" y1="${sy(500)}" x2="575" y2="${sy(500)}" />
+            <line class="grid-line" x1="${leftX}" y1="${sy(400)}" x2="575" y2="${sy(400)}" />
+            <path class="${revenueType === "elastic" ? "demand" : "demand2"}" d="M ${sx(seg.qStart)} ${sy(seg.pStart)} L ${sx(seg.qEnd)} ${sy(seg.pEnd)}" />
+            ${show ? `<rect class="revenue-before" x="${leftX}" y="${y0}" width="${x0 - leftX}" height="${baseY - y0}" />
+            <rect class="revenue-after" x="${leftX}" y="${y1}" width="${x1 - leftX}" height="${baseY - y1}" />` : ""}
+            <line class="price-line" x1="${leftX}" y1="${y0}" x2="${x0}" y2="${y0}" />
+            <line class="price-line" x1="${x0}" y1="${y0}" x2="${x0}" y2="${baseY}" />
+            <line class="price-line" x1="${leftX}" y1="${y1}" x2="${x1}" y2="${y1}" />
+            <line class="price-line" x1="${x1}" y1="${y1}" x2="${x1}" y2="${baseY}" />
+            <circle class="point-a" cx="${x0}" cy="${y0}" r="7" />
+            <circle class="point-b" cx="${x1}" cy="${y1}" r="7" />
+            <text class="label-small" x="${Math.max(leftX + 12, x0 - 86)}" y="${y0 - 18}">値下げ前</text>
+            <text class="label-small" x="${Math.min(x1 + 18, 515)}" y="${y1 + 34}">値下げ後</text>
+            <text class="label-muted" x="16" y="${y0 + 4}">P=${data.p0}</text>
+            <text class="label-muted" x="16" y="${y1 + 4}">P=${data.p1}</text>
+            <text class="label-muted" x="${x0 - 16}" y="355">X=${data.q0}</text>
+            <text class="label-muted" x="${x1 - 16}" y="374">X=${data.q1}</text>
+            ${show ? `<text class="label-small" x="86" y="54">売上: ${yen.format(beforeRev)} → ${yen.format(afterRev)}</text>
+            <text class="label-small" x="86" y="78">弾力性: ${elastic.toFixed(2)}</text>` : `<text class="label-small" x="86" y="54">予想してから結果を表示</text>`}
+        `;
+        document.getElementById("revBeforeText").textContent = `${yen.format(data.p0)} × ${data.q0} = ${yen.format(beforeRev)}`;
+        document.getElementById("revAfterText").textContent = `${yen.format(data.p1)} × ${data.q1} = ${show ? yen.format(afterRev) : "未表示"}`;
+        document.getElementById("revElasticityText").textContent = show ? elastic.toFixed(2) : "未表示";
+        document.getElementById("revenueCalcBox").innerHTML = show
+            ? `計算: - [(${data.q1} - ${data.q0}) / ${data.q0}] ÷ [(${data.p1} - ${data.p0}) / ${data.p0}]<br>` +
+              `= - [${pct(qtyRate)}] ÷ [${pct(priceRate)}] = <strong>${elastic.toFixed(2)}</strong>`
+            : "結果を表示すると、ここに弾力性の計算過程が出ます。";
+    }
+
+    function updateRevenueVerdict() {
+        const data = revenueCases[revenueType];
+        const beforeRev = data.p0 * data.q0;
+        const afterRev = data.p1 * data.q1;
+        const answer = afterRev > beforeRev ? "up" : "down";
+        const verdict = document.getElementById("revenueVerdict");
+        if (!revenueRevealed) {
+            verdict.className = "result-box";
+            verdict.textContent = revenuePrediction ? "予想を受け取りました。結果を表示して確認しましょう。" : "まず予想を選んでから、結果を表示してください。";
+            return;
+        }
+        const correct = revenuePrediction === answer;
+        verdict.className = `result-box ${answer === "up" ? "elastic" : "inelastic"}`;
+        verdict.innerHTML = `<strong>${correct ? "正解です。" : "ここがひっかけです。"}</strong> ${data.explanation}`;
+    }
+
+    document.getElementById("elasticCurve").addEventListener("click", () => {
+        revenueType = "elastic";
+        revenueRevealed = false;
+        document.getElementById("elasticCurve").classList.add("active");
+        document.getElementById("inelasticCurve").classList.remove("active");
+        drawRevenueSvg();
+        updateRevenueVerdict();
+    });
+
+    document.getElementById("inelasticCurve").addEventListener("click", () => {
+        revenueType = "inelastic";
+        revenueRevealed = false;
+        document.getElementById("inelasticCurve").classList.add("active");
+        document.getElementById("elasticCurve").classList.remove("active");
+        drawRevenueSvg();
+        updateRevenueVerdict();
+    });
+
+    document.querySelectorAll("[data-predict]").forEach((button) => {
+        button.addEventListener("click", () => {
+            revenuePrediction = button.dataset.predict;
+            document.querySelectorAll("[data-predict]").forEach((b) => b.classList.remove("active"));
+            button.classList.add("active");
+            revenueRevealed = false;
+            drawRevenueSvg();
+            updateRevenueVerdict();
+        });
+    });
+
+    document.getElementById("revealRevenue").addEventListener("click", () => {
+        revenueRevealed = true;
+        drawRevenueSvg();
+        updateRevenueVerdict();
+    });
+
+    const factorData = [
+        {
+            title: "期間の長さ",
+            a: "明日からガソリン価格が上がる",
+            b: "数年かけてガソリン価格が高い状態が続く",
+            answer: "b",
+            reason: "長期では電車利用、車種変更、引っ越しなど調整手段が増えるため、需要はより弾力的になります。"
+        },
+        {
+            title: "必要度の強さ",
+            a: "冬の暖房用の灯油",
+            b: "ブランドバッグ",
+            answer: "b",
+            reason: "必需品は価格が上がっても買わざるを得ないため非弾力的、奢侈品は弾力的になりやすいです。"
+        },
+        {
+            title: "商品の限定度",
+            a: "歯磨きペースト全体",
+            b: "A社の歯磨きペースト",
+            answer: "b",
+            reason: "商品を特定するほど代替先が増えるので、価格に対する反応は大きくなります。"
+        },
+        {
+            title: "支出割合の大きさ",
+            a: "消しゴム",
+            b: "大型液晶テレビ",
+            answer: "b",
+            reason: "所得に占める支出割合が大きい商品ほど、価格差を気にして需要が大きく反応します。"
+        }
+    ];
+
+    function renderFactorCards() {
+        const root = document.getElementById("factorCards");
+        root.innerHTML = factorData.map((item, index) => `
+            <article class="scenario" data-factor="${index}">
+                <h3>${item.title}</h3>
+                <p>どちらがより弾力的ですか。</p>
+                <div class="choices">
+                    <button type="button" data-choice="a">${item.a}</button>
+                    <button type="button" data-choice="b">${item.b}</button>
+                </div>
+                <p class="feedback"></p>
+            </article>
+        `).join("");
+        root.querySelectorAll("button").forEach((button) => {
+            button.addEventListener("click", () => {
+                const card = button.closest(".scenario");
+                const item = factorData[Number(card.dataset.factor)];
+                card.querySelectorAll("button").forEach((b) => {
+                    b.classList.remove("good", "bad");
+                    b.dataset.selected = "false";
+                });
+                button.dataset.selected = "true";
+                if (button.dataset.choice === item.answer) {
+                    button.classList.add("good");
+                    card.querySelector(".feedback").textContent = `正解。${item.reason}`;
+                } else {
+                    button.classList.add("bad");
+                    card.querySelector(".feedback").textContent = `もう一歩。${item.reason}`;
+                }
+                updateFactorScore();
+            });
+        });
+    }
+
+    function updateFactorScore() {
+        let score = 0;
+        document.querySelectorAll(".scenario").forEach((card) => {
+            const item = factorData[Number(card.dataset.factor)];
+            const selected = card.querySelector("button[data-selected='true']");
+            if (selected && selected.dataset.choice === item.answer) score += 1;
+        });
+        document.getElementById("factorScore").textContent = score;
+        document.getElementById("factorMessage").textContent =
+            score === 4 ? "すべて正解です。弾力性の要因を、具体例から読めています。" : "比較するときは「代替しやすいか」「調整する時間があるか」「支出として重いか」を見ます。";
+    }
+
+    const typeMessages = {
+        luxury: "η > 1 なので正常財の中でも奢侈品です。所得上昇率以上に需要が増えています。",
+        inferior: "η < 0 なので劣等財です。所得が上がるほど需要が減るタイプです。",
+        substitute: "ε > 0 なので粗代替財です。一方の価格上昇が他方の需要増につながります。",
+        long: "長期ほど設備や生産方法を調整できるため、供給は弾力的になりやすいです。"
+    };
+
+    function setupTypeSelectors() {
+        document.querySelectorAll(".type-card select").forEach((select) => {
+            select.addEventListener("change", () => {
+                const card = select.closest(".type-card");
+                const feedback = card.querySelector(".feedback");
+                if (select.value === select.dataset.answer) {
+                    feedback.textContent = `正解。${typeMessages[select.dataset.answer]}`;
+                    feedback.style.color = "#047857";
+                } else if (select.value) {
+                    feedback.textContent = "分類名と符号の対応をもう一度確認しましょう。";
+                    feedback.style.color = "#b91c1c";
+                } else {
+                    feedback.textContent = "";
+                }
+                updateTypeScore();
+            });
+        });
+    }
+
+    function updateTypeScore() {
+        let score = 0;
+        document.querySelectorAll(".type-card select").forEach((select) => {
+            if (select.value === select.dataset.answer) score += 1;
+        });
+        document.getElementById("typeScore").textContent = score;
+    }
+
+    function demandStudent(price) {
+        return Math.max(0, 360 - 0.16 * price);
+    }
+
+    function demandAdult(price) {
+        return Math.max(0, 250 - 0.055 * price);
+    }
+
+    function revenueAtSeparate(sp, ap) {
+        return sp * demandStudent(sp) + ap * demandAdult(ap);
+    }
+
+    function revenueAtUniform(price) {
+        return price * (demandStudent(price) + demandAdult(price));
+    }
+
+    function bestSearch() {
+        let bestUniform = { price: 0, revenue: -Infinity };
+        let bestSeparate = { sp: 0, ap: 0, revenue: -Infinity };
+        for (let p = 600; p <= 2600; p += 25) {
+            const r = revenueAtUniform(p);
+            if (r > bestUniform.revenue) bestUniform = { price: p, revenue: r };
+        }
+        for (let sp = 600; sp <= 2200; sp += 25) {
+            for (let ap = 600; ap <= 2600; ap += 25) {
+                const r = revenueAtSeparate(sp, ap);
+                if (r > bestSeparate.revenue) bestSeparate = { sp, ap, revenue: r };
+            }
+        }
+        return { bestUniform, bestSeparate };
+    }
+
+    const pricingBest = bestSearch();
+
+    function bar(x, y, w, h, color) {
+        return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${color}" />`;
+    }
+
+    function drawPricingSvg(userRevenue) {
+        const svg = document.getElementById("pricingSvg");
+        const maxRev = Math.max(pricingBest.bestSeparate.revenue, userRevenue) * 1.1;
+        const values = [
+            { label: "均一価格", value: pricingBest.bestUniform.revenue, color: "rgba(37,99,235,0.75)" },
+            { label: "価格差別の目安", value: pricingBest.bestSeparate.revenue, color: "rgba(5,150,105,0.75)" },
+            { label: "あなたの設定", value: userRevenue, color: "rgba(217,119,6,0.78)" }
+        ];
+        const bars = values.map((d, i) => {
+            const x = 90 + i * 160;
+            const h = Math.max(4, (d.value / maxRev) * 190);
+            const y = 238 - h;
+            return `${bar(x, y, 82, h, d.color)}
+                <text class="label-small" x="${x - 10}" y="270">${d.label}</text>
+                <text class="label-muted" x="${x - 2}" y="${y - 10}">${yen.format(d.value)}</text>`;
+        }).join("");
+        svg.innerHTML = `
+            <line class="axis" x1="58" y1="34" x2="58" y2="238" />
+            <line class="axis" x1="58" y1="238" x2="560" y2="238" />
+            <text class="label-small" x="18" y="38">売上</text>
+            ${bars}
+        `;
+    }
+
+    function updatePricing() {
+        const sp = getValue("studentPrice");
+        const ap = getValue("adultPrice");
+        const sq = demandStudent(sp);
+        const aq = demandAdult(ap);
+        const userRevenue = revenueAtSeparate(sp, ap);
+        const gain = userRevenue - pricingBest.bestUniform.revenue;
+
+        document.getElementById("studentDemand").textContent = `${num.format(sq)} 人`;
+        document.getElementById("adultDemand").textContent = `${num.format(aq)} 人`;
+        document.getElementById("totalDiscriminationRevenue").textContent = yen.format(userRevenue);
+        document.getElementById("uniformBest").textContent = `${yen.format(pricingBest.bestUniform.price)}、売上 ${yen.format(pricingBest.bestUniform.revenue)}`;
+        document.getElementById("separateBest").textContent = `学生 ${yen.format(pricingBest.bestSeparate.sp)}・一般 ${yen.format(pricingBest.bestSeparate.ap)}、売上 ${yen.format(pricingBest.bestSeparate.revenue)}`;
+        document.getElementById("yourPrices").textContent = `学生 ${yen.format(sp)}・一般 ${yen.format(ap)}`;
+        document.getElementById("pricingCalcBox").innerHTML =
+            `学生需要 = 360 - 0.16 × ${sp} = <strong>${num.format(sq)} 人</strong><br>` +
+            `一般需要 = 250 - 0.055 × ${ap} = <strong>${num.format(aq)} 人</strong><br>` +
+            `合計売上 = ${yen.format(sp)} × ${num.format(sq)} + ${yen.format(ap)} × ${num.format(aq)} = <strong>${yen.format(userRevenue)}</strong>`;
+
+        const verdict = document.getElementById("pricingVerdict");
+        if (gain >= 0) {
+            verdict.className = "result-box inelastic";
+            verdict.innerHTML = `<strong>均一価格より ${yen.format(gain)} 高い売上です。</strong> 学生は価格に敏感なので低め、一般客は相対的に非弾力的なので高めにすると収入が伸びます。`;
+        } else {
+            verdict.className = "result-box warning";
+            verdict.innerHTML = `<strong>均一価格より ${yen.format(Math.abs(gain))} 低い売上です。</strong> 学生価格を上げすぎるか、一般価格を下げすぎると、弾力性の差を活かしきれません。`;
+        }
+        drawPricingSvg(userRevenue);
+    }
+
+    ["studentPrice", "adultPrice"].forEach((id) => {
+        syncRangeNumber(id, `${id}Num`, updatePricing);
+    });
+
+    updateStep1();
+    drawRevenueSvg();
+    updateRevenueVerdict();
+    renderFactorCards();
+    setupTypeSelectors();
+    updatePricing();
+</script>
+</body>
+</html>
