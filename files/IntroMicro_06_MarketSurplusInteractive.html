@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミクロ経済学入門 第6回：完全競争市場と余剰分析</title>
+    <style>
+        :root {
+            --bg: #eef3f7;
+            --paper: #ffffff;
+            --ink: #183044;
+            --muted: #607184;
+            --line: #d8e1ea;
+            --navy: #1e293b;
+            --blue: #2563eb;
+            --green: #059669;
+            --orange: #d97706;
+            --red: #dc2626;
+            --violet: #7c3aed;
+            --soft-blue: #eaf2ff;
+            --soft-green: #e9f8f1;
+            --soft-orange: #fff4df;
+            --soft-red: #feecec;
+            --shadow: 0 16px 40px rgba(24, 48, 68, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.7;
+        }
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 44px;
+        }
+
+        header {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .meta {
+            margin: 0 0 8px;
+            color: #dbeafe;
+            font-size: 0.88rem;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 2.65rem);
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        .promise {
+            margin: 12px 0 0;
+            color: #e5edf6;
+            font-size: 1rem;
+        }
+
+        .instructor {
+            margin: 10px 0 0;
+            color: #dbeafe;
+            text-align: center;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .section {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 18px 0;
+            box-shadow: 0 8px 22px rgba(24, 48, 68, 0.05);
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            background: var(--navy);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        h2 {
+            margin: 12px 0 8px;
+            font-size: clamp(1.28rem, 2vw, 1.65rem);
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+
+        p { margin: 8px 0; }
+
+        .lead {
+            color: var(--muted);
+            max-width: none;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 18px;
+            align-items: start;
+            margin-top: 16px;
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 16px;
+        }
+
+        .panel h3 {
+            margin: 0 0 12px;
+            font-size: 1rem;
+            color: var(--ink);
+        }
+
+        .chart-wrap {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 8px 8px 12px;
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .axis { stroke: #334155; stroke-width: 2; }
+        .grid-line { stroke: #e2e8f0; stroke-width: 1; }
+        .demand { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linecap: round; }
+        .supply { fill: none; stroke: var(--orange); stroke-width: 4; stroke-linecap: round; }
+        .policy { stroke: var(--red); stroke-width: 2; stroke-dasharray: 6 5; }
+        .world { stroke: var(--green); stroke-width: 2; stroke-dasharray: 7 5; }
+        .point { fill: var(--navy); }
+        .cs { fill: rgba(37, 99, 235, 0.18); stroke: rgba(37, 99, 235, 0.45); }
+        .ps { fill: rgba(5, 150, 105, 0.20); stroke: rgba(5, 150, 105, 0.45); }
+        .dwl { fill: rgba(220, 38, 38, 0.24); stroke: rgba(220, 38, 38, 0.60); }
+        .taxrect { fill: rgba(217, 119, 6, 0.22); stroke: rgba(217, 119, 6, 0.68); }
+        .tradegain { fill: rgba(124, 58, 237, 0.20); stroke: rgba(124, 58, 237, 0.62); }
+        .label-small { font-size: 13px; fill: #334155; font-weight: 700; }
+        .label-muted { font-size: 12px; fill: #64748b; }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 132px minmax(0, 1fr) 76px;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        label {
+            font-weight: 700;
+            color: #31475f;
+            font-size: 0.92rem;
+        }
+
+        input[type="range"] { width: 100%; accent-color: var(--blue); }
+
+        input[type="number"] {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 8px;
+            font: inherit;
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .segmented {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            border-radius: 6px;
+            padding: 9px 12px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        button:hover { transform: translateY(-1px); border-color: #9fb4c8; }
+        button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+        button.good { background: var(--soft-green); border-color: #8fd8b5; color: #075f45; }
+        button.bad { background: var(--soft-red); border-color: #f0aaa9; color: #991b1b; }
+
+        .readout {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .metric {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 12px;
+        }
+
+        .metric span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 1.25rem;
+            color: var(--navy);
+        }
+
+        .formula-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .formula-card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 12px;
+        }
+
+        .formula-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .formula-card strong {
+            display: block;
+            font-size: 1.35rem;
+            line-height: 1.25;
+            color: var(--navy);
+        }
+
+        .result-box {
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 12px;
+            border: 1px solid var(--line);
+            background: var(--soft-blue);
+        }
+
+        .result-box.good { background: var(--soft-green); border-color: #99d9b8; }
+        .result-box.warn { background: var(--soft-orange); border-color: #f4c77b; }
+        .result-box.bad { background: var(--soft-red); border-color: #f0aaa9; }
+
+        .big-number {
+            display: block;
+            font-size: clamp(1.45rem, 2.8vw, 2rem);
+            line-height: 1.2;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .calc-note {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: #26384d;
+        }
+
+        .calc-note strong { color: var(--navy); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--line);
+            padding: 8px;
+            text-align: right;
+        }
+
+        th:first-child, td:first-child { text-align: left; }
+        th { color: #475569; background: #f8fafc; }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .scenario h3 { margin: 0 0 8px; font-size: 1rem; }
+        .feedback { min-height: 46px; margin-top: 10px; color: var(--muted); font-size: 0.92rem; }
+
+        .insight {
+            border-left: 5px solid #0f766e;
+            background: #ecfeff;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 14px;
+        }
+
+        .final {
+            background: #102033;
+            color: #f8fafc;
+        }
+
+        .final .lead { color: #dbeafe; max-width: none; }
+
+        @media (max-width: 820px) {
+            .page { width: min(100% - 20px, 1180px); padding-top: 10px; }
+            header, .section { padding: 16px; }
+            .grid, .readout, .cards, .formula-strip { grid-template-columns: 1fr; }
+            .control-row { grid-template-columns: 1fr; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+<main class="page">
+    <header>
+        <p class="meta">2026年度春学期　ミクロ経済学入門　「市場の理論・余剰分析」補足資料</p>
+        <h1>市場均衡から余剰・死荷重・貿易利益までを図で読む</h1>
+        <p class="promise">完全競争市場の均衡、価格規制、租税負担、自由貿易と関税を、図形の面積と計算式を対応させながら確認します。</p>
+        <p class="instructor">東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </header>
+
+    <section class="section" id="step1">
+        <span class="step-label">STEP 1</span>
+        <h2>需要と供給の交点から、均衡価格・取引量・余剰を読む</h2>
+        <p class="lead">演習で扱った例 D = 100 - P, S = 3P を出発点に、均衡条件 D = S と余剰の三角形を同時に確認します。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="equilibriumSvg" viewBox="0 0 640 430" role="img" aria-label="市場均衡と消費者余剰・生産者余剰"></svg>
+                <div class="calc-note" id="equilibriumCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>市場の式を動かす</h3>
+                <div class="control-row">
+                    <label for="demandIntercept">需要切片 A</label>
+                    <input id="demandIntercept" type="range" min="60" max="140" step="5" value="100">
+                    <input id="demandInterceptNum" type="number" min="60" max="140" step="5" value="100">
+                </div>
+                <div class="control-row">
+                    <label for="demandSlope">需要の傾き b</label>
+                    <input id="demandSlope" type="range" min="0.5" max="3" step="0.1" value="1">
+                    <input id="demandSlopeNum" type="number" min="0.5" max="3" step="0.1" value="1">
+                </div>
+                <div class="control-row">
+                    <label for="supplySlope">供給の傾き d</label>
+                    <input id="supplySlope" type="range" min="1" max="5" step="0.1" value="3">
+                    <input id="supplySlopeNum" type="number" min="1" max="5" step="0.1" value="3">
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>均衡価格</span><strong id="eqPrice"></strong></div>
+                    <div class="metric"><span>均衡取引量</span><strong id="eqQty"></strong></div>
+                    <div class="metric"><span>社会的余剰</span><strong id="eqTotalSurplus"></strong></div>
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong id="demandFormulaText"></strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong id="supplyFormulaText"></strong></div>
+                </div>
+                <div class="result-box good" id="equilibriumVerdict"></div>
+            </div>
+        </div>
+        <div class="insight">完全競争市場では、均衡価格が「取引したい人」と「供給したい人」を最も自然に一致させます。そのとき、消費者余剰と生産者余剰の合計が最大になります。</div>
+    </section>
+
+    <section class="section" id="step2">
+        <span class="step-label">STEP 2</span>
+        <h2>価格規制はなぜ死荷重を生むのか</h2>
+        <p class="lead">均衡価格より低い上限価格を設定すると、需要量は増えても実際に取引できる量は供給量に制約されます。ここが価格規制の落とし穴です。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="ceilingSvg" viewBox="0 0 640 430" role="img" aria-label="価格規制と死荷重"></svg>
+                <div class="calc-note" id="ceilingCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>上限価格を設定する</h3>
+                <div class="control-row">
+                    <label for="ceilingPrice">上限価格</label>
+                    <input id="ceilingPrice" type="range" min="5" max="35" step="1" value="20">
+                    <input id="ceilingPriceNum" type="number" min="5" max="35" step="1" value="20">
+                </div>
+                <div class="segmented" aria-label="予想">
+                    <button data-ceiling-predict="larger" type="button">余剰は増える</button>
+                    <button data-ceiling-predict="smaller" type="button">余剰は減る</button>
+                </div>
+                <button id="ceilingReveal" type="button">結果を表示</button>
+                <div class="readout">
+                    <div class="metric"><span>実際の取引量</span><strong id="ceilingTradeQty"></strong></div>
+                    <div class="metric"><span>超過需要</span><strong id="shortageQty"></strong></div>
+                    <div class="metric"><span>死荷重</span><strong id="ceilingDwl"></strong></div>
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong id="ceilingDemandFormula"></strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong id="ceilingSupplyFormula"></strong></div>
+                </div>
+                <div class="result-box" id="ceilingVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step3">
+        <span class="step-label">STEP 3</span>
+        <h2>租税負担は「誰に課税するか」より「弾力性」で決まる</h2>
+        <p class="lead">ラムゼイ・ルールの直感を、需要が弾力的な財と非弾力的な財で比較します。税額は同じでも、価格・取引量・税収・死荷重は変わります。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="taxSvg" viewBox="0 0 640 430" role="img" aria-label="租税負担と弾力性"></svg>
+                <div class="calc-note" id="taxCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>需要の形と税額を選ぶ</h3>
+                <div class="segmented" aria-label="需要の弾力性">
+                    <button id="inelasticDemandBtn" class="active" type="button">非弾力的な需要</button>
+                    <button id="elasticDemandBtn" type="button">弾力的な需要</button>
+                </div>
+                <div class="control-row">
+                    <label for="taxAmount">1単位あたり税</label>
+                    <input id="taxAmount" type="range" min="2" max="20" step="1" value="10">
+                    <input id="taxAmountNum" type="number" min="2" max="20" step="1" value="10">
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>消費者負担</span><strong id="consumerBurden"></strong></div>
+                    <div class="metric"><span>生産者負担</span><strong id="producerBurden"></strong></div>
+                    <div class="metric"><span>税収</span><strong id="taxRevenue"></strong></div>
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong id="taxDemandFormula"></strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong id="taxSupplyFormula"></strong></div>
+                </div>
+                <div class="result-box" id="taxVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step4">
+        <span class="step-label">STEP 4</span>
+        <h2>自由貿易と関税：輸入量・関税収入・死荷重を分けて見る</h2>
+        <p class="lead">小国の仮定では国際価格を受け入れます。国内価格より低い国際価格なら輸入が起こり、関税は輸入価格を引き上げます。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="tradeSvg" viewBox="0 0 640 430" role="img" aria-label="自由貿易と関税"></svg>
+                <div class="calc-note" id="tradeCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>国際価格と関税を動かす</h3>
+                <div class="control-row">
+                    <label for="worldPrice">国際価格 p*</label>
+                    <input id="worldPrice" type="range" min="8" max="24" step="1" value="15">
+                    <input id="worldPriceNum" type="number" min="8" max="24" step="1" value="15">
+                </div>
+                <div class="control-row">
+                    <label for="tariffRate">従価税率 t</label>
+                    <input id="tariffRate" type="range" min="0" max="0.8" step="0.05" value="0.25">
+                    <input id="tariffRateNum" type="number" min="0" max="0.8" step="0.05" value="0.25">
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>輸入量</span><strong id="importQty"></strong></div>
+                    <div class="metric"><span>関税収入</span><strong id="tariffRevenue"></strong></div>
+                    <div class="metric"><span>関税の死荷重</span><strong id="tariffDwl"></strong></div>
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong id="tradeDemandFormula"></strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong id="tradeSupplyFormula"></strong></div>
+                </div>
+                <div class="result-box" id="tradeVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step5">
+        <span class="step-label">STEP 5</span>
+        <h2>自由財とマイナス価格：価格がつく条件を判定する</h2>
+        <p class="lead">講義終盤の補足は、需要供給図の読み方を広げる部分です。希少性がない財は価格がつかず、処理費用がかかる財では価格がマイナスになることもあります。</p>
+        <div class="cards" id="scenarioCards"></div>
+        <div class="result-box">判定スコア：<span class="big-number" id="scenarioScore">0 / 3</span></div>
+    </section>
+
+    <section class="section final">
+        <span class="step-label">まとめ</span>
+        <h2>余剰分析は「誰が得をし、何が失われたか」を面積で読む道具</h2>
+        <p class="lead">完全競争市場の均衡は効率性の基準では社会的余剰を最大にします。ただし、価格規制・税・関税・市場の失敗は、取引量や分配を変えます。重要なのは、価格だけでなく、取引量、余剰、税収、死荷重を同じ図の中で対応させて読むことです。</p>
+    </section>
+</main>
+
+<script>
+    const fmt = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 2 });
+    const pctFmt = new Intl.NumberFormat("ja-JP", { style: "percent", maximumFractionDigits: 0 });
+    const yen = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
+
+    function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function syncRangeNumber(rangeId, numberId, callback) {
+        const range = document.getElementById(rangeId);
+        const number = document.getElementById(numberId);
+        const apply = (source) => {
+            const min = Number(range.min);
+            const max = Number(range.max);
+            const value = clamp(Number(source.value), min, max);
+            range.value = value;
+            number.value = value;
+            callback();
+        };
+        range.addEventListener("input", () => apply(range));
+        number.addEventListener("input", () => apply(number));
+    }
+
+    function val(id) {
+        return Number(document.getElementById(id).value);
+    }
+
+    function marketFromControls() {
+        const A = val("demandIntercept");
+        const b = val("demandSlope");
+        const d = val("supplySlope");
+        const p = A / (b + d);
+        const q = d * p;
+        const choke = A / b;
+        const cs = 0.5 * (choke - p) * q;
+        const ps = 0.5 * p * q;
+        return { A, b, d, p, q, choke, cs, ps, ts: cs + ps };
+    }
+
+    function setupScale(maxQ, maxP) {
+        const left = 82, right = 560, top = 28, bottom = 354;
+        return {
+            left, right, top, bottom,
+            x: (q) => left + (q / maxQ) * (right - left),
+            y: (p) => bottom - (p / maxP) * (bottom - top)
+        };
+    }
+
+    function linePathDemand(m, scale) {
+        const qEnd = m.A;
+        return `M ${scale.x(0)} ${scale.y(m.A / m.b)} L ${scale.x(qEnd)} ${scale.y(0)}`;
+    }
+
+    function linePathSupply(m, scale) {
+        const qEnd = Math.min(m.A * 1.1, scale.right);
+        return `M ${scale.x(0)} ${scale.y(0)} L ${scale.x(qEnd)} ${scale.y(qEnd / m.d)}`;
+    }
+
+    function triangle(points, cls) {
+        return `<polygon class="${cls}" points="${points.map((p) => p.join(",")).join(" ")}" />`;
+    }
+
+    function baseAxes(scale, maxPLabel, maxQLabel, demandInterceptLabel = null) {
+        const interceptLabel = demandInterceptLabel ?? maxPLabel / 2;
+        return `
+            <line class="axis" x1="${scale.left}" y1="${scale.top}" x2="${scale.left}" y2="${scale.bottom}" />
+            <line class="axis" x1="${scale.left}" y1="${scale.bottom}" x2="${scale.right}" y2="${scale.bottom}" />
+            <text class="label-small" x="${scale.left - 40}" y="35">価格</text>
+            <text class="label-small" x="${scale.right - 22}" y="${scale.bottom + 34}">数量</text>
+            <line class="grid-line" x1="${scale.left}" y1="${scale.y(interceptLabel)}" x2="${scale.right}" y2="${scale.y(interceptLabel)}" />
+            <text class="label-muted" text-anchor="end" x="${scale.left - 8}" y="${scale.y(interceptLabel) + 4}">切片=${fmt.format(interceptLabel)}</text>
+        `;
+    }
+
+    function drawEquilibrium() {
+        const m = marketFromControls();
+        const maxQ = 150;
+        const maxP = 300;
+        const s = setupScale(maxQ, maxP);
+        const svg = document.getElementById("equilibriumSvg");
+        const px = s.x(m.q), py = s.y(m.p);
+        svg.innerHTML = `
+            ${baseAxes(s, maxP, maxQ, m.choke)}
+            ${triangle([[s.x(0), s.y(m.choke)], [px, py], [s.x(0), py]], "cs")}
+            ${triangle([[s.x(0), s.y(0)], [s.x(0), py], [px, py]], "ps")}
+            <path class="demand" d="${linePathDemand(m, s)}" />
+            <path class="supply" d="${linePathSupply(m, s)}" />
+            <line class="grid-line" x1="${s.left}" y1="${py}" x2="${px}" y2="${py}" />
+            <line class="grid-line" x1="${px}" y1="${py}" x2="${px}" y2="${s.bottom}" />
+            <circle class="point" cx="${px}" cy="${py}" r="6" />
+            <text class="label-small" x="${px + 10}" y="${py - 10}">E</text>
+            <text class="label-muted" x="16" y="${py + 4}">P=${fmt.format(m.p)}</text>
+            <text class="label-muted" x="${px - 22}" y="${s.bottom + 34}">Q=${fmt.format(m.q)}</text>
+            <text class="label-small" x="${s.x(m.A * 0.75)}" y="${s.y((m.A - m.A * 0.75) / m.b) - 12}">D</text>
+            <text class="label-small" x="${s.x(m.q * 1.42)}" y="${s.y((m.q * 1.42) / m.d) - 8}">S</text>
+        `;
+        document.getElementById("eqPrice").textContent = fmt.format(m.p);
+        document.getElementById("eqQty").textContent = fmt.format(m.q);
+        document.getElementById("eqTotalSurplus").textContent = fmt.format(m.ts);
+        document.getElementById("demandFormulaText").textContent = `D = ${fmt.format(m.A)} - ${fmt.format(m.b)}P`;
+        document.getElementById("supplyFormulaText").textContent = `S = ${fmt.format(m.d)}P`;
+        document.getElementById("equilibriumVerdict").innerHTML = `<span class="big-number">CS ${fmt.format(m.cs)} + PS ${fmt.format(m.ps)}</span>社会的余剰は ${fmt.format(m.ts)} です。需要側の最大支払意思額と供給側の費用の差が、取引から生まれる利益です。`;
+        document.getElementById("equilibriumCalc").innerHTML =
+            `均衡条件: ${fmt.format(m.A)} - ${fmt.format(m.b)}P = ${fmt.format(m.d)}P<br>` +
+            `P = ${fmt.format(m.A)} / (${fmt.format(m.b)} + ${fmt.format(m.d)}) = <strong>${fmt.format(m.p)}</strong>, Q = ${fmt.format(m.d)} × ${fmt.format(m.p)} = <strong>${fmt.format(m.q)}</strong><br>` +
+            `CS = (${fmt.format(m.choke)} - ${fmt.format(m.p)}) × ${fmt.format(m.q)} × 1/2 = <strong>${fmt.format(m.cs)}</strong><br>` +
+            `PS = ${fmt.format(m.p)} × ${fmt.format(m.q)} × 1/2 = <strong>${fmt.format(m.ps)}</strong>`;
+        drawCeiling();
+        drawTrade();
+    }
+
+    ["demandIntercept", "demandSlope", "supplySlope"].forEach((id) => syncRangeNumber(id, `${id}Num`, drawEquilibrium));
+
+    let ceilingPrediction = "";
+    let ceilingRevealed = false;
+
+    function drawCeiling() {
+        const m = marketFromControls();
+        const pc = val("ceilingPrice");
+        const qs = m.d * pc;
+        const qd = Math.max(0, m.A - m.b * pc);
+        const qt = Math.min(qs, qd);
+        const pDemandAtQt = (m.A - qt) / m.b;
+        const dwl = Math.max(0, 0.5 * (m.q - qt) * (pDemandAtQt - pc));
+        const shortage = Math.max(0, qd - qs);
+        const maxQ = Math.max(m.A * 1.08, qd * 1.12, m.q * 1.45);
+        const maxP = Math.max(m.choke * 1.08, m.p * 1.7);
+        const s = setupScale(maxQ, maxP);
+        const svg = document.getElementById("ceilingSvg");
+        const eX = s.x(m.q), eY = s.y(m.p);
+        const hX = s.x(qt), hY = s.y(pc);
+        const iY = s.y(pDemandAtQt);
+        const ceilingBinds = pc < m.p;
+        svg.innerHTML = `
+            ${baseAxes(s, maxP, maxQ, m.choke)}
+            ${ceilingBinds ? triangle([[hX, iY], [eX, eY], [hX, hY]], "dwl") : ""}
+            <path class="demand" d="${linePathDemand(m, s)}" />
+            <path class="supply" d="${linePathSupply(m, s)}" />
+            <line class="policy" x1="${s.left}" y1="${s.y(pc)}" x2="${s.right}" y2="${s.y(pc)}" />
+            <line class="grid-line" x1="${eX}" y1="${eY}" x2="${eX}" y2="${s.bottom}" />
+            <circle class="point" cx="${eX}" cy="${eY}" r="6" />
+            <circle class="point" cx="${hX}" cy="${hY}" r="5" />
+            <text class="label-small" x="${eX + 8}" y="${eY - 10}">E</text>
+            <text class="label-muted" x="16" y="${s.y(pc) + 4}">上限P=${fmt.format(pc)}</text>
+            <text class="label-muted" x="${hX - 18}" y="${s.bottom + 22}">取引Q=${fmt.format(qt)}</text>
+            <text class="label-small" x="${hX + 10}" y="${(iY + hY) / 2}">${ceilingBinds ? "死荷重" : "規制なし"}</text>
+        `;
+        document.getElementById("ceilingTradeQty").textContent = fmt.format(qt);
+        document.getElementById("shortageQty").textContent = ceilingBinds ? fmt.format(shortage) : "0";
+        document.getElementById("ceilingDwl").textContent = ceilingBinds ? fmt.format(dwl) : "0";
+        document.getElementById("ceilingDemandFormula").textContent = `D = ${fmt.format(m.A)} - ${fmt.format(m.b)}P`;
+        document.getElementById("ceilingSupplyFormula").textContent = `S = ${fmt.format(m.d)}P`;
+        document.getElementById("ceilingCalc").innerHTML = ceilingBinds
+            ? `上限価格 ${fmt.format(pc)} では、供給量 = ${fmt.format(m.d)} × ${fmt.format(pc)} = <strong>${fmt.format(qs)}</strong><br>` +
+              `需要量 = ${fmt.format(m.A)} - ${fmt.format(m.b)} × ${fmt.format(pc)} = <strong>${fmt.format(qd)}</strong><br>` +
+              `実際の取引量は少ない方なので Q = <strong>${fmt.format(qt)}</strong>。死荷重 = (${fmt.format(m.q)} - ${fmt.format(qt)}) × (${fmt.format(pDemandAtQt)} - ${fmt.format(pc)}) × 1/2 = <strong>${fmt.format(dwl)}</strong>`
+            : `上限価格 ${fmt.format(pc)} は均衡価格 ${fmt.format(m.p)} 以上なので、取引を制約しません。死荷重は 0 です。`;
+        const verdict = document.getElementById("ceilingVerdict");
+        const correct = ceilingPrediction === "smaller";
+        verdict.className = `result-box ${ceilingBinds ? "warn" : "good"}`;
+        if (!ceilingRevealed) {
+            verdict.textContent = "予想を選んでから結果を表示してください。";
+        } else if (ceilingBinds) {
+            verdict.innerHTML = `<strong>${correct ? "正解です。" : "ここがひっかけです。"}</strong> 需要量は増えても、実際の取引量は供給量に制約されるため、社会的余剰は減ります。`;
+        } else {
+            verdict.innerHTML = "上限価格が均衡価格以上なので、規制は実質的に効いていません。";
+        }
+    }
+
+    syncRangeNumber("ceilingPrice", "ceilingPriceNum", () => {
+        ceilingRevealed = false;
+        drawCeiling();
+    });
+    document.querySelectorAll("[data-ceiling-predict]").forEach((button) => {
+        button.addEventListener("click", () => {
+            ceilingPrediction = button.dataset.ceilingPredict;
+            document.querySelectorAll("[data-ceiling-predict]").forEach((b) => b.classList.remove("active"));
+            button.classList.add("active");
+            ceilingRevealed = false;
+            drawCeiling();
+        });
+    });
+    document.getElementById("ceilingReveal").addEventListener("click", () => {
+        ceilingRevealed = true;
+        drawCeiling();
+    });
+
+    let taxDemandType = "inelastic";
+
+    function taxMarket() {
+        const tax = val("taxAmount");
+        const A = 100;
+        const b = taxDemandType === "inelastic" ? 1 : 2.5;
+        const d = 3;
+        const p0 = A / (b + d);
+        const q0 = d * p0;
+        const ps = (A - b * tax) / (b + d);
+        const pc = ps + tax;
+        const q = d * ps;
+        const cb = pc - p0;
+        const pb = p0 - ps;
+        const revenue = tax * q;
+        const dwl = 0.5 * tax * Math.max(0, q0 - q);
+        return { A, b, d, tax, p0, q0, ps, pc, q, cb, pb, revenue, dwl, choke: A / b };
+    }
+
+    function drawTax() {
+        const m = taxMarket();
+        const maxQ = Math.max(m.q0 * 1.55, m.A * 1.05);
+        const maxP = Math.max(m.choke * 1.08, m.pc * 1.35);
+        const s = setupScale(maxQ, maxP);
+        const svg = document.getElementById("taxSvg");
+        const q0x = s.x(m.q0), qx = s.x(m.q);
+        const p0y = s.y(m.p0), psy = s.y(m.ps), pcy = s.y(m.pc);
+        const supplyTaxPath = `M ${s.x(0)} ${s.y(m.tax)} L ${s.x(maxQ)} ${s.y(maxQ / m.d + m.tax)}`;
+        svg.innerHTML = `
+            ${baseAxes(s, maxP, maxQ, m.choke)}
+            <rect class="taxrect" x="${s.left}" y="${pcy}" width="${qx - s.left}" height="${psy - pcy}" />
+            ${triangle([[qx, pcy], [q0x, p0y], [qx, psy]], "dwl")}
+            <path class="demand" d="${linePathDemand(m, s)}" />
+            <path class="supply" d="${linePathSupply(m, s)}" />
+            <path class="supply" style="stroke:#b45309; stroke-dasharray:7 5;" d="${supplyTaxPath}" />
+            <line class="grid-line" x1="${s.left}" y1="${pcy}" x2="${qx}" y2="${pcy}" />
+            <line class="grid-line" x1="${s.left}" y1="${psy}" x2="${qx}" y2="${psy}" />
+            <line class="grid-line" x1="${qx}" y1="${pcy}" x2="${qx}" y2="${s.bottom}" />
+            <circle class="point" cx="${qx}" cy="${pcy}" r="5" />
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${pcy + 4}">消費者P=${fmt.format(m.pc)}</text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${psy + 4}">生産者P=${fmt.format(m.ps)}</text>
+            <text class="label-muted" x="${qx - 20}" y="${s.bottom + 24}">Q=${fmt.format(m.q)}</text>
+            <text class="label-small" x="${s.left + 18}" y="${(pcy + psy) / 2}">税収</text>
+            <text class="label-small" x="${qx + 12}" y="${p0y}">死荷重</text>
+        `;
+        document.getElementById("consumerBurden").textContent = fmt.format(m.cb);
+        document.getElementById("producerBurden").textContent = fmt.format(m.pb);
+        document.getElementById("taxRevenue").textContent = fmt.format(m.revenue);
+        document.getElementById("taxDemandFormula").textContent = `D = ${fmt.format(m.A)} - ${fmt.format(m.b)}P`;
+        document.getElementById("taxSupplyFormula").textContent = `S = ${fmt.format(m.d)}P`;
+        document.getElementById("taxCalc").innerHTML =
+            `課税前: P = ${fmt.format(m.p0)}, Q = ${fmt.format(m.q0)}<br>` +
+            `課税後: 消費者価格 = ${fmt.format(m.pc)}, 生産者受取価格 = ${fmt.format(m.ps)}, Q = ${fmt.format(m.q)}<br>` +
+            `税収 = 税 ${fmt.format(m.tax)} × 数量 ${fmt.format(m.q)} = <strong>${fmt.format(m.revenue)}</strong><br>` +
+            `死荷重 = 税 ${fmt.format(m.tax)} × 減少数量 ${fmt.format(m.q0 - m.q)} × 1/2 = <strong>${fmt.format(m.dwl)}</strong>`;
+        document.getElementById("taxVerdict").className = `result-box ${taxDemandType === "inelastic" ? "good" : "warn"}`;
+        document.getElementById("taxVerdict").innerHTML = taxDemandType === "inelastic"
+            ? `<span class="big-number">非弾力的な財は税収が残りやすい</span>需要量があまり減らないため、税収は比較的大きく、死荷重は小さめになります。`
+            : `<span class="big-number">弾力的な財は取引量が大きく減る</span>需要が価格に敏感なため、税による数量減少と死荷重が大きくなります。`;
+    }
+
+    syncRangeNumber("taxAmount", "taxAmountNum", drawTax);
+    document.getElementById("inelasticDemandBtn").addEventListener("click", () => {
+        taxDemandType = "inelastic";
+        document.getElementById("inelasticDemandBtn").classList.add("active");
+        document.getElementById("elasticDemandBtn").classList.remove("active");
+        drawTax();
+    });
+    document.getElementById("elasticDemandBtn").addEventListener("click", () => {
+        taxDemandType = "elastic";
+        document.getElementById("elasticDemandBtn").classList.add("active");
+        document.getElementById("inelasticDemandBtn").classList.remove("active");
+        drawTax();
+    });
+
+    function tradeValues() {
+        const m = marketFromControls();
+        const pw = val("worldPrice");
+        const t = val("tariffRate");
+        const pt = pw * (1 + t);
+        const qsFree = m.d * pw;
+        const qdFree = Math.max(0, m.A - m.b * pw);
+        const qsTariff = m.d * pt;
+        const qdTariff = Math.max(0, m.A - m.b * pt);
+        const importsFree = Math.max(0, qdFree - qsFree);
+        const importsTariff = Math.max(0, qdTariff - qsTariff);
+        const tariffPerUnit = pt - pw;
+        const revenue = tariffPerUnit * importsTariff;
+        const productionDwl = 0.5 * tariffPerUnit * Math.max(0, qsTariff - qsFree);
+        const consumptionDwl = 0.5 * tariffPerUnit * Math.max(0, qdFree - qdTariff);
+        const tradeGain = 0.5 * Math.max(0, m.p - pw) * Math.max(0, qdFree - qsFree);
+        return { ...m, pw, t, pt, qsFree, qdFree, qsTariff, qdTariff, importsFree, importsTariff, tariffPerUnit, revenue, dwl: productionDwl + consumptionDwl, tradeGain };
+    }
+
+    function drawTrade() {
+        const m = tradeValues();
+        const maxQ = Math.max(m.A * 1.08, m.qdFree * 1.15, m.q * 1.45);
+        const maxP = Math.max(m.choke * 1.08, m.p * 1.7);
+        const s = setupScale(maxQ, maxP);
+        const svg = document.getElementById("tradeSvg");
+        const pwY = s.y(m.pw), ptY = s.y(m.pt);
+        const freeImportStart = s.x(m.qsFree), freeImportEnd = s.x(m.qdFree);
+        const tariffImportStart = s.x(m.qsTariff), tariffImportEnd = s.x(m.qdTariff);
+        svg.innerHTML = `
+            ${baseAxes(s, maxP, maxQ, m.choke)}
+            ${m.importsFree > 0 ? triangle([[s.x(m.qsFree), pwY], [s.x(m.q), s.y(m.p)], [s.x(m.qdFree), pwY]], "tradegain") : ""}
+            ${m.importsTariff > 0 ? `<rect class="taxrect" x="${tariffImportStart}" y="${ptY}" width="${tariffImportEnd - tariffImportStart}" height="${pwY - ptY}" />` : ""}
+            ${m.importsTariff > 0 ? triangle([[freeImportStart, pwY], [tariffImportStart, ptY], [tariffImportStart, pwY]], "dwl") : ""}
+            ${m.importsTariff > 0 ? triangle([[tariffImportEnd, ptY], [freeImportEnd, pwY], [tariffImportEnd, pwY]], "dwl") : ""}
+            <path class="demand" d="${linePathDemand(m, s)}" />
+            <path class="supply" d="${linePathSupply(m, s)}" />
+            <line class="world" x1="${s.left}" y1="${pwY}" x2="${s.right}" y2="${pwY}" />
+            <line class="policy" x1="${s.left}" y1="${ptY}" x2="${s.right}" y2="${ptY}" />
+            <line class="grid-line" x1="${freeImportStart}" y1="${pwY}" x2="${freeImportStart}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${tariffImportStart}" y1="${ptY}" x2="${tariffImportStart}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${freeImportEnd}" y1="${pwY}" x2="${freeImportEnd}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${tariffImportEnd}" y1="${ptY}" x2="${tariffImportEnd}" y2="${s.bottom}" />
+            <circle class="point" cx="${freeImportStart}" cy="${pwY}" r="5" />
+            <circle class="point" cx="${tariffImportStart}" cy="${ptY}" r="5" />
+            <circle class="point" cx="${freeImportEnd}" cy="${pwY}" r="5" />
+            <circle class="point" cx="${tariffImportEnd}" cy="${ptY}" r="5" />
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${pwY + 4}">p*=${fmt.format(m.pw)}</text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${ptY + 4}">(1+t)p*=${fmt.format(m.pt)}</text>
+            <text class="label-muted" text-anchor="end" x="${freeImportStart - 6}" y="${s.bottom + 20}">qS(p*)=${fmt.format(m.qsFree)}</text>
+            <text class="label-muted" text-anchor="start" x="${tariffImportStart + 6}" y="${s.bottom + 38}">qS関税後=${fmt.format(m.qsTariff)}</text>
+            <text class="label-muted" text-anchor="end" x="${tariffImportEnd - 6}" y="${s.bottom + 56}">qD関税後=${fmt.format(m.qdTariff)}</text>
+            <text class="label-muted" text-anchor="start" x="${freeImportEnd + 6}" y="${s.bottom + 20}">qD(p*)=${fmt.format(m.qdFree)}</text>
+            <text class="label-small" x="${(tariffImportStart + tariffImportEnd) / 2 - 12}" y="${s.bottom + 24}">輸入</text>
+            <text class="label-small" x="${tariffImportStart + 8}" y="${(ptY + pwY) / 2}">関税収入</text>
+        `;
+        document.getElementById("importQty").textContent = fmt.format(m.importsTariff);
+        document.getElementById("tariffRevenue").textContent = fmt.format(m.revenue);
+        document.getElementById("tariffDwl").textContent = fmt.format(m.dwl);
+        document.getElementById("tradeDemandFormula").textContent = `D = ${fmt.format(m.A)} - ${fmt.format(m.b)}P`;
+        document.getElementById("tradeSupplyFormula").textContent = `S = ${fmt.format(m.d)}P`;
+        document.getElementById("tradeCalc").innerHTML =
+            `自由貿易: 国内供給 ${fmt.format(m.qsFree)}, 国内需要 ${fmt.format(m.qdFree)}, 輸入 ${fmt.format(m.importsFree)}<br>` +
+            `関税後価格 = ${fmt.format(m.pw)} × (1 + ${fmt.format(m.t)}) = <strong>${fmt.format(m.pt)}</strong><br>` +
+            `関税後: 国内供給 ${fmt.format(m.qsTariff)}, 国内需要 ${fmt.format(m.qdTariff)}, 輸入 ${fmt.format(m.importsTariff)}<br>` +
+            `関税収入 = ${fmt.format(m.tariffPerUnit)} × ${fmt.format(m.importsTariff)} = <strong>${fmt.format(m.revenue)}</strong>, 死荷重 = <strong>${fmt.format(m.dwl)}</strong>`;
+        document.getElementById("tradeVerdict").className = m.importsTariff > 0 ? "result-box warn" : "result-box good";
+        document.getElementById("tradeVerdict").innerHTML = m.importsTariff > 0
+            ? `<span class="big-number">関税は輸入を縮小する</span>関税収入は政府に入りますが、生産と消費の両側で死荷重が生じます。`
+            : `<span class="big-number">この設定では輸入がほぼ消えます</span>関税後価格が高すぎると、自由貿易の利益が大きく失われます。`;
+    }
+
+    ["worldPrice", "tariffRate"].forEach((id) => syncRangeNumber(id, `${id}Num`, drawTrade));
+
+    const scenarios = [
+        {
+            title: "山ほどある普通の空気",
+            text: "需要に比べて供給がはるかに多く、追加的に使っても希少性がほぼない。",
+            answer: "free",
+            choices: [["free", "自由財"], ["positive", "正の価格"], ["negative", "マイナス価格"]],
+            feedback: "自由財です。希少性がなければ、通常は価格がつきません。"
+        },
+        {
+            title: "夏のデパートのカブトムシ",
+            text: "欲しい人がいて、捕獲・流通に手間がかかり、供給が限定される。",
+            answer: "positive",
+            choices: [["free", "自由財"], ["positive", "正の価格"], ["negative", "マイナス価格"]],
+            feedback: "正の価格がつきます。需要があり、希少性と供給費用があるからです。"
+        },
+        {
+            title: "処理費用がかかる古紙",
+            text: "供給が多すぎ、引き取る側には処理や保管の費用がかかる。",
+            answer: "negative",
+            choices: [["free", "自由財"], ["positive", "正の価格"], ["negative", "マイナス価格"]],
+            feedback: "マイナス価格がありえます。供給者がお金を払って引き取ってもらう状態です。"
+        }
+    ];
+
+    function renderScenarios() {
+        const root = document.getElementById("scenarioCards");
+        root.innerHTML = scenarios.map((s, i) => `
+            <article class="scenario" data-scenario="${i}">
+                <h3>${s.title}</h3>
+                <p>${s.text}</p>
+                <div class="segmented">
+                    ${s.choices.map(([value, label]) => `<button type="button" data-choice="${value}">${label}</button>`).join("")}
+                </div>
+                <p class="feedback"></p>
+            </article>
+        `).join("");
+        root.querySelectorAll("button").forEach((button) => {
+            button.addEventListener("click", () => {
+                const card = button.closest(".scenario");
+                const item = scenarios[Number(card.dataset.scenario)];
+                card.querySelectorAll("button").forEach((b) => {
+                    b.classList.remove("good", "bad");
+                    b.dataset.selected = "false";
+                });
+                button.dataset.selected = "true";
+                if (button.dataset.choice === item.answer) {
+                    button.classList.add("good");
+                    card.querySelector(".feedback").textContent = `正解。${item.feedback}`;
+                } else {
+                    button.classList.add("bad");
+                    card.querySelector(".feedback").textContent = "需要に対して供給が足りないのか、余りすぎて処理費用がかかるのかを見直しましょう。";
+                }
+                updateScenarioScore();
+            });
+        });
+    }
+
+    function updateScenarioScore() {
+        let score = 0;
+        document.querySelectorAll(".scenario").forEach((card) => {
+            const item = scenarios[Number(card.dataset.scenario)];
+            const selected = card.querySelector("button[data-selected='true']");
+            if (selected && selected.dataset.choice === item.answer) score += 1;
+        });
+        document.getElementById("scenarioScore").textContent = `${score} / ${scenarios.length}`;
+    }
+
+    renderScenarios();
+    drawEquilibrium();
+    drawTax();
+    drawTrade();
+</script>
+</body>
+</html>

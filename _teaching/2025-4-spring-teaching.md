@@ -12,4 +12,5 @@ April 2025 -
 
 ● <a href="/files/IntroMicro_03_SupplyTheory.html" target="_blank">IntroMicro_03_Supply_Theory</a> <br>
 ● <a href="/files/IntroMicro_04_ProducerTheory.html" target="_blank">IntroMicro_04_Producer_Theory</a> <br>
-● <a href="/files/IntroMicro_05_ElasticityInteractive.html" target="_blank">IntroMicro_05_Elasticity_Interactive</a>
+● <a href="/files/IntroMicro_05_ElasticityInteractive.html" target="_blank">IntroMicro_05_Elasticity_Interactive</a> <br>
+● <a href="/files/IntroMicro_06_MarketSurplusInteractive.html" target="_blank">IntroMicro_06_Market_Surplus_Interactive</a>
