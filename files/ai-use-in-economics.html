@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>経済学の学習・研究におけるAI活用 — 経済学科学生のためのガイド</title>
+<style>
+  :root {
+    --yellow-bg: #fdfae8;
+    --yellow-border: #333;
+    --red-bg: #fff5f5;
+    --red-border: #b54040;
+    --blue-bg: #f0f5ff;
+    --blue-border: #4060b5;
+    --text: #1a1a1a;
+    --muted: #555;
+    --max-width: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    background: #fff;
+  }
+  /* ── Header ── */
+  header {
+    background: #1a2a4a;
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  header h1 {
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+  }
+  header .meta { font-size: 0.95rem; opacity: 0.85; margin-bottom: 0.3rem; }
+  header .pdf-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.45rem 1.2rem;
+    background: #fff;
+    color: #1a2a4a;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  header .pdf-link:hover { background: #e8f0ff; }
+
+  /* ── Nav ── */
+  nav {
+    background: #f4f6fa;
+    border-bottom: 1px solid #ddd;
+    padding: 0.8rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    list-style: none;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  nav ol li a { color: #1a2a4a; text-decoration: none; }
+  nav ol li a:hover { text-decoration: underline; }
+
+  /* ── Main ── */
+  main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── Abstract ── */
+  .abstract {
+    background: #f7f9fc;
+    border-left: 4px solid #1a2a4a;
+    padding: 1rem 1.2rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ── Sections ── */
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 2.5rem 0 0.8rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid #1a2a4a;
+    color: #1a2a4a;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    color: #2a3a5a;
+  }
+  p { margin-bottom: 0.9rem; }
+  ul, ol { margin: 0.5rem 0 0.9rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+
+  /* ── Boxes ── */
+  .box { border-radius: 5px; padding: 1rem 1.2rem; margin: 1.2rem 0; }
+  .box-principle {
+    background: var(--yellow-bg);
+    border: 1px solid var(--yellow-border);
+  }
+  .box-principle.center { text-align: center; }
+  .box-principle.center p { font-size: 1.15rem; font-weight: 700; margin: 0; }
+  .box-warning {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+  }
+  .box-prompt {
+    background: var(--blue-bg);
+    border: 1px solid var(--blue-border);
+    font-size: 0.92rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+  .checklist li::before {
+    content: "☐";
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .checklist-group { margin-bottom: 1.5rem; }
+  .checklist-group h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1.2rem 0 0.5rem;
+    color: #2a3a5a;
+  }
+
+  /* ── Comic figures ── */
+  .comic-wrap { margin: 1.5rem 0; overflow-x: auto; }
+  .comic {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 2px solid #333;
+    border-radius: 6px;
+    min-width: 480px;
+  }
+  .comic-title {
+    grid-column: 1 / -1;
+    background: #f0f0f0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .comic-panel {
+    border-right: 1px solid #ccc;
+    padding: 0.8rem 0.6rem 0.6rem;
+    text-align: center;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .comic-panel:last-child { border-right: none; }
+  .comic-panel svg { display: block; }
+  .comic-panel p { margin: 0; line-height: 1.4; }
+
+  /* ── Links ── */
+  a { color: #1a4a9a; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Footer ── */
+  footer {
+    background: #f4f6fa;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    nav ol { font-size: 0.78rem; }
+    h2 { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+  <h1>経済学の学習・研究におけるAI活用<br>経済学科学生のためのガイド</h1>
+  <p class="meta">東海大学政治経済学部経済学科　孫明超</p>
+  <a class="pdf-link" href="ai-use-in-economics.pdf">📄 PDF版をダウンロード</a>
+</header>
+
+<!-- ===== Nav ===== -->
+<nav>
+  <ol>
+    <li><a href="#s1">1. AIを使う前に</a></li>
+    <li><a href="#s2">2. 授業・ゼミ</a></li>
+    <li><a href="#s3">3. テーマ・文献</a></li>
+    <li><a href="#s4">4. データ・分析</a></li>
+    <li><a href="#s5">5. 執筆・校正</a></li>
+    <li><a href="#s6">6. 審査会準備</a></li>
+    <li><a href="#s7">7. チェックリスト</a></li>
+    <li><a href="#s8">8. 参考資料</a></li>
+  </ol>
+</nav>
+
+<!-- ===== Main ===== -->
+<main>
+
+<div class="abstract">
+生成AIは、経済学の学習からデータ分析、卒業論文の執筆、発表準備まで、あらゆる場面で強力な助けとなる。しかし同時に、使い方を誤ると理解の空洞化、誤情報の混入、研究倫理上の問題を招く。本稿は、経済学科の学生が卒業論文を完成させるまでの流れ（テーマ選びから文献調査、分析、執筆、発表審査会まで）に沿って、AIを「考えることを外注する機械」ではなく「経済学を深く理解するための道具」として使いこなす方法を整理する。
+</div>
+
+<!-- ===== §1 ===== -->
+<section id="s1">
+<h2>1. AIを使う前に知っておくべきこと</h2>
+
+<h3>根本的な問いかけ</h3>
+<p>AI活用の基本理念は、次の一文に集約される。</p>
+<div class="box box-principle center"><p>AIを最大限に活用して、より多くの経済学を知ろう。</p></div>
+<p>そのための最も重要な原則は次の通りである。</p>
+<div class="box box-principle center"><p>AIと議論している内容について、常に自分自身が理解を保つこと。</p></div>
+<p>AIが作成した説明、分析、コード、文章をレポートや卒業論文に利用する場合、内容を理解し、自分の言葉で書き直し、その場で説明できる状態にしておく必要がある。なぜなら、誤りが論文に混入したとき、責任を負うのはAIではなくあなた自身だからである。</p>
+<p>経済学を学ぶ目的は、単にレポートを提出することではない。需要と供給、インセンティブ、制度、データ、因果関係を通じて、現実の社会を理解する力を身につけることである。AIを使う目的は、考えることを避けることではなく、より深くそれを理解することにある。</p>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">AIにすべて任せることの危険性</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80"><!-- student -->
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>卒論、全部AIに書いてもらおう。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80"><!-- robot -->
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="20" x2="30" y2="10" stroke="#333" stroke-width="2"/>
+      <circle cx="30" cy="8" r="3" fill="#333"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>完成しました。参考文献も入れました。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80"><!-- teacher -->
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>この回帰係数の意味を説明できますか？</p>
+  </div>
+</div>
+</div>
+
+<h3>AIの限界を知る</h3>
+<p>AIは流暢な文章を書くため、一見正しく見える。しかし実際には、存在しない論文の引用、誤った統計、単純化しすぎた理論、根拠のない政策評価を堂々と提示することがある。「GDP成長率が1%上昇すると失業率は0.5%低下する」という文章がそれらしく書かれていても、その数字に出典がなければ意味がない。</p>
+<p>AIがとくに危険なのは、一見気づきにくい誤った前提に基づいて、もっともらしい論理を展開するときである。前提が間違っていれば、どれだけ論理が整然としていても結論は誤りになる。したがって、AI出力は「完成品」ではなく、「検討すべき仮説」または「下書きの素材」として扱うべきである。</p>
+<p>また、AIには有料論文の本文へのアクセス権がない。抄録や他の資料から内容を推測して説明するため、論文の内容を誤って伝えることがある。引用された文献は必ず自分で原文を確認する必要がある。</p>
+
+<h3>AIをうまく使うための基本作法</h3>
+<p>AIへの質問は、自分の立場と目的を明示するほど回答の質が上がる。以下のような前置きを習慣にするとよい。</p>
+<div class="box box-prompt">私は経済学部3年生で、労働経済学の卒業論文を準備しています。最低賃金が雇用に与える影響について、理論モデル、代表的な実証研究、データ分析の第一歩を、大学生にも確認できる形で説明してください。前提条件と、間違えやすい点も挙げてください。</div>
+<p>AIはリソースを節約しようとして、説明を省いたり手順を飛ばしたりする傾向がある。「慎重に確認してください」「前提条件を明示してください」「失敗しやすい点も挙げてください」と付け加えることで、より詳しく信頼できる回答を引き出せる。</p>
+<p>一度の回答で満足しないことも重要である。AIの回答を読み、疑問点を指摘し、再度質問することで、よりよい理解に近づく。難しいテーマほど、数回のやりとりを経てはじめて有用な回答が得られることが多い。テーマごとにチャットを分け、区切りのよいところで要約させてから新しいチャットを始めると、混乱を防ぎやすい。</p>
+<div class="box box-warning">未公開データ、授業内資料、共同研究者の原稿、企業や自治体から提供されたデータを、許可なくAIにアップロードしてはならない。個人が識別される可能性のあるデータ、成績情報、アンケートの自由記述は特に慎重に扱うこと。</div>
+</section>
+
+<!-- ===== §2 ===== -->
+<section id="s2">
+<h2>2. 授業・ゼミでの学習</h2>
+<p>経済学の学力は、教科書を読み、演習問題を解き、論文を読み、議論する積み重ねによって育つ。AIはこの過程を大きく支援できる。</p>
+
+<h3>理解を深めるためのAI活用</h3>
+<p>講義で分からなかった概念を深く掘り下げたいとき、AIは個別指導教員のように機能する。</p>
+<ol>
+  <li>「IS-LMモデルで金融政策が効かなくなる流動性の罠を、図の動きで説明してください」</li>
+  <li>「ジニ係数が0.4と0.6の社会の違いを、具体的な所得分布の例で示してください」</li>
+  <li>「この論文（アップロード）の第2節のモデルを、大学生向けに解説してください」</li>
+  <li>「ゲーム理論のナッシュ均衡について、日常生活の例で3つ説明してください」</li>
+  <li>「固定効果モデルとランダム効果モデルの使い分けを、ハウスマン検定と合わせて教えてください」</li>
+</ol>
+<p>重要なのは、AIの説明を読んで終わりにしないことである。説明を読んだあと、ノートを閉じて自分の言葉で再現できるか確認する。できなければ、もう一度質問する。この往復が理解を定着させる。</p>
+
+<h3>演習問題との向き合い方</h3>
+<p>授業で出された演習問題を最初からAIに解かせることは推奨されない。演習問題は答えを得るためではなく、経済学的な考え方を鍛えるためにある。</p>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">演習問題をAIに丸投げする学生</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>需要曲線の問題、答えだけ教えて。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="20" x2="30" y2="10" stroke="#333" stroke-width="2"/>
+      <circle cx="30" cy="8" r="3" fill="#333"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>答えは③です。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>なぜ③になるのですか？</p>
+  </div>
+</div>
+</div>
+
+<p>ゼミで「なぜそうなるか」を問われたとき、自分で説明できなければ本番で困るのは自分である。望ましい順序は次の通りだ。</p>
+<ol>
+  <li>まず自分で考える（最低15分）。</li>
+  <li>解けなければ、AIに「ヒントだけ」を求める。</li>
+  <li>ヒントをもとに、もう一度自分で解く。</li>
+  <li>最後にAIの解答例と比較し、自分の解法との違いを確認する。</li>
+  <li>ゼミ生や教員に口頭で説明できるか確認する。</li>
+</ol>
+<p>水泳を学ぶのにプールサイドで動画を見るだけでは泳げるようにならない。経済学も、自分の手と頭で考える時間は省略できない。</p>
+</section>
+
+<!-- ===== §3 ===== -->
+<section id="s3">
+<h2>3. 卒業論文：テーマ選びと文献調査</h2>
+<p>卒業論文は、多くの学生にとって初めての本格的な研究経験である。ここからは、テーマ選び・文献調査・データ分析・執筆・発表という卒論の流れに沿って、AIをどう活用するかを整理する。</p>
+
+<h3>テーマを見つける</h3>
+<p>「何を研究したらよいか分からない」という悩みは珍しくない。AIはテーマ探索の最初の壁打ち相手として機能する。自分が気になるニュースや社会問題を出発点に、次のように問いかけてみるとよい。</p>
+<div class="box box-prompt">日本の少子高齢化について、経済学部生の卒業論文テーマを15個提案してください。それぞれについて、研究の意義、e-Statや総務省などで入手できるデータ、初歩的な分析方法を示してください。都道府県データで因果推論に取り組めるテーマを優先してください。</div>
+<p>ただし、AIが提案したテーマが本当に面白いか、新規性があるか、卒論の期間内に実行可能かは、必ずゼミの指導教員と相談すべきである。AIはその分野の先行研究の蓄積や、データへのアクセスの難しさを正確に把握していないことがある。</p>
+
+<h3>文献を調査する</h3>
+<p>テーマが固まったら先行研究を調べる。AIは初期の地図を作るのに役立つが、文献の実在確認は自分で行わなければならない。</p>
+<div class="box box-prompt">最低賃金が雇用に与える影響に関する実証研究を10本挙げてください。Card and Krueger（1994）以降の主要な論文を含め、それぞれの識別戦略と主な結論を1〜2文で要約してください。</div>
+<p>AIが挙げた文献は、必ずCiNii・Google Scholar・J-STAGEなどの学術データベースで実在を確認する。実在する論文であっても、AIがその内容を誤って伝えている可能性がある。とくにAIは有料論文の本文にアクセスできないため、抄録から内容を推測することがある。論文の要旨だけでなく、本文の該当箇所を自分で読むことが研究の基本である。</p>
+<p>また、「AIが参照したソースを教えてください」と尋ねることも有効である。AIは参照元を明示せずに説明することが多いが、尋ねれば具体的な文献名が出てくることがある。</p>
+<div class="box box-warning">AIが生成した参考文献リストをそのまま卒論に使用してはならない。著者名・年・雑誌名・巻号・ページを一つひとつ原文で確認すること。</div>
+</section>
+
+<!-- ===== §4 ===== -->
+<section id="s4">
+<h2>4. 卒業論文：データ収集と分析</h2>
+
+<h3>データを探す・整える</h3>
+<p>経済学の実証研究では、どのデータをどこから入手するかが分析の出発点となる。日本の卒業論文でよく使われる公的データソースを以下に示す。</p>
+<ul>
+  <li><strong>e-Stat</strong>（政府統計の総合窓口）：人口、労働、産業、物価など幅広い統計</li>
+  <li><strong>賃金構造基本統計調査</strong>（厚生労働省）：産業・職種・地域別の賃金データ</li>
+  <li><strong>就業構造基本調査</strong>（総務省）：就業形態・雇用・収入の都道府県別データ</li>
+  <li><strong>国勢調査</strong>（総務省）：人口・世帯・就業の地域別長期時系列データ</li>
+  <li><strong>財務省法人企業統計</strong>：企業の財務・雇用・投資データ</li>
+</ul>
+<p>AIはデータの探し方、変数の定義、データの結合方法についても相談相手になる。ただし、AIが「このデータは公開されている」と言っても、実際にはアクセス制限や利用条件がある場合がある。必ず公式サイトで確認する。</p>
+
+<h3>分析コードを書く</h3>
+<p>Stata・R・Pythonなどによるデータ分析は、卒業論文において避けて通れない作業である。AIはコード作成の強力な助手になる。</p>
+<div class="box box-prompt">都道府県パネルデータを使って、失業率を被説明変数、最低賃金を説明変数とする固定効果モデルをStataで推定したいです。都道府県固定効果と年固定効果を含め、都道府県レベルでクラスターロバスト標準誤差を使うコードを書いてください。</div>
+<p>ただし、AIが作成したコードには必ずバグが潜んでいると思って確認する。</p>
+<ul>
+  <li>変数定義は意図通りか（対数変換、ラグ処理、欠損値の扱い）。</li>
+  <li>固定効果の入れ方は適切か（areg か reghdfe か、吸収する変数は何か）。</li>
+  <li>標準誤差のクラスタリング単位は正しいか。</li>
+  <li>簡単な小さいサンプルで、手計算と結果が一致するか。</li>
+  <li>コード・データ・出力結果を再現可能な形で保存しているか。</li>
+</ul>
+<p>AIが「このコードは正しい」と言っても、自分でテストして確認するまで信じてはならない。AIコードの検証には、答えがわかっている単純な例（たとえばダミーデータで手計算できる回帰）を使って動作確認するのが効果的である。</p>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">AIを研究補助者として使う</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>私はこういう仮説を考えています。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="20" x2="30" y2="10" stroke="#333" stroke-width="2"/>
+      <circle cx="30" cy="8" r="3" fill="#333"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>内生性の問題と追加データを確認しましょう。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>その識別戦略の弱点は何ですか？</p>
+  </div>
+</div>
+</div>
+
+<h3>仮説を批判的に検討する</h3>
+<p>AIは仮説を支持する説明を作るのが得意だが、研究では「自分の仮説が間違っている可能性」を積極的に調べることが重要である。</p>
+<div class="box box-prompt">私の仮説は「観光客の増加が地域の賃金水準を押し上げる」です。この仮説への反論、代替的な説明、内生性の問題、必要なロバストネスチェックを挙げてください。</div>
+<p>AIを「賛同してくれる助手」としてではなく、「厳しい査読者」として使う意識が研究の質を高める。AIが「この結果は正しい」と述べても、それをそのまま受け入れてはならない。別のAIに同じ内容を確認させても同じ答えが返ってくることがあるが、それは自分による検証の代わりにはならない。AIどうしは訓練データや誤りのパターンを共有していることがある。最終的な判断は自分自身で下すべきである。</p>
+
+<h3>AIとの協働と丸投げの違い</h3>
+<p>AIを使うことで作業は速くなる。しかし、卒業論文でAIを使う目的は研究時間を減らすことではない。同じ時間でより多くの推定手法を試し、より多くの先行研究を読み、より深く結果を解釈することが目的である。</p>
+<p>研究能力は、行き詰まり、試行錯誤し、失敗する過程で育つ。自分で問いを立て、データを読み、結果を解釈する力は、その過程でしか身につかない。AIはその過程を消すためではなく、より豊かにするために使うべきである。経験が少ないほど、この点はより重要になる。</p>
+</section>
+
+<!-- ===== §5 ===== -->
+<section id="s5">
+<h2>5. 卒業論文：執筆と校正</h2>
+
+<h3>論文の構成と文章</h3>
+<p>卒業論文の文章は自分で書くべきである。文章を書くことは、経済学的思考を整理する訓練そのものだからだ。ゼミ発表や審査会で「この部分はどういう意味ですか」と問われたとき、答えられなければ評価に直結する。</p>
+<p>AIには文章を「書かせる」のではなく、自分が書いた文章を「批評させる」使い方が適している。</p>
+<div class="box box-prompt">以下は私が書いた卒業論文の第3節です。書き直すのではなく、改善点だけリストアップしてください。確認してほしい点：論理の飛躍、用語の不統一、根拠が薄い箇所、引用が必要な主張、日本語として不自然な表現。</div>
+<p>注意点がある。AIに校正を依頼すると、指摘するだけでなく勝手に書き直した文章を返してくることが多い。自分の文章がAIの文体に置き換えられると、内容の正確さと著者としての責任が両方曖昧になる。「書き直さずにコメントのみ返してください」と明示し、節ごとに分けて依頼すると丁寧な指摘が返ってきやすい。</p>
+<div class="box box-warning">AIが生成した文章をそのままコピーして提出することは、内容の誤りのリスクだけでなく、知らないうちに他者の著作物を模倣する可能性がある。最終的な文章は自分の言葉で書き直すこと。</div>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">AIに書かせる学生とAIで改善する学生</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>卒論を書いて。提出します。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="20" x2="30" y2="10" stroke="#333" stroke-width="2"/>
+      <circle cx="30" cy="8" r="3" fill="#333"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>この文章は自然ですが、根拠が弱いです。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>どの部分を自分で説明できますか？</p>
+  </div>
+</div>
+</div>
+
+<h3>AI利用の記録と開示</h3>
+<p>卒業論文でAIを利用した場合、どの作業に使ったかを記録しておく習慣をつけよう。東海大学や各授業の方針、また将来論文を投稿する学術誌のAI利用ポリシーによっては、開示が必要になる。</p>
+<ul>
+  <li>文献探索の補助（先行研究のリストアップ）</li>
+  <li>Stata・R・PythonなどのコードのAI支援による作成</li>
+  <li>英文アブストラクトの校正</li>
+  <li>図表の説明文の改善</li>
+  <li>想定質問の作成</li>
+</ul>
+<div class="box box-principle">本研究では、生成AIを用いてStataコードの作成補助、英文アブストラクトの校正、卒業論文審査会の想定質問の作成を行った。研究テーマの設定、データ収集・加工、実証分析、結果の解釈、本文の最終執筆はすべて著者が行った。</div>
+</section>
+
+<!-- ===== §6 ===== -->
+<section id="s6">
+<h2>6. 卒業論文審査会の準備</h2>
+<p>日本の大学の卒業論文審査会は、提出した論文を口頭で説明し、教員から質問を受ける場である。AIはこの準備においても有効なツールとなる。</p>
+
+<h3>発表スライドを作る</h3>
+<p>論文の内容を10〜15分の発表にまとめるのは、それ自体が高度な作業である。AIはスライド構成の第一案を作るのに役立つ。</p>
+<div class="box box-prompt">この卒業論文を10分で発表します。問題意識・先行研究・データと識別戦略・推定結果・結論と政策的含意の順番で、スライド10枚の構成案を作ってください。各スライドで伝えるべき最重要メッセージを1文で示してください。</div>
+<p>ただし、AIが作った構成案はあくまで出発点である。経済学のゼミ発表では、識別戦略の説明と結果の解釈に時間をかけることが多い。発表の流れ、図表の見やすさ、聴き手（担当教員・副査・他の学生）の知識水準に合わせて、自分で大きく調整する必要がある。</p>
+
+<h3>審査会の質問を想定する</h3>
+<p>審査会で鋭い質問を受けて答えられないと、その後の採点に影響する。AIを「厳しい審査員」として使い、事前に想定問答を練習しておくと効果的である。</p>
+<div class="box box-prompt">あなたは経済学の卒業論文審査会の教員です。以下の卒業論文（アップロード）に対して、厳しい質問を15個挙げてください。特に、内生性問題への対処、固定効果の解釈、外部妥当性、政策的含意の根拠について重点的に質問してください。</div>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">AIを模擬審査員として使う</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>発表練習をしたいです。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="20" x2="30" y2="10" stroke="#333" stroke-width="2"/>
+      <circle cx="30" cy="8" r="3" fill="#333"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>識別戦略は本当に妥当ですか？</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>その質問、本番で出ますよ。</p>
+  </div>
+</div>
+</div>
+
+<p>AIが生成した想定質問に対して自分で回答を準備し、それをゼミ仲間や指導教員に見せてフィードバックをもらうと、さらに準備の質が高まる。AIの模擬審査はあくまで練習台であり、本番の質問は予想外の角度から来ることも多い。</p>
+</section>
+
+<!-- ===== §7 ===== -->
+<section id="s7">
+<h2>7. 提出前のチェックリスト</h2>
+<p>レポートや卒業論文を提出する前に、以下を確認しよう。</p>
+
+<div class="checklist-group">
+  <h4>1. 理解と責任</h4>
+  <ul class="checklist">
+    <li>AIが作成した説明、分析、コード、文章の内容を自分で理解している。</li>
+    <li>指導教員・審査員・ゼミ仲間に、その場で説明できる。</li>
+    <li>定義、前提条件、適用範囲、例外ケースをすべて確認した。</li>
+    <li>相関関係と因果関係を区別している。</li>
+    <li>AIを「考えることを避けるため」ではなく「より深く学ぶため」に使っている。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>2. 学習と演習</h4>
+  <ul class="checklist">
+    <li>授業の演習問題でAIを使う場合、担当教員の方針を確認した。</li>
+    <li>AIに解答を出させるのではなく、ヒントや背景説明を求めた。</li>
+    <li>AIの説明を参考にしたあと、自分で議論を再構成した。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>3. 研究アイデアと仮説</h4>
+  <ul class="checklist">
+    <li>AIが提案した研究テーマ、仮説、分析手法を批判的に検討した。</li>
+    <li>AIが示した手法や結論が既存の研究と重複しないか確認した。</li>
+    <li>有望なアイデアは指導教員に相談した。</li>
+    <li>AIが「正しい」と述べても、自分で検証した。</li>
+    <li>別のAIモデルが同じ結論を出しても、それは自分の検証の代わりにならないと理解している。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>4. データとコード</h4>
+  <ul class="checklist">
+    <li>AIが作成したコードを自分で実行し、動作を確認した。</li>
+    <li>答えがわかっている単純な例でコードをテストした。</li>
+    <li>変数定義、欠損値処理、固定効果の指定、標準誤差のクラスタリングを確認した。</li>
+    <li>場合分けの漏れ、異常値の影響、数値の不安定性を確認した。</li>
+    <li>コード・データ加工手順・出力を再現可能な形で保存した。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>5. 文献と引用</h4>
+  <ul class="checklist">
+    <li>AIが挙げた文献の実在を、CiNii・Google Scholar・J-STAGEで確認した。</li>
+    <li>AIが参照したソースを具体的に尋ね、原文を確認した。</li>
+    <li>本文または要旨を実際に読み、その文献が本当に主張を支えているか確認した。</li>
+    <li>AIが文献を捏造していないか、二つの論文を混同していないか確認した。</li>
+    <li>引用形式（著者名・年・雑誌名・巻号・ページ）を整えた。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>6. 執筆</h4>
+  <ul class="checklist">
+    <li>AIが生成した文章をそのまま貼り付けていない。</li>
+    <li>自分の言葉で書き直し、内容の正確さを確認した。</li>
+    <li>用語・記号・表記スタイルが論文全体で一貫している。</li>
+    <li>AIには「書き直し」ではなく「コメントと指摘」を依頼した。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>7. プライバシーと許可</h4>
+  <ul class="checklist">
+    <li>未公開資料・個人情報・共同研究者の原稿を無断でアップロードしていない。</li>
+    <li>指導教員・データ提供者の許可が必要か確認した。</li>
+    <li>AIサービスのデータ利用設定とプライバシーポリシーを確認した。</li>
+    <li>機密性の高い資料は、機関アカウントやローカルモデルの利用を検討した。</li>
+  </ul>
+</div>
+<div class="checklist-group">
+  <h4>8. 開示</h4>
+  <ul class="checklist">
+    <li>AIをどの作業に使ったか（文献探索・コード作成・校正など）記録している。</li>
+    <li>利用したモデル名と用途を必要に応じて明記できる。</li>
+    <li>授業・大学・学術誌のAI利用方針を確認した。</li>
+  </ul>
+</div>
+
+<div class="box box-principle center" style="margin-top:1.5rem;">
+  <p>もしAIとの会話履歴がすべて消えたとしても、<br>私はこのレポートや卒業論文の内容を再現し、説明し、責任を持てるだろうか。</p>
+</div>
+<p>この問いに「はい」と答えられるなら、あなたはAIを正しく活用できている。</p>
+</section>
+
+<!-- ===== §8 ===== -->
+<section id="s8">
+<h2>8. 参考資料</h2>
+<p>AI利用の方針や利用可能なデータについては、以下を確認するとよい。</p>
+<ul>
+  <li>所属大学・学部・授業のAI利用方針</li>
+  <li>卒業論文・レポート提出時のルール（ゼミの指導教員に確認）</li>
+  <li>利用するAIサービスのデータ管理設定とプライバシーポリシー</li>
+  <li>投稿予定の学術誌・学会のAI利用ポリシー</li>
+</ul>
+<p>特に授業ごとにAI利用の許可範囲は異なる。迷った場合は担当教員に確認することが最善である。</p>
+
+<h3>データ・文献の主要リンク</h3>
+<ul>
+  <li><a href="https://www.e-stat.go.jp/" target="_blank">政府統計の総合窓口（e-Stat）</a></li>
+  <li><a href="https://cir.nii.ac.jp/" target="_blank">CiNii（国内学術論文データベース）</a></li>
+  <li><a href="https://www.jstage.jst.go.jp/" target="_blank">J-STAGE（国内学術誌データベース）</a></li>
+  <li><a href="https://www.nber.org/papers" target="_blank">NBER ワーキングペーパー</a></li>
+  <li><a href="https://www.aeaweb.org/journals/data/data-code-policy" target="_blank">AEA データ・コード公開ポリシー</a></li>
+</ul>
+
+<hr style="margin:2.5rem 0; border:none; border-top:1px solid #ddd;">
+
+<h3>おわりに</h3>
+<p>AIは、経済学を学ぶ学生にとって強力な道具である。しかし道具は使い方によって結果が変わる。</p>
+<p>卒業論文を書き終えたとき、自分がデータを読み、仮説を立て、格闘した記憶が残っているかどうか。その記憶こそが、社会に出てからも役に立つ力の源になる。AIに考えてもらうのではなく、AIと一緒に考える。この姿勢を持つ学生は、AI時代においても強い経済学者であり続けるだろう。</p>
+
+<hr style="margin:2rem 0; border:none; border-top:1px solid #ddd;">
+
+<h3>AI利用の開示</h3>
+<div class="box box-principle">
+本稿の作成にあたり、Pavel Etingof, <em>Use of AI in mathematical research: A guide for young mathematicians</em> (Department of Mathematics, MIT, 2026), <a href="https://math.mit.edu/~etingof/aiuse.pdf" target="_blank">https://math.mit.edu/~etingof/aiuse.pdf</a> を参考にした。また、生成AI（Claude と Codex by OpenAI）を用いて、本文中の図の作成補助、内容構成のブレインストーミング、および文章の校正を行った。本稿の内容に関する一切の責任は著者が負う。
+</div>
+
+<h3>本稿の共有・紹介について</h3>
+<p>本稿は、授業・ゼミ・勉強会などの教育の場での紹介・配布を歓迎する。最新のPDFは以下のURLから自由に入手できる。</p>
+<p style="text-align:center; margin:1rem 0;">
+  <a href="https://sun-mingchao.org/files/ai-use-in-economics.pdf" target="_blank">https://sun-mingchao.org/files/ai-use-in-economics.pdf</a>
+</p>
+<p>授業資料やスライドで紹介する際は、出典として「孫明超、東海大学政治経済学部経済学科、2026年」と記載していただければ幸いである。</p>
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <p>孫明超　東海大学政治経済学部経済学科　2026年</p>
+  <p style="margin-top:0.4rem;"><a href="ai-use-in-economics.pdf">PDF版</a>　|　参考：<a href="https://math.mit.edu/~etingof/aiuse.pdf" target="_blank">Etingof (MIT, 2026)</a></p>
+</footer>
+
+</body>
+</html>

@@ -10,7 +10,7 @@ location: "Tokyo, Japan"
 
 April 2026 -
 
-● <a href="/files/ai-use-in-economics.pdf" target="_blank">Ai use in economics</a> (by M. Sun) <br>
+● <a href="/files/ai-use-in-economics.html" target="_blank">Ai use in economics</a> (by M. Sun) <br>
  <br>
 ● <a href="/files/2026_seminar_1.html" target="_blank">Handout 1</a> (by M. Sun) <br>
 ● <a href="/files/2026_seminar_2.html" target="_blank">Handout 2</a> (by M. Sun) 
