@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生のためのメールの書き方 — 教員・事務へのメール実践ガイド</title>
+<style>
+  :root {
+    --yellow-bg: #fdfae8;
+    --yellow-border: #333;
+    --red-bg: #fff5f5;
+    --red-border: #b54040;
+    --blue-bg: #f0f5ff;
+    --blue-border: #4060b5;
+    --text: #1a1a1a;
+    --muted: #555;
+    --max-width: 820px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text);
+    background: #fff;
+  }
+  /* ── Header ── */
+  header {
+    background: #1a2a4a;
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  header h1 {
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+  }
+  header .meta { font-size: 0.95rem; opacity: 0.85; margin-bottom: 0.3rem; }
+  header .pdf-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.45rem 1.2rem;
+    background: #fff;
+    color: #1a2a4a;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  header .pdf-link:hover { background: #e8f0ff; }
+
+  /* ── Nav ── */
+  nav {
+    background: #f4f6fa;
+    border-bottom: 1px solid #ddd;
+    padding: 0.8rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    list-style: none;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0;
+    font-size: 0.82rem;
+  }
+  nav ol li a { color: #1a2a4a; text-decoration: none; }
+  nav ol li a:hover { text-decoration: underline; }
+
+  /* ── Main ── */
+  main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── Abstract ── */
+  .abstract {
+    background: #f7f9fc;
+    border-left: 4px solid #1a2a4a;
+    padding: 1rem 1.2rem;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ── Sections ── */
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 2.5rem 0 0.8rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid #1a2a4a;
+    color: #1a2a4a;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 1.8rem 0 0.6rem;
+    color: #2a3a5a;
+  }
+  p { margin-bottom: 0.9rem; }
+  ul, ol { margin: 0.5rem 0 0.9rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+
+  /* ── Boxes ── */
+  .box { position: relative; border-radius: 5px; padding: 1.55rem 1.2rem 1rem; margin: 1.45rem 0 1.2rem; }
+  .box::before {
+    position: absolute;
+    top: -0.7rem;
+    left: 0.9rem;
+    padding: 0.12rem 0.55rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .box-principle { background: var(--yellow-bg); border: 1px solid var(--yellow-border); }
+  .box-principle::before { content: "ポイント"; background: #fff7bd; border: 1px solid var(--yellow-border); color: #1a1a1a; }
+  .box-disclosure { background: #f3f4f6; border: 1px solid #c8ccd2; padding-top: 1rem; }
+  .refs-list { list-style: none; padding-left: 0; margin-left: 0; }
+  .refs-list li { padding-left: 1.8rem; text-indent: -1.8rem; margin-bottom: 0.65rem; }
+  .refs-list li p { margin: 0 0 0.55rem; }
+  .box-principle.center { text-align: center; }
+  .box-principle.center p { font-size: 1.15rem; font-weight: 700; margin: 0; }
+  .box-warning { background: var(--red-bg); border: 1px solid var(--red-border); }
+  .box-warning::before { content: "注意"; background: #ffe0e0; border: 1px solid var(--red-border); color: #7a1f1f; }
+  .box-example { background: var(--blue-bg); border: 1px solid var(--blue-border); font-size: 0.92rem; }
+  .box-example::before { content: "例文"; background: #e2ebff; border: 1px solid var(--blue-border); color: #1e3f8f; }
+  .box-template { background: #f6fdf6; border: 1px solid #3a8a3a; font-size: 0.92rem; }
+  .box-template::before { content: "テンプレート"; background: #d6f0d6; border: 1px solid #3a8a3a; color: #1a5a1a; }
+
+  /* ── Email mock ── */
+  .email-mock {
+    background: #fff;
+    border: 1px solid #c0c8d8;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+    overflow: hidden;
+  }
+  .email-mock-header {
+    background: #f0f4fa;
+    border-bottom: 1px solid #c0c8d8;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+    color: #2a3a5a;
+  }
+  .email-mock-header div { margin-bottom: 0.1rem; }
+  .email-mock-body {
+    padding: 0.8rem 1rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.8;
+    font-family: inherit;
+  }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin-left: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+  .checklist li::before {
+    content: "☐";
+    flex-shrink: 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .checklist-group { margin-bottom: 1.5rem; }
+  .checklist-group h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1.2rem 0 0.5rem;
+    color: #2a3a5a;
+  }
+
+  /* ── Comparison table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    margin: 0.8rem 0 1rem;
+  }
+  th {
+    background: #1a2a4a;
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+  }
+  td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid #ddd;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f7f9fc; }
+
+  /* ── Comic figures ── */
+  .comic-wrap { margin: 1.5rem 0; overflow-x: auto; }
+  .comic {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 2px solid #333;
+    border-radius: 6px;
+    min-width: 480px;
+  }
+  .comic-title {
+    grid-column: 1 / -1;
+    background: #f0f0f0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .comic-panel {
+    border-right: 1px solid #ccc;
+    padding: 0.8rem 0.6rem 0.6rem;
+    text-align: center;
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .comic-panel:last-child { border-right: none; }
+  .comic-panel svg { display: block; }
+  .comic-panel p { margin: 0; line-height: 1.4; }
+
+  /* ── Links ── */
+  a { color: #1a4a9a; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Footer ── */
+  footer {
+    background: #f4f6fa;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    nav ol { font-size: 0.78rem; }
+    h2 { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header>
+  <h1>大学生のためのメールの書き方<br>教員・事務へのメール実践ガイド</h1>
+  <p class="meta">東海大学政治経済学部経済学科　孫明超</p>
+  <p class="meta">最終更新：2026年6月7日（作成日：2026年6月7日）</p>
+  <a class="pdf-link" href="email-guide.pdf">📄 PDF版をダウンロード</a>
+</header>
+
+<!-- ===== Nav ===== -->
+<nav>
+  <ol>
+    <li><a href="#s1">1. メールとは</a></li>
+    <li><a href="#s2">2. 基本構成</a></li>
+    <li><a href="#s3">3. 具体的な例文</a></li>
+    <li><a href="#s4">4. チェックリスト</a></li>
+    <li><a href="#s5">5. よくある疑問</a></li>
+  </ol>
+</nav>
+
+<!-- ===== Main ===== -->
+<main>
+
+<div class="abstract">
+大学生になると、授業の質問、欠席連絡、レポートの相談、面談のお願いなど、教員や事務の方にメールを送る場面が急に増える。しかし、高校まで口頭やLINEで済ませてきた多くの学生は、改まったメールの書き方を十分に学ぶ機会がなかった。本稿は、各大学のメール指導実践をもとに、大学生が教員・事務にメールを送る際の基本的な作法と具体的な例文を整理する。「唯一の正解」ではなく、どこでも通用する最低限の目安として活用してほしい。
+</div>
+
+<!-- ===== §1 ===== -->
+<section id="s1">
+<h2>1. メールとは何かを理解する</h2>
+
+<h3>1.1. メールはLINEではない</h3>
+<p>大学では、授業に関する問い合わせ、欠席連絡、レポートの提出、面談のアポイントメントなど、授業外で教員や事務の方と連絡を取る機会がある。このとき、LINEのような私的なやり取りの感覚で短く送るのは適切ではない。</p>
+
+<div class="box box-warning">
+「今日休みます」「課題わかりません」「今いいですか」のような書き方では、誰が、何の授業について、何をしたいのかが相手に伝わらない。
+</div>
+
+<p>メールと普段使うメッセージアプリには、次のような違いがある。</p>
+
+<table>
+  <tr><th>メール</th><th>メッセージ・チャットアプリ</th></tr>
+  <tr><td>どのソフトでもほぼ共通</td><td>アプリにより異なる</td></tr>
+  <tr><td>長文・非同期型</td><td>短文・同期型</td></tr>
+  <tr><td>個人間・グループ間のやり取り</td><td>グループ内のやり取り</td></tr>
+  <tr><td>後から検索・参照しやすい</td><td>流れやすい</td></tr>
+</table>
+
+<p>大学生は対外的には大人として扱われる。先生や事務の方、学外の関係者に連絡するときは、相手が読みやすく処理しやすい形で書く必要がある。メールは単なる連絡手段ではなく、相手と仕事を進めるための文書だと考えるとよい。</p>
+
+<h3>1.2. よくある失敗例</h3>
+<p>高校までの感覚でメールを書くと、情報が不足して相手が対応できないことが多い。次の例は、大学生がやりがちな典型的な失敗だ。</p>
+
+<div class="box box-warning">
+  <strong>悪い例</strong>
+  <div class="email-mock" style="margin-top:0.8rem;">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>質問</div>
+    </div>
+    <div class="email-mock-body">今日の授業で○○のところがよく分かりませんでした。
+詳しく説明してください。お願いします。</div>
+  </div>
+  <p style="margin-top:0.7rem; font-size:0.9rem; color:#7a1f1f;"><strong>問題点：</strong>質問者は誰か？どの授業か？何が分からないのか？これでは先生も答えられない。</p>
+</div>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">「件名：質問」だけのメールが届いた先生</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>件名「質問」でメールを送ろう。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <line x1="20" y1="44" x2="40" y2="44" stroke="#333" stroke-width="2"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>（困惑）誰から？何の授業？どんな質問？</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>「名前と授業名を教えてください」と返信するしかない…</p>
+  </div>
+</div>
+</div>
+
+</section>
+
+<!-- ===== §2 ===== -->
+<section id="s2">
+<h2>2. メールの基本構成</h2>
+
+<h3>2.1. メール全体の構造</h3>
+<p>大学へのメールは、次の順番で書くと整う。</p>
+
+<ol>
+  <li><strong>件名</strong>――用件が一目で分かる具体的な内容</li>
+  <li><strong>宛名</strong>――相手の氏名・敬称</li>
+  <li><strong>あいさつ</strong>――「お世話になっております」など</li>
+  <li><strong>名乗り</strong>――所属・氏名（・学籍番号）</li>
+  <li><strong>何の授業の話か</strong>――曜日・時限・授業名</li>
+  <li><strong>用件</strong>――簡潔に</li>
+  <li><strong>お願い・質問</strong>――婉曲的な表現で</li>
+  <li><strong>結び</strong>――「よろしくお願いいたします」など</li>
+  <li><strong>署名</strong>――大学名・学部・氏名・メールアドレス</li>
+</ol>
+
+<h3>2.2. 件名の書き方</h3>
+<p>件名は空欄にせず、内容が一目で分かるように書く。漠然とした件名（「質問」「お願い」だけ）や件名なしはNGだ。授業名と用件を入れると、相手が後で探すときにも助かる。</p>
+
+<div class="box box-principle">
+  <strong>件名の良い例</strong>
+  <ul style="margin-top:0.4rem;">
+    <li>「○○演習」授業に関する質問</li>
+    <li>水曜3限「経済学入門」欠席のご連絡</li>
+    <li>面談のお願い――卒業論文について</li>
+  </ul>
+  <strong style="color:#b54040;">件名のNG例</strong>
+  <ul style="margin-top:0.4rem;">
+    <li>質問（内容が不明）</li>
+    <li>お願い（何のお願いか分からない）</li>
+    <li>件名なし（削除される可能性がある）</li>
+  </ul>
+</div>
+
+<p>件名に自分の名前を入れる必要は必ずしもない。名前は本文の最初と最後で分かるので、件名には何の授業の何の用件かを書けば十分である。ただし、外部から送信する場合などは氏名を添えると分かりやすい。</p>
+
+<h3>2.3. 宛名の書き方</h3>
+<ol>
+  <li><strong>教員宛て：</strong>「○○先生」と書く。「教授」は職名であって呼びかけの言葉ではない。大学には教授、准教授、講師、助教などさまざまな立場の先生がいるので、最初から「先生」と書くのが最も安全。</li>
+  <li><strong>事務・学外の方宛て：</strong>「○○様」を使う。担当者が分からない場合は「○○課　ご担当者様」とする。</li>
+  <li><strong>フォーマルな場合：</strong>フルネームが望ましい。やり取りが増えてきたら姓だけでよい。</li>
+</ol>
+
+<div class="box box-warning">
+初めてメールを送る場合、「お世話になっております」の代わりに「初めてメールを差し上げます」や「突然メールを差し上げる失礼をお許しください」などを使うこともできる。
+</div>
+
+<h3>2.4. 自己紹介・名乗り</h3>
+<p>先生は多くの学生を相手にしている。「誰から来たメールか」がすぐ分かることが大切だ。最低限、次の情報を入れる。</p>
+<ul>
+  <li><strong>氏名</strong>（フルネーム）</li>
+  <li><strong>学部・学科・学年</strong></li>
+  <li><strong>学籍番号</strong>（大人数授業では特に重要）</li>
+  <li><strong>履修している授業名・曜日・時限</strong></li>
+</ul>
+<p>先生はいくつもの講義を担当していることが普通なので、「質問があります」だけでは足りない。「火曜2限の『ミクロ経済学入門』について」のように、授業名や曜日・時限まで書くと、相手がすぐ状況をつかめる。</p>
+
+<h3>2.5. 本文・用件の書き方</h3>
+<p>まず用件が質問・欠席連絡・お願いのどれかを最初の1文で示す。その後に詳しい状況を書く。</p>
+<ul>
+  <li>具体的な日付・回・ページなど特定できる情報を入れる</li>
+  <li>質問が複数ある場合は番号を振って整理する</li>
+  <li>1行が長くなりすぎないよう、30文字程度を目安に改行する。また、内容のまとまりごとに1行空けると読みやすい</li>
+  <li>添付ファイルがある場合は、その旨を本文に明記する（ファイルを添付する前に、相手の了承を得ること）</li>
+  <li>簡潔に書いたうえで、詳しく状況を述べる</li>
+</ul>
+
+<div class="box box-warning">
+「本日の授業で」のような表現は避ける。送信者がいつでもメールを送信できるのと同様、受信者がいつ読むかは分からない。「○月○日の授業で」と日付を明示する。
+</div>
+
+<h3>2.6. 丁寧な表現・お願いの仕方</h3>
+<p>「～してください」は一方的なお願いで、目上の人への表現としては適切でない。婉曲的な表現の方が丁寧とされる。</p>
+
+<div class="box box-principle">
+  <strong>婉曲的な表現の例</strong>
+  <ul style="margin-top:0.4rem;">
+    <li>疑問形：「～していただけますでしょうか」「～してもよろしいでしょうか」</li>
+    <li>仮定形：「もし差し支えなければ」「よろしければ」「お時間がありましたら」</li>
+    <li>配慮の表現：「お手数をおかけして申し訳ないのですが」「おそれいりますが」</li>
+    <li>感謝：「いただけると幸いです」「ご教示いただけますと助かります」</li>
+  </ul>
+</div>
+
+<p>面会を希望する場合は、まず相手の都合を確認する。「直接お尋ねする機会をいただけると幸いです。差し支えなければ、ご都合の良い時間をご教示いただけますでしょうか？」のように書く。</p>
+
+<h3>2.7. よく使うあいさつ表現</h3>
+<p>冒頭と結びの定型表現を覚えておくと、メールを書くときに迷わなくなる。状況に応じて使い分けよう。</p>
+<table>
+  <tr><th>場面</th><th>表現</th></tr>
+  <tr><td>冒頭（一般）</td><td>お世話になっております。</td></tr>
+  <tr><td>冒頭（初メール）</td><td>初めてメールを差し上げます。<br>突然メールを差し上げる失礼をお許しください。</td></tr>
+  <tr><td>結び（一般）</td><td>どうぞよろしくお願いいたします。</td></tr>
+  <tr><td>結び（お礼）</td><td>引き続きどうぞよろしくお願いいたします。</td></tr>
+  <tr><td>謝罪を添えるとき</td><td>ご迷惑をおかけし、大変申し訳ございません。</td></tr>
+  <tr><td>返信が遅れたとき</td><td>返信が遅くなり、大変申し訳ございませんでした。</td></tr>
+</table>
+
+<p>返信をもらったら、できるだけ早くお礼を伝えることが大切だ。長い返事を完璧に仕上げるより、まず感謝が伝わる一言を送る方が相手への配慮になる。</p>
+<div class="box box-principle center"><p>返信が来たら、必ずお礼の返信を送ろう。<br>平日ならなるべく24時間以内が理想。</p></div>
+
+<h3>2.8. 結び・署名</h3>
+<p>「よろしくお願いいたします」が最も一般的な結び。「お世話になっております」で始まり、「よろしくお願いいたします」で結ぶのが典型的な表現。</p>
+<p>署名には次の情報を入れる（フォーマットを作っておくと便利）。</p>
+
+<div class="box box-template">
+<pre style="margin:0; font-family:inherit;">--
+東海大学政治経済学部経済学科 3年
+学籍番号：○○○○○○○○
+東海　太郎
+Email: ○○○○@tokai.ac.jp</pre>
+</div>
+
+
+</section>
+
+<!-- ===== §3 ===== -->
+<section id="s3">
+<h2>3. 具体的な例文</h2>
+
+<h3>3.1. 基本の型</h3>
+<p>次の型に「誰が」「何の授業で」「何を伝えたいか」を入れれば、多くの場面に対応できる。</p>
+
+<div class="box box-principle">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>○曜○限「○○」○○についての○○</div>
+    </div>
+    <div class="email-mock-body">○○先生
+
+お世話になっております。
+○○学部○年の○○（学籍番号：○○○○）です。
+○曜日○限の「○○」についてご連絡いたします。
+
+〔ここに用件を書く〕
+
+お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。
+
+--
+東海大学○○学部○年
+学籍番号 ○○○○○○○○
+○○　○○
+Email: ○○○○@tokai.ac.jp</div>
+  </div>
+</div>
+
+<h3>3.2. 例文1：授業内容について質問する</h3>
+
+<div class="box box-example">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>火曜2限「ミクロ経済学入門」第3回講義内容についての質問</div>
+    </div>
+    <div class="email-mock-body">孫先生
+
+お世話になっております。
+政治経済学部経済学科1年の東海太郎（学籍番号：12345678）です。
+火曜2限の「ミクロ経済学入門」についてご連絡いたします。
+
+5月28日の第3回講義で扱った需要曲線のシフトについて、理解が及ばない点があり、ご連絡いたしました。
+
+配布資料の3ページ目に示された「所得の増加が需要曲線を右にシフトさせる」という例は理解できたのですが、その次の「補完財の価格が上昇した場合」のシフト方向がなぜ左になるのかが分かりませんでした。
+
+お忙しいところ恐縮ですが、ご説明いただけますと幸いです。
+どうぞよろしくお願いいたします。
+
+--
+東海大学政治経済学部経済学科1年
+学籍番号 12345678
+東海　太郎
+Email: taro.tokai@tokai-univ.ac.jp</div>
+  </div>
+</div>
+
+<div class="comic-wrap">
+<div class="comic">
+  <div class="comic-title">良いメールの書き方</div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="10" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="28" x2="30" y2="55" stroke="#333" stroke-width="2"/>
+      <line x1="12" y1="40" x2="48" y2="40" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="18" y2="75" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="55" x2="42" y2="75" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>名前・授業・日付・具体的な質問を入れてメールを送った。</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <rect x="14" y="20" width="32" height="36" rx="3" fill="none" stroke="#333" stroke-width="2"/>
+      <circle cx="22" cy="32" r="3" fill="#333"/>
+      <circle cx="38" cy="32" r="3" fill="#333"/>
+      <path d="M22 44 Q30 50 38 44" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="14" y1="40" x2="4" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="46" y1="40" x2="56" y2="52" stroke="#333" stroke-width="2"/>
+      <line x1="22" y1="56" x2="22" y2="72" stroke="#333" stroke-width="2"/>
+      <line x1="38" y1="56" x2="38" y2="72" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>（嬉しい）具体的だからすぐ答えられる！</p>
+  </div>
+  <div class="comic-panel">
+    <svg width="60" height="80" viewBox="0 0 60 80">
+      <circle cx="30" cy="18" r="11" fill="none" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="29" x2="30" y2="56" stroke="#333" stroke-width="2"/>
+      <line x1="10" y1="41" x2="50" y2="46" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="18" y2="76" stroke="#333" stroke-width="2"/>
+      <line x1="30" y1="56" x2="42" y2="76" stroke="#333" stroke-width="2"/>
+    </svg>
+    <p>丁寧なメールで好印象。返信も丁寧になる。</p>
+  </div>
+</div>
+</div>
+
+<h3>3.3. 例文2：欠席を連絡する</h3>
+
+<div class="box box-example">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>金曜3限「経済英書１」欠席のご連絡</div>
+    </div>
+    <div class="email-mock-body">孫先生
+
+お世話になっております。
+政治経済学部経済学科2年の東海花子（学籍番号：23456789）です。
+金曜3限の「経済英書１」についてご連絡いたします。
+
+本日（6月5日）、体調不良のため授業を欠席いたします。
+ご迷惑をおかけし、大変申し訳ございません。
+
+必要な提出物や次回に向けて確認すべき資料がありましたら、ご教示いただけますと幸いです。
+
+どうぞよろしくお願いいたします。
+
+--
+東海大学政治経済学部経済学科2年
+学籍番号 23456789
+東海　花子
+Email: hanako.tokai@tokai-univ.ac.jp</div>
+  </div>
+</div>
+
+<h3>3.4. 例文3：レポート提出について相談する</h3>
+
+<div class="box box-example">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>水曜3限「データ分析入門」課題レポートの提出について</div>
+    </div>
+    <div class="email-mock-body">孫先生
+
+お世話になっております。
+政治経済学部経済学科1年の東海次郎（学籍番号：34567890）です。
+水曜3限の「データ分析入門」についてご連絡いたします。
+
+課題レポートの提出について確認したいことがあり、ご連絡いたしました。
+
+提出先として指定されているフォームには提出済みなのですが、アップロードしたファイル名の形式が適切であったか不安に思っております。もし確認すべき点がありましたら、ご教示いただけますと幸いです。
+
+どうぞよろしくお願いいたします。
+
+--
+東海大学政治経済学部経済学科1年
+学籍番号 34567890
+東海　次郎
+Email: jiro.tokai@tokai-univ.ac.jp</div>
+  </div>
+</div>
+
+<h3>3.5. 例文4：面談のアポイントメントをお願いする</h3>
+
+<div class="box box-example">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>卒業論文テーマについての面談のお願い</div>
+    </div>
+    <div class="email-mock-body">孫先生
+
+お世話になっております。
+政治経済学部経済学科3年の東海三郎（学籍番号：45678901）です。
+
+卒業論文のテーマについてご相談したいことがあり、ご連絡いたしました。
+
+メールでは説明しきれない点がありますので、直接お話しする機会をいただけると幸いです。お忙しいところ恐れ入りますが、差し支えなければご都合の良い日時をご教示いただけますでしょうか。
+
+どうぞよろしくお願いいたします。
+
+--
+東海大学政治経済学部経済学科3年
+学籍番号 45678901
+東海　三郎
+Email: saburo.tokai@tokai-univ.ac.jp</div>
+  </div>
+</div>
+
+<h3>3.6. 例文5：お礼の返信を送る</h3>
+<p>返信メールには必ずお礼を返す。長い返事を完璧に書こうとするより、まず受け取ったことと感謝が伝わる方が助かることが多い。</p>
+
+<div class="box box-example">
+  <div class="email-mock">
+    <div class="email-mock-header">
+      <div><strong>件名：</strong>Re: 火曜2限「ミクロ経済学入門」第3回講義内容についての質問</div>
+    </div>
+    <div class="email-mock-body">孫先生
+
+授業内容の質問について丁寧にご説明いただき、ありがとうございました。
+おかげで補完財の価格変化と需要曲線のシフト方向について理解することができました。
+
+次回の授業を聞いてもまだ疑問が残るようであれば、改めてご質問させていただきます。
+どうぞよろしくお願いいたします。
+
+--
+東海大学政治経済学部経済学科1年
+学籍番号 12345678
+東海　太郎
+Email: taro.tokai@tokai-univ.ac.jp</div>
+  </div>
+</div>
+
+</section>
+
+<!-- ===== §4 ===== -->
+<section id="s4">
+<h2>4. 送信前のチェックリスト</h2>
+<p>メールを送る前に、以下を確認しよう。</p>
+
+<div class="checklist-group">
+  <h4>件名・宛先</h4>
+  <ul class="checklist">
+    <li>件名に授業名と用件が入っている（空欄ではない）。</li>
+    <li>宛先のメールアドレスを間違えていない。</li>
+    <li>大学のメールアドレスから送信している。</li>
+  </ul>
+</div>
+
+<div class="checklist-group">
+  <h4>本文</h4>
+  <ul class="checklist">
+    <li>冒頭に宛名（「○○先生」など）がある。</li>
+    <li>自分の所属・氏名・学籍番号・授業名を名乗っている。</li>
+    <li>何の授業の、何の用件かが冒頭で分かる。</li>
+    <li>日付は「○月○日」と具体的に書いた（「今日の」ではない）。</li>
+    <li>お願いの表現が婉曲的になっている（「してください」ではない）。</li>
+    <li>結びの言葉がある（「よろしくお願いいたします」など）。</li>
+  </ul>
+</div>
+
+<div class="checklist-group">
+  <h4>署名・添付</h4>
+  <ul class="checklist">
+    <li>末尾に署名（大学名・学部・氏名・アドレス）がある。</li>
+    <li>添付ファイルを送ると書いた場合、ファイルを添付した。</li>
+    <li>添付ファイルのファイル名が分かりやすい（授業名・氏名・内容など）。</li>
+  </ul>
+</div>
+
+<div class="checklist-group">
+  <h4>全体確認</h4>
+  <ul class="checklist">
+    <li>変換ミス・誤字脱字がない。</li>
+    <li>絵文字・顔文字を使っていない。</li>
+    <li>相手の名前を間違えていない。</li>
+    <li>HTMLメール形式（装飾付き）ではなくテキスト形式で送信している。</li>
+  </ul>
+</div>
+
+</section>
+
+<!-- ===== §5 ===== -->
+<section id="s5">
+<h2>5. よくある疑問</h2>
+
+<div class="box box-principle">
+  <p><strong>Q. 初めてメールを送る場合も「お世話になっております」？</strong></p>
+  <p style="margin-top:0.4rem;">「初めてメールを差し上げます」や「突然メールを差し上げる失礼をお許しください」などと言い換えることができる。ただし「お世話になっております」を使っても問題はない。</p>
+</div>
+
+<div class="box box-principle">
+  <p><strong>Q. 担当者の名前が分からない場合は？</strong></p>
+  <p style="margin-top:0.4rem;">「○○課　ご担当者様」とする。問合せ先メールアドレスがどの部署宛かはっきりしない場合には、「もしご担当部署でなければ適切な問い合わせ先を教えていただけますでしょうか」と添えるとよい。</p>
+</div>
+
+<div class="box box-principle">
+  <p><strong>Q. 返信が遅れてしまった場合は？</strong></p>
+  <p style="margin-top:0.4rem;">冒頭に「返信が遅くなり大変申し訳ございませんでした」と書く。黙って返信しないより、遅れてもお礼を伝えるほうがよい。</p>
+</div>
+
+<div class="box box-principle">
+  <p><strong>Q. すぐに完全な返事ができない場合は？</strong></p>
+  <p style="margin-top:0.4rem;">「少し確認が必要ですので、後ほど改めてご連絡します」のように一次返信を送る。返信の速さは礼儀であると同時に、相手への配慮でもある。</p>
+</div>
+
+<div class="box box-principle">
+  <p><strong>Q. AIで添削してもらってもいい？</strong></p>
+  <p style="margin-top:0.4rem;">送る前にAI（ChatGPTなど）で失礼がないか確認してもらうのは有効。ただし、先生の名前・授業名・日付などの事実は自分で必ず確認する。AIは文章を整えるのは得意だが、その授業固有の事情を正しく知っているとは限らない。</p>
+</div>
+
+<hr style="margin:2.5rem 0; border:none; border-top:1px solid #ddd;">
+
+<h3>おわりに</h3>
+<p>基本に忠実なメールは誰にとっても読みやすい。奇をてらう必要はなく、型に沿って「誰が・何の授業で・何を伝えたいか」を丁寧に届けることが大切だ。</p>
+<p>メールの書き方は一度学べば、大学生活はもちろん、就職活動や社会に出てからも一生使えるスキルになる。「伝えることと伝わることは違う」という意識を持って、相手が読みやすく処理しやすい形で書く習慣をつけよう。</p>
+
+<hr style="margin:2rem 0; border:none; border-top:1px solid #ddd;">
+
+<h3>参考資料</h3>
+<p>本稿は以下の資料を参照・再構成した。各URLは2026年6月時点で確認済み。</p>
+<ol class="refs-list">
+  <li>石塚修．「大学生にたいするEメール書き方指導の実践」．『人文科教育研究』第48号，2021年，pp. 99–111．筑波大学人文科教育学会．<br>
+    <a href="https://cir.nii.ac.jp/crid/1390853651428294656" target="_blank">https://cir.nii.ac.jp/crid/1390853651428294656</a></li>
+  <li>岩本明憲．「メールの書き方」．関西大学商学部，2021年．<br>
+    <a href="http://www2.ipcku.kansai-u.ac.jp/~iwamoto/email.pdf" target="_blank">http://www2.ipcku.kansai-u.ac.jp/~iwamoto/email.pdf</a></li>
+  <li>大山豪．「メールの書き方講座」．京都大学国際高等教育院．<br>
+    <a href="https://www.i-arrc.k.kyoto-u.ac.jp/file/287" target="_blank">https://www.i-arrc.k.kyoto-u.ac.jp/file/287</a></li>
+  <li>富谷昭夫．「大学一年生のためのメールの書き方」（v03）．京都大学基礎物理学研究所，2026年4月13日．<br>
+    <a href="https://www2.yukawa.kyoto-u.ac.jp/~akio.tomiya/filebox/daigaku_email_guide_first_year_v03.pdf" target="_blank">https://www2.yukawa.kyoto-u.ac.jp/~akio.tomiya/filebox/daigaku_email_guide_first_year_v03.pdf</a></li>
+  <li>法政大学教育支援センター．「メールのマナー」．法政大学ラーニングファンデーション，2020年．<br>
+    <a href="https://www.hoseikyoiku.jp/lf/images/handbook/pdf/2020/handbook09.pdf" target="_blank">https://www.hoseikyoiku.jp/lf/images/handbook/pdf/2020/handbook09.pdf</a></li>
+  <li>松岡和美．「メールを書くときにはここに注意」．慶應義塾大学経済学部，2017年改訂．<br>
+    <a href="https://user.keio.ac.jp/~matsuoka/mailsample.htm" target="_blank">https://user.keio.ac.jp/~matsuoka/mailsample.htm</a></li>
+  <li>早稲田大学CELESE．"How to Write Emails to Teachers."<br>
+    <a href="https://celese.jp/links/how-to-write-emails-to-teachers%E3%80%90pdf%E3%80%91/" target="_blank">https://celese.jp/links/how-to-write-emails-to-teachers【pdf】/</a></li>
+</ol>
+
+<hr style="margin:2rem 0; border:none; border-top:1px solid #ddd;">
+
+<h3>AI利用の開示</h3>
+<div class="box box-disclosure">
+本稿の作成にあたり、京都大学・法政大学・早稲田大学・関西大学・慶應義塾大学その他の大学が公開するメールの書き方に関する資料を参照し、主要な論点と実践例を整理・再構成した。生成AI（Claude Code by Anthropic）を用いて、文章の執筆補助・構成のブレインストーミング・校正を行った。本稿の内容に関する一切の責任は著者が負う。
+</div>
+
+<h3>本稿の共有・紹介について</h3>
+<p>本稿は、授業・ゼミ・勉強会などの教育の場での紹介・配布を歓迎する。授業資料やスライドで紹介する際は、出典として「孫明超、東海大学政治経済学部経済学科、2026年」と記載していただければ幸いである。</p>
+
+</section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <p>孫明超　東海大学政治経済学部経済学科　2026年　|　最終更新：2026年6月7日</p>
+  <p style="margin-top:0.4rem;"><a href="email-guide.pdf">PDF版</a></p>
+</footer>
+
+</body>
+</html>
