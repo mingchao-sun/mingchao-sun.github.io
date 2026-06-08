@@ -1,0 +1,1319 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミクロ経済学入門 第8回：部分均衡と一般均衡</title>
+    <style>
+        :root {
+            --bg: #eef3f7;
+            --paper: #ffffff;
+            --ink: #183044;
+            --muted: #607184;
+            --line: #d8e1ea;
+            --navy: #1e293b;
+            --blue: #2563eb;
+            --green: #059669;
+            --orange: #d97706;
+            --red: #dc2626;
+            --violet: #7c3aed;
+            --soft-blue: #eaf2ff;
+            --soft-green: #e9f8f1;
+            --soft-orange: #fff4df;
+            --soft-red: #feecec;
+            --shadow: 0 16px 40px rgba(24, 48, 68, 0.10);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.7;
+        }
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 44px;
+        }
+
+        header {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .meta {
+            margin: 0 0 8px;
+            color: #dbeafe;
+            font-size: 0.88rem;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.7rem, 3vw, 2.65rem);
+            line-height: 1.25;
+            letter-spacing: 0;
+        }
+
+        .promise {
+            margin: 12px 0 0;
+            color: #e5edf6;
+            font-size: 1rem;
+        }
+
+        .instructor {
+            margin: 10px 0 0;
+            color: #dbeafe;
+            text-align: center;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .section {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 22px;
+            margin: 18px 0;
+            box-shadow: 0 8px 22px rgba(24, 48, 68, 0.05);
+        }
+
+        .step-label {
+            display: inline-flex;
+            align-items: center;
+            color: #fff;
+            background: var(--navy);
+            border-radius: 999px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        h2 {
+            margin: 12px 0 8px;
+            font-size: clamp(1.28rem, 2vw, 1.65rem);
+            line-height: 1.35;
+            letter-spacing: 0;
+        }
+
+        p { margin: 8px 0; }
+        .lead { color: var(--muted); max-width: none; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 18px;
+            align-items: start;
+            margin-top: 16px;
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfdff;
+            padding: 16px;
+        }
+
+        .panel h3 {
+            margin: 0 0 12px;
+            font-size: 1rem;
+            color: var(--ink);
+        }
+
+        .chart-wrap {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 8px 8px 12px;
+        }
+
+        svg { width: 100%; height: auto; display: block; }
+        .axis { stroke: #334155; stroke-width: 2; }
+        .grid-line { stroke: #e2e8f0; stroke-width: 1; }
+        .demand { fill: none; stroke: var(--blue); stroke-width: 4; stroke-linecap: round; }
+        .supply { fill: none; stroke: var(--orange); stroke-width: 4; stroke-linecap: round; }
+        .curve-green { fill: none; stroke: var(--green); stroke-width: 4; stroke-linecap: round; }
+        .curve-violet { fill: none; stroke: var(--violet); stroke-width: 4; stroke-linecap: round; }
+        .indiff-a { fill: none; stroke: var(--blue); stroke-width: 3; stroke-linecap: round; }
+        .indiff-b { fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; }
+        .budget { stroke: var(--orange); stroke-width: 2.5; stroke-dasharray: 7 5; }
+        .policy { stroke: var(--red); stroke-width: 2; stroke-dasharray: 6 5; }
+        .price-line { stroke: #64748b; stroke-width: 1.5; stroke-dasharray: 5 5; }
+        .contract { fill: none; stroke: var(--red); stroke-width: 3; stroke-dasharray: 7 5; }
+        .point { fill: var(--navy); }
+        .point-blue { fill: var(--blue); }
+        .point-red { fill: var(--red); }
+        .surplus { fill: rgba(124, 58, 237, 0.20); stroke: rgba(124, 58, 237, 0.62); }
+        .taxrect { fill: rgba(217, 119, 6, 0.22); stroke: rgba(217, 119, 6, 0.68); }
+        .dwl { fill: rgba(220, 38, 38, 0.24); stroke: rgba(220, 38, 38, 0.60); }
+        .label-small { font-size: 13px; fill: #334155; font-weight: 700; }
+        .label-muted { font-size: 12px; fill: #64748b; }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 132px minmax(0, 1fr) 76px;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        label {
+            font-weight: 700;
+            color: #31475f;
+            font-size: 0.92rem;
+        }
+
+        input[type="range"] { width: 100%; accent-color: var(--blue); }
+
+        input[type="number"] {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 8px;
+            font: inherit;
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .segmented {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--ink);
+            border-radius: 6px;
+            padding: 9px 12px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        button:hover { transform: translateY(-1px); border-color: #9fb4c8; }
+        button.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+        button.good { background: var(--soft-green); border-color: #8fd8b5; color: #075f45; }
+        button.bad { background: var(--soft-red); border-color: #f0aaa9; color: #991b1b; }
+
+        .readout {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .metric, .formula-card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            padding: 12px;
+        }
+
+        .metric span, .formula-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .metric strong, .formula-card strong {
+            display: block;
+            font-size: 1.22rem;
+            line-height: 1.25;
+            color: var(--navy);
+        }
+
+        .formula-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .result-box {
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 12px;
+            border: 1px solid var(--line);
+            background: var(--soft-blue);
+        }
+
+        .result-box.good { background: var(--soft-green); border-color: #99d9b8; }
+        .result-box.warn { background: var(--soft-orange); border-color: #f4c77b; }
+        .result-box.bad { background: var(--soft-red); border-color: #f0aaa9; }
+
+        .big-number {
+            display: block;
+            font-size: clamp(1.4rem, 2.8vw, 2rem);
+            line-height: 1.2;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .calc-note {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
+            font-family: "Courier New", Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: #26384d;
+        }
+
+        .calc-note strong { color: var(--navy); }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .scenario {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .scenario h3 { margin: 0 0 8px; font-size: 1rem; }
+        .feedback { min-height: 46px; margin-top: 10px; color: var(--muted); font-size: 0.92rem; }
+
+        .insight {
+            border-left: 5px solid #0f766e;
+            background: #ecfeff;
+            border-radius: 8px;
+            padding: 14px;
+            margin-top: 14px;
+        }
+
+        .slide-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 14px;
+        }
+
+        .slide-controls button {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--navy);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .slide-controls button.primary {
+            background: var(--navy);
+            color: #fff;
+            border-color: var(--navy);
+        }
+
+        .slide-progress {
+            margin-left: auto;
+            color: var(--muted);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .final {
+            background: #102033;
+            color: #f8fafc;
+        }
+
+        .final .lead { color: #dbeafe; max-width: none; }
+
+        @media (max-width: 820px) {
+            .page { width: min(100% - 20px, 1180px); padding-top: 10px; }
+            header, .section { padding: 16px; }
+            .grid, .readout, .cards, .formula-strip { grid-template-columns: 1fr; }
+            .control-row { grid-template-columns: 1fr; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+<main class="page">
+    <header>
+        <p class="meta">2026年度春学期　ミクロ経済学入門 第8回・ミクロ経済学演習 第9回</p>
+        <h1 style="text-align:center">部分均衡から一般均衡へ：<br>市場を一つずつ見るだけでは何を見落とすか</h1>
+        <p class="promise" style="text-align:center">均衡の安定性、エッジワース・ボックス、パレート改善、契約曲線、生産フロンティアを、図と計算が対応する形で確認します。</p>
+        <p class="instructor">東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </header>
+
+    <section class="section" id="step1">
+        <span class="step-label">STEP 1</span>
+        <h2>均衡はいつ安定するのか：普通の需要とギッフェン財を比べる</h2>
+        <p class="lead">価格が均衡から外れたとき、超過需要なら価格上昇、超過供給なら価格下落が起こります。普通の需要では均衡へ戻りますが、ギッフェン財では逆に遠ざかる場合があります。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="stabilitySvg" viewBox="0 0 640 430" role="img" aria-label="均衡の安定性"></svg>
+                <div class="calc-note" id="stabilityCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>価格を均衡からずらす</h3>
+                <div class="segmented">
+                    <button id="normalDemandBtn" class="active" type="button">普通の需要</button>
+                    <button id="giffenDemandBtn" type="button">ギッフェン財</button>
+                </div>
+                <div class="control-row">
+                    <label for="testPrice">現在価格</label>
+                    <input id="testPrice" type="range" min="5" max="45" step="1" value="18">
+                    <input id="testPriceNum" type="number" min="5" max="45" step="1" value="18">
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong id="stabilityDemandFormula"></strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong id="stabilitySupplyFormula"></strong></div>
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>需要量</span><strong id="stabilityDemandQty"></strong></div>
+                    <div class="metric"><span>供給量</span><strong id="stabilitySupplyQty"></strong></div>
+                    <div class="metric"><span>価格の動き</span><strong id="priceDirection"></strong></div>
+                </div>
+                <div class="result-box" id="stabilityVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step2">
+        <span class="step-label">STEP 2</span>
+        <h2>均衡が存在しない市場を見分ける</h2>
+        <p class="lead">需要曲線と供給曲線が交わらないとき、価格メカニズムだけでは通常の市場均衡を作れません。自由財や供給不能のケースを分類します。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="existenceSvg" viewBox="0 0 640 390" role="img" aria-label="均衡の存在と非存在"></svg>
+            </div>
+            <div class="panel">
+                <h3>ケースを切り替える</h3>
+                <div class="segmented">
+                    <button data-existence="normal" class="active" type="button">通常市場</button>
+                    <button data-existence="free" type="button">自由財</button>
+                    <button data-existence="unavailable" type="button">供給不能</button>
+                </div>
+                <div class="result-box" id="existenceVerdict"></div>
+                <div class="calc-note" id="existenceCalc"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step3prep">
+        <span class="step-label">STEP 3.1</span>
+        <h2>エッジワース・ボックスを1枚ずつ組み立てる</h2>
+        <p class="lead">2人の無差別曲線を反転して重ねるところから、初期保有点、パレート改善、予算制約線とMRSの関係までを、矢印で1枚ずつ確認します。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="edgeworthBuildSvg" viewBox="0 0 640 460" role="img" aria-label="エッジワース・ボックスの分解説明"></svg>
+                <div class="calc-note" id="edgeworthBuildNote"></div>
+            </div>
+            <div class="panel">
+                <h3 id="edgeworthBuildTitle"></h3>
+                <p id="edgeworthBuildText" class="lead"></p>
+                <div class="slide-controls">
+                    <button id="edgeworthBuildPrev" type="button">← 前へ</button>
+                    <button id="edgeworthBuildPlay" class="primary" type="button">▶ 再生</button>
+                    <button id="edgeworthBuildNext" type="button">次へ →</button>
+                    <span class="slide-progress" id="edgeworthBuildProgress"></span>
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>横幅</span><strong>X財の総量</strong></div>
+                    <div class="metric"><span>縦幅</span><strong>Y財の総量</strong></div>
+                    <div class="metric"><span>効率条件</span><strong>MRS<sub>1</sub> = MRS<sub>2</sub></strong></div>
+                </div>
+                <div class="result-box" id="edgeworthBuildVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step3">
+        <span class="step-label">STEP 3.2</span>
+        <h2>エッジワース・ボックス：配分点は2人の所有量を同時に表す</h2>
+        <p class="lead">横幅はリンゴ10個、縦幅はミカン20個です。点を動かすと、消費者1の所有量と消費者2の所有量が同時に変わります。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="edgeworthSvg" viewBox="0 0 640 460" role="img" aria-label="エッジワース・ボックス"></svg>
+                <div class="calc-note" id="edgeworthCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>配分点を動かす</h3>
+                <p style="font-size:0.82rem;color:#64748b;margin:0 0 8px">青い点は予算制約線上のみ移動できます</p>
+                <div class="control-row">
+                    <label for="apple1">消費者1のリンゴ（予算線上）</label>
+                    <input id="apple1" type="range" min="0.5" max="9.5" step="0.1" value="2">
+                    <input id="apple1Num" type="number" min="0.5" max="9.5" step="0.1" value="2">
+                </div>
+                <div class="control-row">
+                    <label for="exchangeRatio">価格比 Pₓ/Pᵧ</label>
+                    <input id="exchangeRatio" type="range" min="0.5" max="12" step="0.1" value="3">
+                    <input id="exchangeRatioNum" type="number" min="0.5" max="12" step="0.1" value="3">
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>消費者1</span><strong id="consumer1Bundle"></strong></div>
+                    <div class="metric"><span>消費者2</span><strong id="consumer2Bundle"></strong></div>
+                    <div class="metric"><span>MRS差</span><strong id="mrsGap"></strong></div>
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>予算制約線</span><strong id="budgetLineText"></strong></div>
+                    <div class="formula-card"><span>契約曲線</span><strong>MRS₁ = MRS₂</strong></div>
+                </div>
+                <div class="result-box" id="edgeworthVerdict"></div>
+            </div>
+        </div>
+        <div class="insight">契約曲線は、2人の限界代替率が一致する点の集合です。そこでは一方の効用を上げるためには、もう一方の効用を下げなければなりません。</div>
+    </section>
+
+    <section class="section" id="step4">
+        <span class="step-label">STEP 4</span>
+        <h2>生産可能性フロンティアで限界変形率を読む</h2>
+        <p class="lead">資源が一定なら、X財を増やすほどY財は減ります。その減り方をPPF上の小さな三角形と接線の傾きで読み、最後に価格比との一致を確認します。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="ppfSvg" viewBox="0 0 640 430" role="img" aria-label="生産可能性フロンティアとMRT"></svg>
+                <div class="calc-note" id="ppfCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>PPFの傾きからMRTを読む</h3>
+                <div class="control-row">
+                    <label for="x1Output">X財の生産量 X</label>
+                    <input id="x1Output" type="range" min="5" max="45" step="1" value="25">
+                    <input id="x1OutputNum" type="number" min="5" max="45" step="1" value="25">
+                </div>
+                <div class="control-row">
+                    <label for="priceRatio">価格比 P<sub>X</sub>/P<sub>Y</sub></label>
+                    <input id="priceRatio" type="range" min="0.4" max="3.8" step="0.1" value="2">
+                    <input id="priceRatioNum" type="number" min="0.4" max="3.8" step="0.1" value="2">
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>生産可能性フロンティア</span><strong>Y = 100 - 0.04X²</strong></div>
+                    <div class="formula-card"><span>限界変形率</span><strong>MRT = -dY/dX = 0.08X</strong></div>
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>MRT</span><strong id="mrtValue"></strong></div>
+                    <div class="metric"><span>価格比</span><strong id="priceRatioValue"></strong></div>
+                    <div class="metric"><span>判定</span><strong id="ppfStatus"></strong></div>
+                </div>
+                <div class="result-box" id="ppfVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="step5">
+        <span class="step-label">STEP 5</span>
+        <h2>演習復習：貿易利益・関税収入・死荷重を式で確認する</h2>
+        <p class="lead">演習第9回の冒頭で扱った <strong>D = 100 - P, S = P, p<sup>*</sup> = 10</strong> の貿易計算を、関税額を動かしながら確認します。</p>
+        <div class="grid">
+            <div class="chart-wrap">
+                <svg id="tradeReviewSvg" viewBox="0 0 640 430" role="img" aria-label="貿易利益と関税"></svg>
+                <div class="calc-note" id="tradeReviewCalc"></div>
+            </div>
+            <div class="panel">
+                <h3>関税額を動かす</h3>
+                <div class="control-row">
+                    <label for="tariffAmount">関税額</label>
+                    <input id="tariffAmount" type="range" min="0" max="30" step="1" value="10">
+                    <input id="tariffAmountNum" type="number" min="0" max="30" step="1" value="10">
+                </div>
+                <div class="formula-strip">
+                    <div class="formula-card"><span>需要曲線</span><strong>D = 100 - P</strong></div>
+                    <div class="formula-card"><span>供給曲線</span><strong>S = P</strong></div>
+                </div>
+                <div class="readout">
+                    <div class="metric"><span>輸入量</span><strong id="reviewImport"></strong></div>
+                    <div class="metric"><span>関税収入</span><strong id="reviewTariffRevenue"></strong></div>
+                    <div class="metric"><span>死荷重</span><strong id="reviewDwl"></strong></div>
+                </div>
+                <div class="result-box" id="tradeReviewVerdict"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section final">
+        <span class="step-label">まとめ</span>
+        <h2>一般均衡は、複数市場を同時に見るための考え方</h2>
+        <p class="lead">部分均衡は一つの市場を鋭く見る方法です。一方で一般均衡は、消費者の限界代替率、生産者の限界変形率、そして市場の価格比が同時に整合するかを見ます。エッジワース・ボックスと生産フロンティアは、その整合性を図で考えるための道具です。</p>
+    </section>
+</main>
+
+<script>
+    const fmt = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 2 });
+
+    function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function syncRangeNumber(rangeId, numberId, callback) {
+        const range = document.getElementById(rangeId);
+        const number = document.getElementById(numberId);
+        const apply = (source) => {
+            const min = Number(range.min);
+            const max = Number(range.max);
+            const value = clamp(Number(source.value), min, max);
+            range.value = value;
+            number.value = value;
+            callback();
+        };
+        range.addEventListener("input", () => apply(range));
+        number.addEventListener("input", () => apply(number));
+    }
+
+    function val(id) {
+        return Number(document.getElementById(id).value);
+    }
+
+    function scale(maxQ, maxP) {
+        const left = 82, right = 560, top = 28, bottom = 354;
+        return {
+            left, right, top, bottom,
+            x: (q) => left + (q / maxQ) * (right - left),
+            y: (p) => bottom - (p / maxP) * (bottom - top)
+        };
+    }
+
+    function axes(s, yLabel, qLabel = "") {
+        return `
+            <line class="axis" x1="${s.left}" y1="${s.top}" x2="${s.left}" y2="${s.bottom}" />
+            <line class="axis" x1="${s.left}" y1="${s.bottom}" x2="${s.right}" y2="${s.bottom}" />
+            <text class="label-small" x="${s.left - 40}" y="35">価格</text>
+            <text class="label-small" x="${s.right - 22}" y="${s.bottom + 34}">数量</text>
+            ${yLabel ? `<text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${s.y(yLabel.value) + 4}">${yLabel.label}</text>` : ""}
+            ${qLabel ? `<text class="label-muted" x="${s.x(qLabel.value) - 18}" y="${s.bottom + 20}">${qLabel.label}</text>` : ""}
+        `;
+    }
+
+    let demandCase = "normal";
+
+    function stabilityData() {
+        const p = val("testPrice");
+        if (demandCase === "normal") {
+            return { p, qd: Math.max(0, 100 - 2 * p), qs: 2 * p, pe: 25, qe: 50, demandFormula: "D = 100 - 2P", supplyFormula: "S = 2P", stable: true };
+        }
+        return { p, qd: 20 + p, qs: 2 * p, pe: 20, qe: 40, demandFormula: "D = 20 + P", supplyFormula: "S = 2P", stable: false };
+    }
+
+    function drawStability() {
+        const d = stabilityData();
+        const s = scale(105, 60);
+        const svg = document.getElementById("stabilitySvg");
+        const demandPath = demandCase === "normal"
+            ? `M ${s.x(0)} ${s.y(50)} L ${s.x(100)} ${s.y(0)}`
+            : `M ${s.x(20)} ${s.y(0)} L ${s.x(80)} ${s.y(60)}`;
+        const supplyPath = `M ${s.x(0)} ${s.y(0)} L ${s.x(105)} ${s.y(52.5)}`;
+        const priceY = s.y(d.p);
+        const qdX = s.x(d.qd);
+        const qsX = s.x(d.qs);
+        const peX = s.x(d.qe), peY = s.y(d.pe);
+        const eLabel = demandCase === "normal"
+            ? `<text class="label-small" text-anchor="middle" x="${peX}" y="${peY - 14}">E</text>`
+            : `<text class="label-small" text-anchor="end" x="${peX - 10}" y="${peY - 12}">E</text>`;
+        const excess = d.qd - d.qs;
+        const direction = excess > 0 ? "上昇" : excess < 0 ? "下落" : "変化なし";
+        const arrow = direction === "上昇" ? "↑" : direction === "下落" ? "↓" : "→";
+        svg.innerHTML = `
+            ${axes(s, { value: demandCase === "normal" ? 50 : 20, label: demandCase === "normal" ? "切片=50" : "D切片=20" })}
+            <path class="demand" d="${demandPath}" />
+            <path class="supply" d="${supplyPath}" />
+            <line class="price-line" x1="${s.left}" y1="${priceY}" x2="${s.right}" y2="${priceY}" />
+            <line class="price-line" x1="${qdX}" y1="${priceY}" x2="${qdX}" y2="${s.bottom}" />
+            <line class="price-line" x1="${qsX}" y1="${priceY}" x2="${qsX}" y2="${s.bottom}" />
+            <circle class="point" cx="${peX}" cy="${peY}" r="6" />
+            ${eLabel}
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${priceY + 4}">P=${fmt.format(d.p)}</text>
+            <text class="label-muted" x="${qdX - 18}" y="${s.bottom + 20}">D=${fmt.format(d.qd)}</text>
+            <text class="label-muted" x="${qsX - 18}" y="${s.bottom + 38}">S=${fmt.format(d.qs)}</text>
+            <text class="label-small" x="${(qdX + qsX) / 2 - 34}" y="${priceY - 12}">${Math.abs(excess) < 0.01 ? "均衡" : excess > 0 ? "超過需要" : "超過供給"} ${arrow}</text>
+        `;
+        document.getElementById("stabilityDemandFormula").textContent = d.demandFormula;
+        document.getElementById("stabilitySupplyFormula").textContent = d.supplyFormula;
+        document.getElementById("stabilityDemandQty").textContent = fmt.format(d.qd);
+        document.getElementById("stabilitySupplyQty").textContent = fmt.format(d.qs);
+        document.getElementById("priceDirection").textContent = direction;
+        document.getElementById("stabilityCalc").innerHTML =
+            `現在価格 P=${fmt.format(d.p)} のとき、D=${fmt.format(d.qd)}, S=${fmt.format(d.qs)}。<br>` +
+            `D-S = ${fmt.format(excess)} なので、価格は <strong>${direction}</strong> します。`;
+        const verdict = document.getElementById("stabilityVerdict");
+        verdict.className = `result-box ${d.stable ? "good" : "bad"}`;
+        verdict.innerHTML = d.stable
+            ? `<span class="big-number">安定的な均衡</span>価格調整が均衡点へ戻る方向に働きます。`
+            : `<span class="big-number">不安定な均衡</span>ギッフェン財では価格上昇が需要増につながり、均衡から外れると戻りにくくなります。`;
+    }
+
+    document.getElementById("normalDemandBtn").addEventListener("click", () => {
+        demandCase = "normal";
+        document.getElementById("normalDemandBtn").classList.add("active");
+        document.getElementById("giffenDemandBtn").classList.remove("active");
+        drawStability();
+    });
+    document.getElementById("giffenDemandBtn").addEventListener("click", () => {
+        demandCase = "giffen";
+        document.getElementById("giffenDemandBtn").classList.add("active");
+        document.getElementById("normalDemandBtn").classList.remove("active");
+        drawStability();
+    });
+    syncRangeNumber("testPrice", "testPriceNum", drawStability);
+
+    let existenceCase = "normal";
+
+    function drawExistence() {
+        const s = scale(100, 100);
+        const svg = document.getElementById("existenceSvg");
+        let demandPath = `M ${s.x(0)} ${s.y(80)} L ${s.x(90)} ${s.y(10)}`;
+        let supplyPath = `M ${s.x(0)} ${s.y(10)} L ${s.x(90)} ${s.y(80)}`;
+        let point = `<circle class="point" cx="${s.x(45)}" cy="${s.y(45)}" r="6" /><text class="label-small" text-anchor="middle" x="${s.x(45)}" y="${s.y(45) - 16}">均衡</text>`;
+        let demandLabel = `<text class="label-small" x="${s.x(78)}" y="${s.y(20)}">D</text>`;
+        let supplyLabel = `<text class="label-small" x="${s.x(78)}" y="${s.y(72)}">S</text>`;
+        let verdict = `<span class="big-number">均衡が存在する</span>需要曲線と供給曲線が交わり、その価格で D=S になります。`;
+        let calc = "通常市場では、需要と供給の交点が市場均衡です。";
+        if (existenceCase === "free") {
+            demandPath = `M ${s.x(0)} ${s.y(70)} L ${s.x(50)} ${s.y(0)}`;
+            supplyPath = `M ${s.x(65)} ${s.y(0)} L ${s.x(95)} ${s.y(55)}`;
+            point = `<line stroke="#888" stroke-width="1.5" stroke-dasharray="4,3" x1="${s.left}" y1="${s.y(0)}" x2="${s.right}" y2="${s.y(0)}" />
+                <text class="label-muted" x="${s.x(10)}" y="${s.y(5)}">価格=0で供給量 &gt; 需要量</text>`;
+            demandLabel = `<text class="label-small" x="${s.x(38)}" y="${s.y(8)}">D</text>`;
+            supplyLabel = `<text class="label-small" x="${s.x(97)}" y="${s.y(52)}">S</text>`;
+            verdict = `<span class="big-number">自由財のケース</span>価格ゼロでも供給量が需要量を上回り、正の価格の均衡が存在しません。`;
+            calc = "空気や豊富な湧き水のように希少性がなければ、需要と供給は価格0でも交わらず、市場価格はつきません。";
+        }
+        if (existenceCase === "unavailable") {
+            demandPath = `M ${s.x(0)} ${s.y(80)} L ${s.x(90)} ${s.y(10)}`;
+            supplyPath = `M ${s.x(0)} ${s.y(100)} L ${s.x(0)} ${s.y(0)}`;
+            point = `<text class="label-small" x="${s.x(10)}" y="${s.y(55)}">交点なし</text>
+                <text class="label-muted" x="${s.x(10)}" y="${s.y(45)}">供給量 = 0</text>`;
+            demandLabel = `<text class="label-small" x="${s.x(78)}" y="${s.y(18)}">D</text>`;
+            supplyLabel = `<text class="label-small" x="${s.x(3)}" y="${s.y(90)}">S</text>`;
+            verdict = `<span class="big-number">均衡が存在しない</span>どの価格でも供給量がゼロであり、市場均衡が成立しません。`;
+            calc = "廃版品や供給不能な財では、需要があっても供給がゼロのため均衡を作れません。";
+        }
+        svg.innerHTML = `
+            ${axes(s, null)}
+            <path class="demand" d="${demandPath}" />
+            <path class="supply" d="${supplyPath}" />
+            ${point}
+            ${demandLabel}
+            ${supplyLabel}
+        `;
+        document.getElementById("existenceVerdict").innerHTML = verdict;
+        document.getElementById("existenceCalc").textContent = calc;
+    }
+
+    document.querySelectorAll("[data-existence]").forEach((button) => {
+        button.addEventListener("click", () => {
+            existenceCase = button.dataset.existence;
+            document.querySelectorAll("[data-existence]").forEach((b) => b.classList.remove("active"));
+            button.classList.add("active");
+            drawExistence();
+        });
+    });
+
+    const edgeworthBuildSlides = [
+        {
+            title: "1. まず消費者1の普通の無差別曲線",
+            text: "左下の原点 O1 から、X財は右、Y財は上に測ります。右上へ行くほど消費者1の効用は高くなります。",
+            note: "通常の消費者理論と同じ図から始めます。まだ箱ではなく、消費者1だけの座標です。"
+        },
+        {
+            title: "2. 財の総量で箱を作る",
+            text: "横幅はX財の総量、縦幅はY財の総量です。この箱の中にある点だけが、2人で分けられる実行可能な配分です。",
+            note: "ここでは X財の総量 = 10、Y財の総量 = 20 とします。箱の外は総量制約を破るので選べません。"
+        },
+        {
+            title: "3. 消費者2の図を反転して重ねる",
+            text: "消費者2の原点 O2 は右上です。消費者2にとっては左下へ進むほど、自分のX財・Y財が増えます。",
+            note: "2人の所有量は必ず足して総量になります。だから消費者2の座標は、消費者1とは逆向きに読みます。"
+        },
+        {
+            title: "4. 1つの点が2人の配分を同時に表す",
+            text: "初期保有点 W は、消費者1の所有量を左下から、消費者2の所有量を右上から同時に示します。",
+            note: "W=(2.5,12) なら、消費者1は X=2.5・Y=12、消費者2は X=7.5・Y=8 を持っています。"
+        },
+        {
+            title: "5. 2人の無差別曲線を同じ箱に描く",
+            text: "青は消費者1、赤は消費者2の無差別曲線です。消費者2の曲線は反転しているので、左下ほど高い効用になります。",
+            note: "同じ点 W を通る2本の曲線を比べると、交換によって誰の効用を上げられるかが見え始めます。"
+        },
+        {
+            title: "6. 交わっているならパレート改善の余地がある",
+            text: "一方の効用を保ちながら、もう一方の無差別曲線を高い側へ動かせるなら、その配分はまだ効率的ではありません。",
+            note: "2本の無差別曲線が交差している状態では、レンズ状の改善可能領域が生まれます。"
+        },
+        {
+            title: "7. 接する点をつないだものが契約曲線",
+            text: "2人の無差別曲線が接する点では MRS1 と MRS2 が一致します。そのような点の集まりが契約曲線です。",
+            note: "接点では、これ以上どちらかを良くするにはもう一方を悪くする必要があるため、パレート効率的です。"
+        },
+        {
+            title: "8. 予算制約線は初期保有点を通る",
+            text: "交換は初期保有点 W から始まります。価格比が決まると、W を通る予算制約線上で取引可能な配分を探します。",
+            note: "競争均衡では、予算制約線の傾き -Px/Py と、2人のMRSが同じになる点が候補になります。"
+        }
+    ];
+    let edgeworthBuildIndex = 0;
+    let edgeworthBuildTimer = null;
+
+    function drawEdgeworthBuild() {
+        const slide = edgeworthBuildSlides[edgeworthBuildIndex];
+        const totalX = 10;
+        const totalY = 20;
+        const left = 86, top = 50, width = 430, height = 320;
+        const x = (v) => left + (v / totalX) * width;
+        const y = (v) => top + height - (v / totalY) * height;
+        const w = { x: 2.5, y: 12 };
+        // 競争均衡点：契約曲線(y=2x)と予算制約線(傾き=-Px/Py=-y_w/x_w=-4.8)の交点
+        // y = w.y + (w.y/w.x)*(w.x - x) = 2*w.y - (w.y/w.x)*x
+        // 契約曲線 y=2x を代入: 2x = 2*w.y - (w.y/w.x)*x → x*(2 + w.y/w.x) = 2*w.y
+        const eqX = (2 * w.y) / (2 + w.y / w.x);
+        const eqY = 2 * eqX;
+        const a = { x: eqX, y: eqY };
+        const utility1 = w.x * w.y;
+        const utility2 = (totalX - w.x) * (totalY - w.y);
+        const tangentU = a.x * a.y;
+        const otherCross = { x: w.y / 2, y: utility1 / (w.y / 2) };
+
+        function hyperbolaA(u) {
+            let path = "";
+            for (let xv = 0.25; xv <= totalX; xv += 0.1) {
+                const yv = u / xv;
+                if (yv >= 0 && yv <= totalY) path += `${path ? "L" : "M"} ${x(xv)} ${y(yv)} `;
+            }
+            return path;
+        }
+        function hyperbolaB(u) {
+            let path = "";
+            for (let xv = 0; xv <= totalX - 0.25; xv += 0.1) {
+                const yv = totalY - u / (totalX - xv);
+                if (yv >= 0 && yv <= totalY) path += `${path ? "L" : "M"} ${x(xv)} ${y(yv)} `;
+            }
+            return path;
+        }
+        function improvementLensPath() {
+            const xMin = Math.min(w.x, otherCross.x) + 0.04;
+            const xMax = Math.max(w.x, otherCross.x) - 0.04;
+            const topPoints = [];
+            const bottomPoints = [];
+            for (let xv = xMin; xv <= xMax; xv += 0.12) {
+                const lower = utility1 / xv;
+                const upper = totalY - utility2 / (totalX - xv);
+                if (upper > lower) {
+                    topPoints.push(`${x(xv)},${y(upper)}`);
+                    bottomPoints.unshift(`${x(xv)},${y(lower)}`);
+                }
+            }
+            return topPoints.length ? `M ${topPoints.concat(bottomPoints).join(" L ")} Z` : "";
+        }
+        const show = (n) => edgeworthBuildIndex >= n;
+        const finalSlide = edgeworthBuildIndex === edgeworthBuildSlides.length - 1;
+        const budgetSlope = w.y / w.x;
+        const budgetIntercept = w.y + budgetSlope * w.x;
+        const budgetX1 = 0, budgetY1 = budgetIntercept;
+        const budgetX2 = Math.min(totalX, budgetIntercept / budgetSlope);
+        const budgetPath = `M ${x(budgetX1)} ${y(budgetY1)} L ${x(budgetX2)} ${y(0)}`;
+        const parts = [];
+        parts.push(`
+            <defs>
+                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#2563eb"></path>
+                </marker>
+                <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#dc2626"></path>
+                </marker>
+                <marker id="arrowAxis" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#334155"></path>
+                </marker>
+                <marker id="arrowAxis2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#dc2626"></path>
+                </marker>
+            </defs>
+            <line class="axis" x1="${left}" y1="${top + height}" x2="${left + width + 45}" y2="${top + height}" marker-end="url(#arrowAxis)" />
+            <line class="axis" x1="${left}" y1="${top + height}" x2="${left}" y2="${top - 30}" marker-end="url(#arrowAxis)" />
+            <text class="label-small" x="${left - 28}" y="${top + height + 28}">O1</text>
+            <text class="label-muted" x="${left - 28}" y="${top + height + 44}">消費者1の原点</text>
+            <text class="label-small" text-anchor="middle" x="${left + width / 2}" y="${top + height + 34}">消費者1のX財 →</text>
+            <text class="label-small" text-anchor="middle" x="${left - 62}" y="${top + height / 2}">↑</text>
+            <text class="label-small" text-anchor="middle" x="${left - 62}" y="${top + height / 2 + 18}">消費者1</text>
+            <text class="label-small" text-anchor="middle" x="${left - 62}" y="${top + height / 2 + 34}">のY財</text>
+            <path class="indiff-a" d="${hyperbolaA(utility1)}" />
+            <text class="label-small" x="${x(7.5)}" y="${y(2.2)}">U1</text>
+            <rect x="${left + width - 168}" y="${top + 6}" width="168" height="46" rx="6" fill="#f8fafc" stroke="#dbe4ef" />
+            <text class="label-small" x="${left + width - 160}" y="${top + 22}">U&#x2081; = x&#x2081;y&#x2081;</text>
+            <text class="label-small" x="${left + width - 160}" y="${top + 40}">U&#x2082; = x&#x2082;y&#x2082;</text>
+        `);
+        if (show(1)) {
+            parts.push(`
+                <rect x="${left}" y="${top}" width="${width}" height="${height}" fill="none" stroke="#334155" stroke-width="2" />
+                <text class="label-muted" text-anchor="middle" x="${left + width / 2}" y="${top + height + 52}">X財の総量 = 10</text>
+                <text class="label-muted" text-anchor="middle" x="${left - 62}" y="${top + height / 2 + 56}">Y財の総量 = 20</text>
+            `);
+        }
+        if (show(2)) {
+            parts.push(`
+                <line class="policy" x1="${left + width}" y1="${top}" x2="${left - 42}" y2="${top}" marker-end="url(#arrowRed)" />
+                <line class="policy" x1="${left + width}" y1="${top}" x2="${left + width}" y2="${top + height + 42}" marker-end="url(#arrowRed)" />
+                <text class="label-small" x="${left + width + 8}" y="${top - 8}">O2</text>
+                <text class="label-muted" x="${left + width + 8}" y="${top + 8}">消費者2の原点</text>
+                <text class="label-small" text-anchor="middle" x="${left + width / 2}" y="${top - 14}">← 消費者2のX財</text>
+                <text class="label-small" text-anchor="start" x="${left + width + 8}" y="${top + height / 2}">消費者2のY財 ↓</text>
+                ${finalSlide ? "" : `<text class="label-muted" text-anchor="end" x="${left + width - 4}" y="${top + 68}">消費者2は左下ほど高効用</text>`}
+            `);
+        }
+        if (show(3)) {
+            parts.push(`
+                <line class="grid-line" x1="${x(w.x)}" y1="${top}" x2="${x(w.x)}" y2="${top + height}" />
+                <line class="grid-line" x1="${left}" y1="${y(w.y)}" x2="${left + width}" y2="${y(w.y)}" />
+                <circle fill="#64748b" cx="${x(w.x)}" cy="${y(w.y)}" r="7" />
+                ${finalSlide ? "" : `<text class="label-small" text-anchor="end" x="${x(w.x) - 12}" y="${y(w.y) + 6}">初期保有点 W</text>`}
+                <text class="label-muted" x="${x(w.x) - 28}" y="${top + height + 22}">x<tspan baseline-shift="sub" font-size="10">1</tspan>=${fmt.format(w.x)}</text>
+                <text class="label-muted" text-anchor="end" x="${left - 8}" y="${y(w.y) + 4}">y<tspan baseline-shift="sub" font-size="10">1</tspan>=${fmt.format(w.y)}</text>
+                <text class="label-muted" x="${x(w.x) - 28}" y="${top - 8}">x<tspan baseline-shift="sub" font-size="10">2</tspan>=${fmt.format(totalX - w.x)}</text>
+                <text class="label-muted" x="${left + width + 8}" y="${y(w.y) + 4}">y<tspan baseline-shift="sub" font-size="10">2</tspan>=${fmt.format(totalY - w.y)}</text>
+            `);
+        }
+        if (show(4)) {
+            parts.push(`
+                <path class="indiff-b" d="${hyperbolaB(utility2)}" />
+                <text class="label-small" x="${x(1.15)}" y="${y(16.8)}">U2</text>
+                <circle fill="#fff" stroke="#111827" stroke-width="2" cx="${x(w.x)}" cy="${y(w.y)}" r="8" />
+                ${finalSlide ? "" : `<text class="label-small" x="${x(w.x) + 12}" y="${y(w.y) - 12}">交点 W</text>`}
+                <circle fill="#fff" stroke="#111827" stroke-width="2" cx="${x(otherCross.x)}" cy="${y(otherCross.y)}" r="6" />
+                ${finalSlide ? "" : `<text class="label-small" text-anchor="end" x="${x(otherCross.x) - 10}" y="${y(otherCross.y) + 20}">もう1つの交点</text>`}
+            `);
+        }
+        if (show(5)) {
+            parts.push(`
+                <path class="surplus" d="${improvementLensPath()}" />
+                ${finalSlide ? "" : `
+                    <rect x="${x(3.6)}" y="${y(10.2)}" width="90" height="22" rx="4" fill="#ffffffcc" />
+                    <text class="label-small" x="${x(3.65)}" y="${y(9.4)}">改善可能領域</text>
+                `}
+                <circle class="point-red" cx="${x(4.4)}" cy="${y(8.8)}" r="6" />
+                ${finalSlide ? "" : `
+                    <rect x="${x(4.4) + 8}" y="${y(8.8) - 24}" width="96" height="20" rx="4" fill="#ffffffcc" />
+                    <text class="label-small" x="${x(4.4) + 10}" y="${y(8.8) - 10}">パレート改善</text>
+                `}
+            `);
+        }
+        if (show(6)) {
+            parts.push(`
+                <path class="contract" d="M ${x(0)} ${y(0)} L ${x(totalX)} ${y(totalY)}" />
+                <path class="indiff-a" d="${hyperbolaA(tangentU)}" />
+                <path class="indiff-b" d="${hyperbolaB((totalX - a.x) * (totalY - a.y))}" />
+                <circle class="point-red" cx="${x(a.x)}" cy="${y(a.y)}" r="7" />
+                ${finalSlide ? "" : `
+                    <rect x="${x(a.x) + 8}" y="${y(a.y) - 26}" width="160" height="20" rx="4" fill="#ffffffcc" />
+                    <text class="label-small" x="${x(a.x) + 10}" y="${y(a.y) - 12}">接点：MRS<tspan baseline-shift="sub" font-size="10">1</tspan>=MRS<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+                    <rect x="${x(6.15)}" y="${y(14.15)}" width="66" height="20" rx="4" fill="#ffffffcc" />
+                    <text class="label-small" x="${x(6.2)}" y="${y(13.4)}">契約曲線</text>
+                `}
+            `);
+        }
+        if (show(7)) {
+            parts.push(`
+                <path class="budget" d="${budgetPath}" />
+                ${finalSlide ? `
+                    <!-- 初期保有点Wへの引出し線 -->
+                    <line stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" x1="${x(w.x)}" y1="${y(w.y) - 8}" x2="${x(w.x) - 10}" y2="${y(w.y) - 38}" />
+                    <rect x="${x(0.18)}" y="${y(16.6)}" width="152" height="42" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+                    <text class="label-small" x="${x(0.35)}" y="${y(15.55)}">初期保有点 W</text>
+                    <text class="label-muted" x="${x(0.35)}" y="${y(14.55)}">(x<tspan baseline-shift="sub" font-size="10">1</tspan>,y<tspan baseline-shift="sub" font-size="10">1</tspan>)=(2.5,12)</text>
+                    <!-- 接点への引出し線 -->
+                    <line stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" x1="${x(a.x) + 7}" y1="${y(a.y) - 7}" x2="${x(6.92)}" y2="${y(13.55) + 42}" />
+                    <rect x="${x(6.9)}" y="${y(13.55)}" width="172" height="42" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+                    <text class="label-small" x="${x(7.08)}" y="${y(12.55)}">接点</text>
+                    <text class="label-muted" x="${x(7.08)}" y="${y(11.55)}">MRS<tspan baseline-shift="sub" font-size="10">1</tspan> = MRS<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+                    <!-- 契約曲線への引出し線（対角線の中ほどから） -->
+                    <line stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" x1="${x(7.5)}" y1="${y(15.0)}" x2="${x(7.1)}" y2="${y(16.35) + 34}" />
+                    <rect x="${x(6.92)}" y="${y(16.35)}" width="150" height="34" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+                    <text class="label-small" x="${x(7.1)}" y="${y(15.28)}">契約曲線</text>
+                    <!-- 予算制約線への引出し線 -->
+                    <line stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" x1="${x(3.5)}" y1="${y(8.5)}" x2="${x(0.18) + 178}" y2="${y(4.1) + 24}" />
+                    <rect x="${x(0.18)}" y="${y(4.1)}" width="178" height="48" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+                    <text class="label-small" x="${x(0.35)}" y="${y(3.0)}">予算制約線</text>
+                    <text class="label-muted" x="${x(0.35)}" y="${y(2.0)}">Wを通り、傾き = -P<tspan baseline-shift="sub" font-size="10">x</tspan>/P<tspan baseline-shift="sub" font-size="10">y</tspan></text>
+                ` : `
+                    <rect x="${x(3.1)}" y="${y(9.6)}" width="154" height="20" rx="4" fill="#ffffffcc" />
+                    <text class="label-small" x="${x(3.15)}" y="${y(8.8)}">予算制約線：Wを通る</text>
+                    <rect x="${x(3.9)}" y="${y(8.1)}" width="152" height="20" rx="4" fill="#ffffffcc" />
+                    <text class="label-muted" x="${x(3.95)}" y="${y(7.3)}">傾き = -P<tspan baseline-shift="sub" font-size="10">x</tspan>/P<tspan baseline-shift="sub" font-size="10">y</tspan></text>
+                `}
+            `);
+        }
+        document.getElementById("edgeworthBuildSvg").innerHTML = parts.join("");
+        document.getElementById("edgeworthBuildTitle").textContent = slide.title;
+        document.getElementById("edgeworthBuildText").textContent = slide.text;
+        document.getElementById("edgeworthBuildNote").textContent = slide.note;
+        document.getElementById("edgeworthBuildProgress").textContent = `${edgeworthBuildIndex + 1} / ${edgeworthBuildSlides.length}`;
+        document.getElementById("edgeworthBuildVerdict").innerHTML = edgeworthBuildIndex < 6
+            ? `<span class="big-number">箱は「2人の配分を同時に読む」ための図です。</span>点を1つ置くだけで、消費者1と消費者2の所有量が同時に決まります。`
+            : `<span class="big-number">効率性は接点で読む。</span>MRS<sub>1</sub>、MRS<sub>2</sub>、価格比を同じ傾きとして見ると、次のSTEP 3の操作が理解しやすくなります。`;
+    }
+
+    function setEdgeworthBuildSlide(nextIndex) {
+        edgeworthBuildIndex = (nextIndex + edgeworthBuildSlides.length) % edgeworthBuildSlides.length;
+        drawEdgeworthBuild();
+    }
+
+    function stopEdgeworthBuildPlayback() {
+        if (edgeworthBuildTimer) {
+            clearInterval(edgeworthBuildTimer);
+            edgeworthBuildTimer = null;
+            document.getElementById("edgeworthBuildPlay").textContent = "▶ 再生";
+        }
+    }
+
+    document.getElementById("edgeworthBuildPrev").addEventListener("click", () => {
+        stopEdgeworthBuildPlayback();
+        setEdgeworthBuildSlide(edgeworthBuildIndex - 1);
+    });
+    document.getElementById("edgeworthBuildNext").addEventListener("click", () => {
+        stopEdgeworthBuildPlayback();
+        setEdgeworthBuildSlide(edgeworthBuildIndex + 1);
+    });
+    document.getElementById("edgeworthBuildPlay").addEventListener("click", () => {
+        if (edgeworthBuildTimer) {
+            stopEdgeworthBuildPlayback();
+            return;
+        }
+        document.getElementById("edgeworthBuildPlay").textContent = "一時停止";
+        edgeworthBuildTimer = setInterval(() => {
+            if (edgeworthBuildIndex === edgeworthBuildSlides.length - 1) {
+                stopEdgeworthBuildPlayback();
+                return;
+            }
+            setEdgeworthBuildSlide(edgeworthBuildIndex + 1);
+        }, 1700);
+    });
+
+    function drawEdgeworth() {
+        const x1raw = val("apple1");
+        const priceRatio = val("exchangeRatio");
+        const totalX = 10;
+        const totalY = 20;
+        const endowX = 2;
+        const endowY = 14;
+        // y1は予算制約線上から自動計算: y1 = endowY + priceRatio*(endowX - x1)
+        const y1budget = endowY + priceRatio * (endowX - x1raw);
+        // 予算線がボックス内に収まるようにx1をクランプ
+        const x1min = Math.max(0.1, endowX - (totalY - endowY) / priceRatio);
+        const x1max = Math.min(totalX - 0.1, endowX + endowY / priceRatio);
+        const x1 = Math.min(Math.max(x1raw, x1min), x1max);
+        const y1 = endowY + priceRatio * (endowX - x1);
+        const x2 = totalX - x1;
+        const y2 = totalY - y1;
+        const mrs1 = y1 / x1;
+        const mrs2 = y2 / x2;
+        const gap = Math.abs(mrs1 - mrs2);
+        const left = 82, top = 34, width = 460, height = 340;
+        const x = (v) => left + (v / totalX) * width;
+        const y = (v) => top + height - (v / totalY) * height;
+        const px = x(x1), py = y(y1);
+        const contractPath = `M ${x(0)} ${y(0)} L ${x(totalX)} ${y(totalY)}`;
+        const utility1 = x1 * y1;
+        const utility2 = x2 * y2;
+        function curveA() {
+            let path = "";
+            for (let xv = 0.2; xv <= totalX; xv += 0.1) {
+                const yv = utility1 / xv;
+                if (yv >= 0 && yv <= totalY) {
+                    path += `${path ? "L" : "M"} ${x(xv)} ${y(yv)} `;
+                }
+            }
+            return path;
+        }
+        function curveB() {
+            let path = "";
+            for (let xv = 0; xv <= totalX - 0.2; xv += 0.1) {
+                const yv = totalY - utility2 / (totalX - xv);
+                if (yv >= 0 && yv <= totalY) {
+                    path += `${path ? "L" : "M"} ${x(xv)} ${y(yv)} `;
+                }
+            }
+            return path;
+        }
+        function budgetSegment() {
+            const candidates = [
+                { x: 0, y: endowY + priceRatio * endowX },
+                { x: totalX, y: endowY - priceRatio * (totalX - endowX) },
+                { x: endowX + endowY / priceRatio, y: 0 },
+                { x: endowX - (totalY - endowY) / priceRatio, y: totalY }
+            ].filter((p) => p.x >= 0 && p.x <= totalX && p.y >= 0 && p.y <= totalY);
+            candidates.sort((a, b) => a.x - b.x);
+            const a = candidates[0] || { x: 0, y: endowY };
+            const b = candidates[candidates.length - 1] || { x: totalX, y: endowY };
+            return { path: `M ${x(a.x)} ${y(a.y)} L ${x(b.x)} ${y(b.y)}`, a, b };
+        }
+        // 競争均衡点：契約曲線(y = (totalY/totalX)*x) と予算制約線(y = endowY + priceRatio*(endowX - x)) の交点
+        function competitiveEquilibrium() {
+            const slope = totalY / totalX;
+            // slope*x = endowY + priceRatio*(endowX - x)
+            // x*(slope + priceRatio) = endowY + priceRatio*endowX
+            const ex = (endowY + priceRatio * endowX) / (slope + priceRatio);
+            const ey = slope * ex;
+            if (ex >= 0 && ex <= totalX && ey >= 0 && ey <= totalY) return { x: ex, y: ey };
+            return { x: endowX, y: endowY };
+        }
+        const budget = budgetSegment();
+        const eq = competitiveEquilibrium();
+        const svg = document.getElementById("edgeworthSvg");
+        svg.innerHTML = `
+            <rect x="${left}" y="${top}" width="${width}" height="${height}" fill="#fff" stroke="#334155" stroke-width="2" />
+            <path class="indiff-a" d="${curveA()}" />
+            <path class="indiff-b" d="${curveB()}" />
+            <path class="contract" d="${contractPath}" />
+            <path class="budget" d="${budget.path}" />
+            <line class="grid-line" x1="${px}" y1="${top}" x2="${px}" y2="${top + height}" />
+            <line class="grid-line" x1="${left}" y1="${py}" x2="${left + width}" y2="${py}" />
+            <!-- 軸ラベル -->
+            <text class="label-small" x="${left - 28}" y="${top + height + 28}">O1</text>
+            <text class="label-muted" x="${left - 28}" y="${top + height + 44}">消費者1の原点</text>
+            <text class="label-small" x="${left + width + 8}" y="${top - 8}">O2</text>
+            <text class="label-muted" x="${left + width + 8}" y="${top + 8}">消費者2の原点</text>
+            <!-- 消費者1の軸ラベル -->
+            <text class="label-small" text-anchor="middle" x="${left + width / 2}" y="${top + height + 34}">消費者1のリンゴ →</text>
+            <text class="label-small" text-anchor="middle" x="${left - 58}" y="${top + height / 2 - 10}">↑</text>
+            <text class="label-small" text-anchor="middle" x="${left - 58}" y="${top + height / 2 + 6}">消費者1</text>
+            <text class="label-small" text-anchor="middle" x="${left - 58}" y="${top + height / 2 + 22}">のミカン</text>
+            <!-- 消費者2の軸ラベル -->
+            <text class="label-small" text-anchor="middle" x="${left + width / 2}" y="${top - 14}">← 消費者2のリンゴ</text>
+            <text class="label-small" text-anchor="middle" x="${left + width + 58}" y="${top + height / 2 - 10}">消費者2</text>
+            <text class="label-small" text-anchor="middle" x="${left + width + 58}" y="${top + height / 2 + 6}">のミカン</text>
+            <text class="label-small" text-anchor="middle" x="${left + width + 58}" y="${top + height / 2 + 22}">↓</text>
+            <!-- 数量ラベル -->
+            <text class="label-muted" x="${px - 24}" y="${top + height + 22}">x₁=${fmt.format(x1)}</text>
+            <text class="label-muted" text-anchor="end" x="${left - 8}" y="${py + 4}">y₁=${fmt.format(y1)}</text>
+            <text class="label-muted" x="${left + width + 8}" y="${py + 4}">y₂=${fmt.format(y2)}</text>
+            <text class="label-muted" x="${px - 34}" y="${top - 8}">x₂=${fmt.format(x2)}</text>
+            <!-- 高効用方向ラベル -->
+            <text class="label-muted" x="${x(0.3)}" y="${y(17.5)}">消費者1は</text>
+            <text class="label-muted" x="${x(0.3)}" y="${y(16.2)}">右上ほど高効用</text>
+            <text class="label-muted" text-anchor="end" x="${x(9.7)}" y="${y(2.5)}">消費者2は</text>
+            <text class="label-muted" text-anchor="end" x="${x(9.7)}" y="${y(1.2)}">左下ほど高効用</text>
+            <!-- 契約曲線・予算制約線ラベル（右上の空きスペースに白背景ボックスで） -->
+            <rect x="${x(5.5)}" y="${y(19.0)}" width="118" height="22" rx="4" fill="#ffffffcc" />
+            <text class="label-small" x="${x(5.6)}" y="${y(17.8)}">契約曲線</text>
+            <rect x="${x(5.5)}" y="${y(16.5)}" width="178" height="40" rx="4" fill="#ffffffcc" />
+            <text class="label-small" x="${x(5.6)}" y="${y(15.3)}">予算制約線：Wを通る</text>
+            <text class="label-muted" x="${x(5.6)}" y="${y(13.8)}">傾き = -Pₓ/Pᵧ = -${fmt.format(priceRatio)}</text>
+            <!-- 無差別曲線ラベル（点の右上・左下の空きへ） -->
+            <text class="label-small" x="${x(Math.min(9.2, x1 + 1.0))}" y="${y(Math.min(19.5, y1 + 2.0))}">U₁</text>
+            <text class="label-small" x="${x(Math.max(0.3, x1 - 2.0))}" y="${y(Math.max(1.5, y1 - 2.5))}">U₂</text>
+            <!-- 各点ラベル（白背景付き） -->
+            <circle fill="#64748b" cx="${x(endowX)}" cy="${y(endowY)}" r="6" />
+            <rect x="${x(endowX) + 10}" y="${y(endowY) + 4}" width="100" height="20" rx="4" fill="#ffffffcc" />
+            <text class="label-small" x="${x(endowX) + 14}" y="${y(endowY) + 18}">初期保有点 W</text>
+            <circle class="point-red" cx="${x(eq.x)}" cy="${y(eq.y)}" r="6" />
+            <rect x="${x(eq.x) + 10}" y="${y(eq.y) - 24}" width="84" height="20" rx="4" fill="#ffffffcc" />
+            <text class="label-small" x="${x(eq.x) + 14}" y="${y(eq.y) - 10}">競争均衡点</text>
+            <circle class="point-blue" cx="${px}" cy="${py}" r="7" />
+            <rect x="${px + 10}" y="${py - 24}" width="84" height="20" rx="4" fill="#ffffffcc" />
+            <text class="label-small" x="${px + 14}" y="${py - 10}">現在の配分</text>
+        `;
+        document.getElementById("consumer1Bundle").textContent = `(${fmt.format(x1)}, ${fmt.format(y1)})`;
+        document.getElementById("consumer2Bundle").textContent = `(${fmt.format(x2)}, ${fmt.format(y2)})`;
+        document.getElementById("mrsGap").textContent = fmt.format(gap);
+        document.getElementById("budgetLineText").textContent = `初期保有点を通る傾き -${fmt.format(priceRatio)}`;
+        const mrsPriceGap1 = Math.abs(mrs1 - priceRatio);
+        const mrsPriceGap2 = Math.abs(mrs2 - priceRatio);
+        const atEquilibrium = gap < 0.12 && mrsPriceGap1 < 0.12 && mrsPriceGap2 < 0.12;
+        const mrsEqual = gap < 0.12;
+        let stateComment;
+        if (atEquilibrium) {
+            stateComment = `✓ MRS₁ = MRS₂ = Pₓ/Pᵧ = <strong>${fmt.format(priceRatio)}</strong> が成立しています。これが競争均衡の条件です。`;
+        } else if (mrsEqual) {
+            stateComment = `MRS₁ = MRS₂ = <strong>${fmt.format(mrs1)}</strong> で契約曲線上にありますが、価格比 Pₓ/Pᵧ = <strong>${fmt.format(priceRatio)}</strong> と一致していません。`
+                + `競争均衡には MRS₁ = MRS₂ = Pₓ/Pᵧ が必要です。価格比スライダーを <strong>${fmt.format(mrs1)}</strong> に合わせてください。`;
+        } else {
+            stateComment = `MRS₁ = <strong>${fmt.format(mrs1)}</strong>、MRS₂ = <strong>${fmt.format(mrs2)}</strong> で差が <strong>${fmt.format(gap)}</strong> あります。`
+                + `契約曲線上にないため、赤い点（競争均衡点）へ配分を動かすことで双方の効用を改善できます。`;
+        }
+        const ceqPriceRatio = totalY / totalX;
+        document.getElementById("edgeworthCalc").innerHTML =
+            `消費者1: MRS₁ = ミカン/リンゴ = ${fmt.format(y1)} / ${fmt.format(x1)} = <strong>${fmt.format(mrs1)}</strong><br>` +
+            `消費者2: MRS₂ = ${fmt.format(y2)} / ${fmt.format(x2)} = <strong>${fmt.format(mrs2)}</strong><br>` +
+            `予算制約線は初期保有点W(${endowX}, ${endowY})を通り、傾き = -Pₓ/Pᵧ = <strong>-${fmt.format(priceRatio)}</strong> です。<br>` +
+            `赤い点（競争均衡点）は予算制約線と契約曲線の交点で、定義上Wと均衡点の両方を通る直線上にあります。<br>` +
+            `競争均衡を成立させる価格比は Pₓ/Pᵧ = <strong>${fmt.format(ceqPriceRatio)}</strong> です（MRS₁=MRS₂=Pₓ/Pᵧ）。<br>` +
+            stateComment;
+        const verdict = document.getElementById("edgeworthVerdict");
+        if (atEquilibrium) {
+            verdict.className = "result-box good";
+            verdict.innerHTML = `<span class="big-number">競争均衡に到達</span>MRS₁ = MRS₂ = Pₓ/Pᵧ の3条件が成立しています。`;
+        } else if (mrsEqual) {
+            verdict.className = "result-box";
+            verdict.innerHTML = `<span class="big-number">パレート効率的だが競争均衡ではない</span>MRS₁ = MRS₂ は成立していますが、価格比 Pₓ/Pᵧ = ${fmt.format(priceRatio)} と一致していません。価格比を調整してください。`;
+        } else {
+            verdict.className = "result-box warn";
+            verdict.innerHTML = `<span class="big-number">パレート改善の余地あり</span>MRS₁ ≠ MRS₂ なので契約曲線上にありません。赤い点（競争均衡点）へ向かう交換で双方の効用を改善できます。`;
+        }
+    }
+
+    ["apple1", "exchangeRatio"].forEach((id) => syncRangeNumber(id, `${id}Num`, drawEdgeworth));
+
+    function drawPpf() {
+        const x1 = val("x1Output");
+        const ratio = val("priceRatio");
+        const y2 = Math.max(0, 100 - 0.04 * x1 * x1);
+        const mrt = 0.08 * x1;
+        const diff = Math.abs(mrt - ratio);
+        const s = scale(55, 110);
+        const svg = document.getElementById("ppfSvg");
+        let path = "";
+        for (let xVal = 0; xVal <= 50; xVal += 1) {
+            const yVal = 100 - 0.04 * xVal * xVal;
+            path += `${xVal === 0 ? "M" : "L"} ${s.x(xVal)} ${s.y(yVal)} `;
+        }
+        const px = s.x(x1), py = s.y(y2);
+        const dx = 5;
+        const xNext = Math.min(50, x1 + dx);
+        const yNext = Math.max(0, 100 - 0.04 * xNext * xNext);
+        const actualDx = xNext - x1;
+        const actualDy = yNext - y2;
+        const bx = s.x(xNext), by = s.y(yNext);
+        const tangentLen = 15;
+        const tanXA = Math.max(0, x1 - tangentLen);
+        const tanXB = Math.min(50, x1 + tangentLen);
+        const tanYA = y2 + mrt * (x1 - tanXA);
+        const tanYB = y2 - mrt * (tanXB - x1);
+        const priceLen = 15;
+        const priceXA = Math.max(0, x1 - priceLen);
+        const priceXB = Math.min(50, x1 + priceLen);
+        const priceYA = y2 + ratio * (x1 - priceXA);
+        const priceYB = y2 - ratio * (priceXB - x1);
+        const midX = (px + bx) / 2;
+        const midY = (py + by) / 2;
+        const calloutX = Math.min(s.right - 150, bx + 72);
+        const calloutY = Math.max(s.top + 28, py - 70);
+        const slopeBoxX = Math.max(s.left + 16, px - 130);
+        const slopeBoxY = Math.min(s.bottom - 78, py + 72);
+        svg.innerHTML = `
+            <line class="axis" x1="${s.left}" y1="${s.top}" x2="${s.left}" y2="${s.bottom}" />
+            <line class="axis" x1="${s.left}" y1="${s.bottom}" x2="${s.right}" y2="${s.bottom}" />
+            <text class="label-small" x="${s.left - 42}" y="35">Y財</text>
+            <text class="label-small" x="${s.right - 22}" y="${s.bottom + 34}">X財</text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${s.y(100) + 4}">Y最大=100</text>
+            <path class="curve-violet" d="${path}" />
+            <path class="budget" d="M ${s.x(tanXA)} ${s.y(tanYA)} L ${s.x(tanXB)} ${s.y(tanYB)}" />
+            <line class="policy" x1="${s.x(priceXA)}" y1="${s.y(priceYA)}" x2="${s.x(priceXB)}" y2="${s.y(priceYB)}" />
+            <line class="grid-line" x1="${px}" y1="${py}" x2="${px}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${s.left}" y1="${py}" x2="${px}" y2="${py}" />
+            <line class="grid-line" x1="${bx}" y1="${by}" x2="${bx}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${px}" y1="${by}" x2="${bx}" y2="${by}" />
+            <polygon class="surplus" points="${px},${py} ${bx},${py} ${bx},${by}" />
+            <line class="price-line" x1="${px}" y1="${py}" x2="${bx}" y2="${py}" />
+            <line class="policy" x1="${bx}" y1="${py}" x2="${bx}" y2="${by}" />
+            <circle class="point" cx="${px}" cy="${py}" r="7" />
+            <circle class="point-red" cx="${bx}" cy="${by}" r="6" />
+            <line class="grid-line" x1="${px + 8}" y1="${py - 5}" x2="${calloutX}" y2="${calloutY + 12}" />
+            <line class="grid-line" x1="${bx + 8}" y1="${by + 5}" x2="${calloutX}" y2="${calloutY + 46}" />
+            <rect x="${calloutX}" y="${calloutY}" width="148" height="64" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+            <text class="label-small" x="${calloutX + 10}" y="${calloutY + 22}">A: 現在の生産点</text>
+            <text class="label-small" x="${calloutX + 10}" y="${calloutY + 48}">B: Xを少し増やす</text>
+            <text class="label-small" text-anchor="end" x="${s.x(43)}" y="${s.y(31)}">PPF</text>
+            <text class="label-muted" text-anchor="middle" x="${midX}" y="${py - 10}">ΔX=+${fmt.format(actualDx)}</text>
+            <text class="label-muted" x="${bx + 10}" y="${midY + 16}">ΔY=${fmt.format(actualDy)}</text>
+            <line class="grid-line" x1="${s.x(20)}" y1="${s.y(y2 + mrt * (x1 - 20))}" x2="${slopeBoxX + 120}" y2="${slopeBoxY + 16}" />
+            <line class="grid-line" x1="${s.x(19)}" y1="${s.y(y2 + ratio * (x1 - 19))}" x2="${slopeBoxX + 120}" y2="${slopeBoxY + 44}" />
+            <rect x="${slopeBoxX}" y="${slopeBoxY}" width="176" height="58" rx="7" fill="#ffffff" stroke="#dbe4ef" />
+            <text class="label-small" x="${slopeBoxX + 10}" y="${slopeBoxY + 22}">橙: 接線の傾き = -MRT</text>
+            <text class="label-small" x="${slopeBoxX + 10}" y="${slopeBoxY + 48}">赤: 価格比 = -P<tspan baseline-shift="sub" font-size="10">X</tspan>/P<tspan baseline-shift="sub" font-size="10">Y</tspan></text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${py + 4}">Y=${fmt.format(y2)}</text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${by + 4}">Y'=${fmt.format(yNext)}</text>
+            <text class="label-muted" x="${px - 18}" y="${s.bottom + 20}">X=${fmt.format(x1)}</text>
+            <text class="label-muted" x="${bx - 18}" y="${s.bottom + 38}">X'=${fmt.format(xNext)}</text>
+        `;
+        document.getElementById("mrtValue").textContent = fmt.format(mrt);
+        document.getElementById("priceRatioValue").textContent = fmt.format(ratio);
+        document.getElementById("ppfStatus").textContent = diff < 0.15 ? "一致" : "不一致";
+        document.getElementById("ppfCalc").innerHTML =
+            `PPF: Y = 100 - 0.04X²<br>` +
+            `AからBへ: ΔX = ${fmt.format(actualDx)}, ΔY = ${fmt.format(actualDy)}<br>` +
+            `弧の傾き = ΔY / ΔX = ${fmt.format(actualDy)} / ${fmt.format(actualDx)} = <strong>${fmt.format(actualDy / actualDx)}</strong><br>` +
+            `MRT = -dY/dX = 0.08X = 0.08 × ${fmt.format(x1)} = <strong>${fmt.format(mrt)}</strong><br>` +
+            `意味: Xを1単位増やすために、Yを約 <strong>${fmt.format(mrt)}</strong> 単位あきらめる必要があります。<br>` +
+            `効率条件: MRS = P<sub>X</sub>/P<sub>Y</sub> = MRT。価格比との差は <strong>${fmt.format(diff)}</strong> です。`;
+        const verdict = document.getElementById("ppfVerdict");
+        if (diff < 0.15) {
+            verdict.className = "result-box good";
+            verdict.innerHTML = `<span class="big-number">価格比とMRTがほぼ一致</span>市場が示す交換比率と、生産で変換できる比率がそろっています。`;
+        } else {
+            verdict.className = "result-box warn";
+            verdict.innerHTML = `<span class="big-number">生産点を調整する余地</span>MRT と価格比が違うため、PPF上でどちらの財を増やすかを見直す余地があります。`;
+        }
+    }
+
+    ["x1Output", "priceRatio"].forEach((id) => syncRangeNumber(id, `${id}Num`, drawPpf));
+
+    function drawTradeReview() {
+        const tariff = val("tariffAmount");
+        const world = 10;
+        const price = world + tariff;
+        const qsFree = world;
+        const qdFree = 100 - world;
+        const qsTariff = price;
+        const qdTariff = 100 - price;
+        const imports = Math.max(0, qdTariff - qsTariff);
+        const revenue = tariff * imports;
+        const dwl = 0.5 * tariff * Math.max(0, qsTariff - qsFree) + 0.5 * tariff * Math.max(0, qdFree - qdTariff);
+        const tradeGain = 0.5 * (qdFree - qsFree) * (50 - world);
+        const s = scale(110, 110);
+        const svg = document.getElementById("tradeReviewSvg");
+        const pwY = s.y(world), ptY = s.y(price);
+        const qsFreeX = s.x(qsFree), qdFreeX = s.x(qdFree);
+        const qsTariffX = s.x(qsTariff), qdTariffX = s.x(qdTariff);
+        svg.innerHTML = `
+            ${axes(s, { value: 100, label: "切片=100" })}
+            <polygon class="surplus" points="${qsFreeX},${pwY} ${s.x(50)},${s.y(50)} ${qdFreeX},${pwY}" />
+            ${tariff > 0 ? `<rect class="taxrect" x="${qsTariffX}" y="${ptY}" width="${qdTariffX - qsTariffX}" height="${pwY - ptY}" />` : ""}
+            ${tariff > 0 ? `<polygon class="dwl" points="${qsFreeX},${pwY} ${qsTariffX},${ptY} ${qsTariffX},${pwY}" />` : ""}
+            ${tariff > 0 ? `<polygon class="dwl" points="${qdTariffX},${ptY} ${qdFreeX},${pwY} ${qdTariffX},${pwY}" />` : ""}
+            <path class="demand" d="M ${s.x(0)} ${s.y(100)} L ${s.x(100)} ${s.y(0)}" />
+            <path class="supply" d="M ${s.x(0)} ${s.y(0)} L ${s.x(100)} ${s.y(100)}" />
+            <line class="price-line" x1="${s.left}" y1="${pwY}" x2="${s.right}" y2="${pwY}" />
+            <line class="policy" x1="${s.left}" y1="${ptY}" x2="${s.right}" y2="${ptY}" />
+            <line class="grid-line" x1="${qsTariffX}" y1="${ptY}" x2="${qsTariffX}" y2="${s.bottom}" />
+            <line class="grid-line" x1="${qdTariffX}" y1="${ptY}" x2="${qdTariffX}" y2="${s.bottom}" />
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${pwY + 4}">p<tspan baseline-shift="super" font-size="10">*</tspan>=10</text>
+            <text class="label-muted" text-anchor="end" x="${s.left - 8}" y="${ptY + 4}">関税込=${fmt.format(price)}</text>
+            <text class="label-muted" x="${qsTariffX - 24}" y="${s.bottom + 22}">q<tspan baseline-shift="sub" font-size="10">S</tspan>=${fmt.format(qsTariff)}</text>
+            <text class="label-muted" x="${qdTariffX - 24}" y="${s.bottom + 40}">q<tspan baseline-shift="sub" font-size="10">D</tspan>=${fmt.format(qdTariff)}</text>
+            <text class="label-small" x="${(qsTariffX + qdTariffX) / 2 - 30}" y="${s.bottom + 24}">輸入量</text>
+        `;
+        document.getElementById("reviewImport").textContent = fmt.format(imports);
+        document.getElementById("reviewTariffRevenue").textContent = fmt.format(revenue);
+        document.getElementById("reviewDwl").textContent = fmt.format(dwl);
+        document.getElementById("tradeReviewCalc").innerHTML =
+            `自由貿易の利益 = (90 - 10) × (50 - 10) × 1/2 = <strong>${fmt.format(tradeGain)}</strong><br>` +
+            `関税込価格 = 10 + ${fmt.format(tariff)} = <strong>${fmt.format(price)}</strong><br>` +
+            `輸入量 = q<sub>D</sub> - q<sub>S</sub> = ${fmt.format(qdTariff)} - ${fmt.format(qsTariff)} = <strong>${fmt.format(imports)}</strong><br>` +
+            `関税収入 = ${fmt.format(tariff)} × ${fmt.format(imports)} = <strong>${fmt.format(revenue)}</strong><br>` +
+            `死荷重 = 2つの三角形 = <strong>${fmt.format(dwl)}</strong>`;
+        document.getElementById("tradeReviewVerdict").className = tariff === 10 ? "result-box good" : "result-box warn";
+        document.getElementById("tradeReviewVerdict").innerHTML = tariff === 10
+            ? `<span class="big-number">演習例と一致</span>輸入量 60、関税収入 600、死荷重 100 です。`
+            : `<span class="big-number">関税を動かして比較</span>関税が高いほど輸入量は縮小し、死荷重が大きくなります。`;
+    }
+
+    syncRangeNumber("tariffAmount", "tariffAmountNum", drawTradeReview);
+
+    drawStability();
+    drawExistence();
+    drawEdgeworthBuild();
+    drawEdgeworth();
+    drawPpf();
+    drawTradeReview();
+</script>
+</body>
+</html>
+
