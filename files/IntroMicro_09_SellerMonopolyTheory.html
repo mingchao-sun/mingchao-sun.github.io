@@ -405,11 +405,11 @@
             };
 
             const layoutTR_TC = {
-                title: { text: '<b>総収入 (TR) ・ 総費用 (TC) ・ 利潤</b>', font: {size: 14} },
-                margin: {t: 50, b: 30, l: 50, r: 20},
+                title: { text: '<b>総収入 (TR) ・ 総費用 (TC) ・ 利潤</b>', font: {size: 14}, x: 0.5, xanchor: 'center', y: 0.97, yanchor: 'top' },
+                margin: {t: 80, b: 30, l: 50, r: 20},
                 xaxis: { range: [0, 15], title: '生産量 x' },
                 yaxis: { range: [-100, 550], title: '金額（万円）' },
-                legend: { orientation: 'h', y: 1.15, x: 0 },
+                legend: { orientation: 'h', y: 1.0, yanchor: 'bottom', x: 0, xanchor: 'left', font: {size: 11} },
                 hovermode: false
             };
 
@@ -477,11 +477,11 @@
             };
 
             const layoutDemandMR_MC = {
-                title: { text: '<b>需要曲線 ・ MR ・ MC & 資源配分効果</b>', font: {size: 14} },
-                margin: {t: 50, b: 35, l: 50, r: 20},
+                title: { text: '<b>需要曲線 ・ MR ・ MC & 資源配分効果</b>', font: {size: 14}, x: 0.5, xanchor: 'center', y: 0.97, yanchor: 'top' },
+                margin: {t: 115, b: 35, l: 50, r: 20},
                 xaxis: { range: [0, 15], title: '生産量 x' },
                 yaxis: { range: [0, 70], title: '単位価格（万円）' },
-                legend: { orientation: 'h', y: 1.15, x: 0 },
+                legend: { orientation: 'h', y: 1.0, yanchor: 'bottom', x: 0, xanchor: 'left', font: {size: 11} },
                 hovermode: false,
                 annotations: [
                     {
