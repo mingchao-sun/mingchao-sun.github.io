@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミクロ経済学入門 第9回：市場の失敗(1) 売り手独占の理論</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #eef3f7;
+        }
+        .math-style {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="p-3 md:p-8">
+
+    <header class="max-w-6xl mx-auto mb-5 bg-slate-800 text-white rounded-lg shadow-xl p-6 md:p-7">
+        <p class="text-blue-100 text-sm mb-2 tracking-wide">2026年度春学期　ミクロ経済学入門　「売り手独占の理論」補足資料</p>
+        <h1 class="text-2xl md:text-4xl font-bold leading-tight">市場の失敗(1)：売り手独占の理論</h1>
+        <p class="text-slate-200 mt-3 text-sm md:text-base">「価格を決める権利」を持つプライスメーカーの意思決定と、社会に生まれる損失（死荷重）を解き明かします。</p>
+        <p class="text-blue-100 mt-3 text-center text-sm tracking-wide">東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- 完全競争市場 -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm transition-all hover:shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg">受</div>
+                    <div>
+                        <h3 class="font-bold text-slate-800">完全競争市場 (復習)</h3>
+                        <p class="text-xs text-emerald-600 font-semibold">プライステーカー (価格受容者)</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    市場に多数の売り手と買い手がいるため、企業は市場価格 <span class="math-style font-bold text-emerald-600">p</span> を「自分で変えられないもの」としてそのまま受け入れます。
+                    そのため、もう1単位追加で売った時の追加の収入（限界収入 <span class="math-style font-bold">MR</span>）は、常に価格そのもの（<span class="math-style font-bold text-emerald-600">MR = p</span>）になります。
+                </p>
+            </div>
+
+            <!-- 独占市場 -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm transition-all hover:shadow-md">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold text-lg">作</div>
+                    <div>
+                        <h3 class="font-bold text-slate-800">独占市場 (今回のテーマ)</h3>
+                        <p class="text-xs text-indigo-600 font-semibold">プライスメーカー (価格決定者)</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    市場の供給者が1社しかいないため、企業が「生産量 <span class="math-style font-bold text-indigo-600">x</span>」を増やすと、市場の需要曲線に従って「価格 <span class="math-style font-bold text-indigo-600">p</span>」が下がってしまいます。
+                    たくさん売るには価格を下げなければならないため、限界収入（<span class="math-style font-bold">MR</span>）は価格より常に低くなります（<span class="math-style font-bold text-indigo-600">MR &lt; p</span>）。
+                </p>
+            </div>
+        </section>
+
+        <section class="bg-white border border-slate-200 rounded-2xl p-4 md:p-8 shadow-sm mb-8">
+            <div class="border-b border-slate-100 pb-4 mb-6">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-indigo-600 rounded-full"></span>
+                    独占シミュレーター：最適な生産量を探せ！
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">スライダーを動かして、独占企業になったつもりで生産量 <span class="math-style">x</span> を変えてみましょう。</p>
+            </div>
+
+            <!-- ミッション表示（ゲーミフィケーション） -->
+            <div id="mission-status" class="mb-6 p-4 rounded-xl border transition-all duration-300 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="mission-badge" class="text-2xl">🎯</span>
+                    <div>
+                        <h4 id="mission-title" class="font-bold text-sm md:text-base">ミッション：利潤を最大化する生産量を達成せよ！</h4>
+                        <p id="mission-desc" class="text-xs text-slate-500 mt-0.5">現在の利潤: -- 万円 (最大の利潤を目指そう)</p>
+                    </div>
+                </div>
+                <div id="mission-feedback" class="text-sm font-bold text-right hidden md:block">
+                    <!-- 動的メッセージがここに入ります -->
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 左側：コントロールと数値パネル -->
+                <div class="space-y-6">
+                    <!-- スライダー -->
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/60">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-bold text-slate-700 flex items-center gap-1">
+                                生産量 <span class="math-style">x</span>: 
+                                <span id="x-value-bubble" class="bg-indigo-600 text-white font-mono text-sm px-2.5 py-0.5 rounded-full">3.0</span>
+                            </label>
+                            <span class="text-xs text-slate-400">最大 15.0</span>
+                        </div>
+                        <input type="range" id="x-slider" min="1" max="15" step="0.1" value="3" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-2">
+                            <span>過少生産</span>
+                            <span>完全競争均衡 (x = 12)</span>
+                            <span>供給過剰</span>
+                        </div>
+                    </div>
+
+                    <!-- 計算パネル（リアルタイム更新） -->
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/60 space-y-3.5">
+                        <h4 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">リアルタイム収支計算（万円）</h4>
+                        
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600">需要価格 (<span class="math-style">p = 60 - 2x</span>)</span>
+                            <span id="calc-price" class="font-mono font-bold text-slate-800">--</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                総収入 (<span class="math-style">TR = p &times; x</span>)
+                            </span>
+                            <span id="calc-tr" class="font-mono font-bold text-emerald-600">--</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                総費用 (<span class="math-style">TC = x² + 12x + 50</span>)
+                            </span>
+                            <span id="calc-tc" class="font-mono font-bold text-rose-600">--</span>
+                        </div>
+
+                        <div class="border-t border-slate-200 pt-3 flex justify-between items-center">
+                            <span class="font-bold text-slate-700">企業の利潤 (<span class="math-style">&pi; = TR - TC</span>)</span>
+                            <span id="calc-profit" class="font-mono font-extrabold text-indigo-600 text-lg">--</span>
+                        </div>
+                    </div>
+
+                    <!-- 限界分析パネル -->
+                    <div class="bg-indigo-50/50 rounded-xl p-5 border border-indigo-100 space-y-3">
+                        <h4 class="font-bold text-xs text-indigo-500 uppercase tracking-wider mb-1">追加1単位あたりの動き（限界分析）</h4>
+                        
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-700 font-medium">追加で得られる収入 (<span class="math-style">MR = 60 - 4x</span>)</span>
+                            <span id="calc-mr" class="font-mono font-bold text-indigo-700">--</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-700 font-medium">追加でかかるコスト (<span class="math-style">MC = 2x + 12</span>)</span>
+                            <span id="calc-mc" class="font-mono font-bold text-amber-600">--</span>
+                        </div>
+
+                        <div id="mr-mc-comparison" class="text-xs p-2.5 bg-white border border-indigo-100 rounded-lg text-slate-600 leading-relaxed mt-2">
+                            <!-- ここに比較の解説テキストが入ります -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：2連グラフ -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div id="graph-tr-tc" class="w-full h-[320px] bg-slate-50 rounded-xl border border-slate-100"></div>
+                    <div id="graph-demand-mr-mc" class="w-full h-[380px] bg-slate-50 rounded-xl border border-slate-100"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- なぜMRは2倍急なのか -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-amber-500 text-2xl font-bold mb-3 block">💡 Q1</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">なぜ限界収入(MR)は、需要曲線より傾きが急なの？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    独占企業が「もう1個多く売る」ためには、<span class="font-bold text-slate-800">「新しく増えた1個」の価格を下げるだけでなく、「今までに売れていた分」の価格もすべて下げなければならない</span>からです。
+                    そのため、新しく売って入るお金から、既存の製品を値下げした損失分が引かれるため、限界収入は需要曲線よりもはるかに早く減少します。
+                </p>
+                <div class="mt-3 p-2.5 bg-slate-50 border border-slate-100 rounded-lg text-[11px] font-mono text-slate-500">
+                    逆需要: p = 60 - 2x<br>
+                    限界収入: MR = 60 - 4x (傾きが2倍！)
+                </div>
+            </div>
+
+            <!-- なぜMR=MCで最大化なのか -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-indigo-500 text-2xl font-bold mb-3 block">⚖️ Q2</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">なぜ MR = MC のとき、利潤が最大になるの？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    生産量を増やすかどうかは、「追加でもらえる収入（MR）」と「追加でかかるコスト（MC）」の天秤で決まります。
+                    <br>・<span class="text-indigo-600 font-bold">MR &gt; MC</span> のとき：作れば作るほど儲かるので、もっと生産すべき。
+                    <br>・<span class="text-rose-600 font-bold">MR &lt; MC</span> のとき：作るほど赤字になるので、生産を減らすべき。
+                    <br>この２つの境目である「MR = MC」のとき、利潤は最高潮（極大）に達します。
+                </p>
+            </div>
+
+            <!-- 死荷重とは何か -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-rose-500 text-2xl font-bold mb-3 block">📉 Q3</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">「死荷重(デッドウェイトロス)」ってなに？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    独占企業は自分の利益を最大にするため、完全競争市場よりも<span class="font-bold text-slate-800">「あえて生産量を少なくして、価格を高く」</span>維持します。
+                    これにより、「その値段なら買いたかった消費者」と「そのコストなら売りたかった企業」の取引チャンスが消滅します。
+                    この<span class="font-bold text-slate-800">社会的に失われた取引の利益（余剰の合計）</span>を死荷重と呼び、独占が「市場の失敗」とされる最大の理由です。
+                </p>
+            </div>
+        </section>
+
+        <!-- PDF資料との完全一致検証コーナー -->
+        <section class="bg-slate-800 text-white rounded-2xl p-6 md:p-8 shadow-md">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-indigo-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                PDF講義資料と整合したシミュレーション設定
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-white mb-2">1. 独占企業の意思決定パス</h4>
+                    <p class="text-xs">
+                        本シミュレーターでは、独占企業の行動メカニズムを以下のように完全再現しています。<br>
+                        ① 限界収入と限界費用が一致する交点を求める (<span class="math-style font-bold text-indigo-300">MR = MC</span>) → <span class="font-bold text-white">生産量 x* = 8</span> を決定。<br>
+                        ② その生産量における消費者の許容価格を需要曲線から逆算する → <span class="font-bold text-white">独占価格 p* = 44</span> に決定。<br>
+                        ※これにより、価格受容者（プライステーカー）ではなく、価格設定者（プライスメーカー）としての動きを体感できます。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2">2. 社会的損失の発生</h4>
+                    <p class="text-xs">
+                        本来、完全競争市場であれば「限界費用（供給曲線）と需要曲線」が交わる点（<span class="font-bold text-white">生産量 x = 12、価格 p = 36</span>）で取引され、社会的余剰は最大化します。<br>
+                        しかし、独占市場では生産量が <span class="font-bold text-white">8</span> に制限されるため、グラフ上の<span class="text-rose-400 font-bold">三角形ABCの領域（死荷重 = 32万円分）</span>が誰にも行き渡らず、煙のように消え去ってしまいます。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- まとめ -->
+        <section class="bg-[#102033] text-white rounded-2xl p-6 md:p-8 shadow-md mt-8">
+            <span class="inline-flex items-center bg-slate-700 text-white text-xs font-bold tracking-wider rounded-full px-3 py-1">まとめ</span>
+            <h2 class="text-xl md:text-2xl font-bold mt-3 leading-snug">独占企業は「MR = MC」で過少生産を選び、社会に死荷重を生む</h2>
+            <p class="text-blue-100 mt-3 text-sm md:text-base leading-relaxed">
+                独占企業はプライスメーカーとして、生産量を増やせば需要曲線に沿って価格が下がることを見越して行動します。
+                そのため限界収入は価格より常に低く（<span class="math-style font-bold">MR &lt; p</span>）、利潤が最大になる <span class="math-style font-bold">MR = MC</span> の点では、
+                完全競争（<span class="math-style font-bold">x = 12、p = 36</span>）よりも生産量をあえて絞り（<span class="math-style font-bold">x* = 8</span>）、価格を高く（<span class="math-style font-bold">p* = 44</span>）設定します。
+                この過少生産によって、本来なら成立したはずの取引が失われ、社会的余剰の一部が<span class="text-rose-300 font-bold">死荷重（32万円分）</span>として誰の手にも渡らずに消えてしまいます。
+                これこそが、独占が「市場の失敗」とされる最大の理由です。
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto text-center py-8 text-slate-500 text-xs border-t border-slate-200 mt-6">
+        2026年度春学期　ミクロ経済学入門　第9回「売り手独占の理論」補足資料　© 東海大学政治経済学部経済学科　孫明超
+    </footer>
+
+    <script>
+        // 数理モデル定数 (逆需要: p = 60 - 2x, 総費用: TC = x^2 + 12x + 50)
+        // 限界収入: MR = 60 - 4x
+        // 限界費用: MC = 2x + 12
+        // 完全競争均衡: p = MC => 60 - 2x = 2x + 12 => 4x = 48 => x = 12, p = 36
+        // 独占均衡: MR = MC => 60 - 4x = 2x + 12 => 6x = 48 => x = 8, p = 44, MR = MC = 28
+        
+        const optX = 8.0; // 独占利潤最大化生産量
+        const compX = 12.0; // 完全競争市場生産量
+        
+        // 関数定義
+        const getPrice = (x) => 60 - 2 * x;
+        const getTR = (x) => x * getPrice(x);
+        const getTC = (x) => x * x + 12 * x + 50;
+        const getProfit = (x) => getTR(x) - getTC(x);
+        const getMR = (x) => 60 - 4 * x;
+        const getMC = (x) => 2 * x + 12;
+
+        // UI要素
+        const slider = document.getElementById('x-slider');
+        const xBubble = document.getElementById('x-value-bubble');
+        
+        const calcPrice = document.getElementById('calc-price');
+        const calcTR = document.getElementById('calc-tr');
+        const calcTC = document.getElementById('calc-tc');
+        const calcProfit = document.getElementById('calc-profit');
+        const calcMR = document.getElementById('calc-mr');
+        const calcMC = document.getElementById('calc-mc');
+        
+        const comparisonBox = document.getElementById('mr-mc-comparison');
+        const missionStatus = document.getElementById('mission-status');
+        const missionBadge = document.getElementById('mission-badge');
+        const missionTitle = document.getElementById('mission-title');
+        const missionDesc = document.getElementById('mission-desc');
+        const missionFeedback = document.getElementById('mission-feedback');
+
+        // データ系列作成用
+        const xSeries = Array.from({length: 151}, (_, i) => i * 0.1); // 0 to 15
+        const trSeries = xSeries.map(getTR);
+        const tcSeries = xSeries.map(getTC);
+        const profitSeries = xSeries.map(getProfit);
+        const demandSeries = xSeries.map(getPrice);
+        const mrSeries = xSeries.map(getMR);
+        const mcSeries = xSeries.map(getMC);
+
+        function updateSimulation() {
+            const x = parseFloat(slider.value);
+            xBubble.innerText = x.toFixed(1);
+
+            // 各種数値の計算
+            const p = getPrice(x);
+            const tr = getTR(x);
+            const tc = getTC(x);
+            const profit = getProfit(x);
+            const mr = getMR(x);
+            const mc = getMC(x);
+
+            // パネル表示更新
+            calcPrice.innerText = `${p.toFixed(1)} 万円`;
+            calcTR.innerText = `${tr.toFixed(1)} 万円`;
+            calcTC.innerText = `${tc.toFixed(1)} 万円`;
+            calcProfit.innerText = `${profit.toFixed(1)} 万円`;
+            calcMR.innerText = `${mr.toFixed(1)} 万円`;
+            calcMC.innerText = `${mc.toFixed(1)} 万円`;
+
+            // 限界分析の解説テキスト更新
+            let compText = "";
+            if (mr > mc) {
+                compText = `💡 <b>MR (${mr.toFixed(1)}) &gt; MC (${mc.toFixed(1)}) です。</b><br>
+                追加1単位あたりの収入がコストを上回っています。生産量を増やせば、さらに利潤が増加します。`;
+                comparisonBox.className = "text-xs p-2.5 bg-emerald-50 border border-emerald-100 rounded-lg text-emerald-800 leading-relaxed mt-2";
+            } else if (Math.abs(mr - mc) < 0.21) {
+                compText = `✨ <b>MR (${mr.toFixed(1)}) ≒ MC (${mc.toFixed(1)}) です！</b><br>
+                ここが利潤最大化点です。追加で得られる収入とコストが完璧に釣り合い、これ以上ない最高利益が達成されます。`;
+                comparisonBox.className = "text-xs p-2.5 bg-indigo-50 border border-indigo-100 rounded-lg text-indigo-800 leading-relaxed mt-2";
+            } else {
+                compText = `⚠️ <b>MR (${mr.toFixed(1)}) &lt; MC (${mc.toFixed(1)}) です。</b><br>
+                追加1単位あたりのコストが収入を上回っています（赤字ゾーン）。生産量を減らした方が、無駄なコストを抑えられて利潤が回復します。`;
+                comparisonBox.className = "text-xs p-2.5 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 leading-relaxed mt-2";
+            }
+            comparisonBox.innerHTML = compText;
+
+            // ゲーミフィケーション（ミッションステータス）更新
+            updateMission(x, profit);
+
+            // グラフ更新
+            drawCharts(x, p, tr, tc, profit, mr, mc);
+        }
+
+        function updateMission(x, profit) {
+            const diff = Math.abs(x - optX);
+            if (diff < 0.15) {
+                missionStatus.className = "mb-6 p-4 rounded-xl border border-indigo-200 bg-indigo-50 text-indigo-950 shadow-md";
+                missionBadge.innerText = "👑";
+                missionTitle.innerText = "ミッション成功！ 利潤最大化を達成！";
+                missionDesc.innerText = `生産量 x = 8.0（独占均衡点）で最大利潤 142.0 万円を叩き出しました！(MR = MC = 28)`;
+                missionFeedback.innerHTML = `<span class="text-indigo-600 bg-white border border-indigo-200 px-3 py-1 rounded-full text-xs">完璧なプライスメーカー！</span>`;
+                missionFeedback.classList.remove('hidden');
+            } else if (x < optX) {
+                missionStatus.className = "mb-6 p-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-950";
+                missionBadge.innerText = "📦";
+                missionTitle.innerText = "過少生産状態です";
+                missionDesc.innerText = `現在の生産量: ${x.toFixed(1)} | 利潤: ${profit.toFixed(1)} 万円。もっとたくさん作れば儲かります！`;
+                missionFeedback.innerHTML = `<span class="text-amber-700">スライダーを右に ⇒</span>`;
+                missionFeedback.classList.remove('hidden');
+            } else if (x > optX && x < compX) {
+                missionStatus.className = "mb-6 p-4 rounded-xl border border-orange-200 bg-orange-50 text-orange-950";
+                missionBadge.innerText = "📉";
+                missionTitle.innerText = "生産しすぎです（過大生産）";
+                missionDesc.innerText = `現在の生産量: ${x.toFixed(1)} | 利潤: ${profit.toFixed(1)} 万円。コストが膨らんで利益が圧迫されています。`;
+                missionFeedback.innerHTML = `<span class="text-orange-700">⇐ スライダーを左に</span>`;
+                missionFeedback.classList.remove('hidden');
+            } else {
+                missionStatus.className = "mb-6 p-4 rounded-xl border border-rose-200 bg-rose-50 text-rose-950";
+                missionBadge.innerText = "⚡";
+                missionTitle.innerText = "完全競争市場の基準点（またはそれ以上）";
+                missionDesc.innerText = `生産量: ${x.toFixed(1)} | 社会的余剰は最大化されますが、独占企業としての利益は大幅に減少しています。`;
+                missionFeedback.classList.add('hidden');
+            }
+        }
+
+        function drawCharts(currentX, currentP, currentTR, currentTC, currentProfit, currentMR, currentMC) {
+            
+            // --- PLOT 1: TR vs TC & Profit ---
+            const traceTR = {
+                x: xSeries, y: trSeries,
+                name: '総収入 (TR)',
+                line: {color: '#10b981', width: 4}
+            };
+            const traceTC = {
+                x: xSeries, y: tcSeries,
+                name: '総費用 (TC)',
+                line: {color: '#ef4444', width: 3}
+            };
+            const traceProfit = {
+                x: xSeries, y: profitSeries,
+                name: '利潤 (π)',
+                line: {color: '#6366f1', width: 3, dash: 'dash'}
+            };
+
+            // 縦のインジケータライン
+            const traceVertical1 = {
+                x: [currentX, currentX],
+                y: [-100, 550],
+                name: '現在の生産量',
+                line: {color: '#64748b', width: 1.5, dash: 'dot'},
+                showlegend: false
+            };
+
+            // 現在のプロットポイント
+            const currentPoints1 = {
+                x: [currentX, currentX, currentX],
+                y: [currentTR, currentTC, currentProfit],
+                mode: 'markers',
+                marker: {size: 8, color: ['#10b981', '#ef4444', '#6366f1']},
+                showlegend: false
+            };
+
+            const layoutTR_TC = {
+                title: { text: '<b>総収入 (TR) ・ 総費用 (TC) ・ 利潤</b>', font: {size: 14} },
+                margin: {t: 50, b: 30, l: 50, r: 20},
+                xaxis: { range: [0, 15], title: '生産量 x' },
+                yaxis: { range: [-100, 550], title: '金額（万円）' },
+                legend: { orientation: 'h', y: 1.15, x: 0 },
+                hovermode: false
+            };
+
+            Plotly.react('graph-tr-tc', [traceTR, traceTC, traceProfit, traceVertical1, currentPoints1], layoutTR_TC, {displayModeBar: false});
+
+
+            // --- PLOT 2: Demand, MR, MC, Surplus analysis ---
+            const traceDemand = {
+                x: xSeries, y: demandSeries,
+                name: '需要曲線 (価格 p / 平均収入 AR)',
+                line: {color: '#dc2626', width: 3}
+            };
+            const traceMR = {
+                x: xSeries, y: mrSeries,
+                name: '限界収入 (MR)',
+                line: {color: '#4f46e5', width: 3}
+            };
+            const traceMC = {
+                x: xSeries, y: mcSeries,
+                name: '限界費用 (MC = 供給曲線)',
+                line: {color: '#d97706', width: 3}
+            };
+
+            const currentPoints2 = {
+                x: [currentX, currentX, currentX],
+                y: [currentP, currentMR, currentMC],
+                mode: 'markers',
+                marker: {size: 8, color: ['#dc2626', '#4f46e5', '#d97706']},
+                showlegend: false
+            };
+
+            // 社会的損失（死荷重）の塗りつぶし領域 (三角形 ABC)
+            // A (8, 44), B (8, 28), C (12, 36)
+            const traceSurplusLoss = {
+                x: [8, 8, 12, 8],
+                y: [44, 28, 36, 44],
+                fill: 'toself',
+                fillcolor: 'rgba(239, 68, 68, 0.25)',
+                line: {color: 'transparent'},
+                name: '死荷重 (余剰損失 = 32万円)',
+                type: 'scatter',
+                mode: 'lines'
+            };
+
+            // 独占利潤領域の塗りつぶし (四角形 ADEF)
+            // F (0, 44) -> A (8, 44) -> D (8, 36) -> E (0, 36)
+            const traceMonopolyProfit = {
+                x: [0, 8, 8, 0, 0],
+                y: [44, 44, 36, 36, 44],
+                fill: 'toself',
+                fillcolor: 'rgba(99, 102, 241, 0.2)',
+                line: {color: 'transparent'},
+                name: '独占利潤 (四角形 = 64万円)',
+                type: 'scatter',
+                mode: 'lines'
+            };
+
+            // 縦のインジケータライン
+            const traceVertical2 = {
+                x: [currentX, currentX],
+                y: [0, 70],
+                name: '現在の生産量',
+                line: {color: '#64748b', width: 1.5, dash: 'dot'},
+                showlegend: false
+            };
+
+            const layoutDemandMR_MC = {
+                title: { text: '<b>需要曲線 ・ MR ・ MC & 資源配分効果</b>', font: {size: 14} },
+                margin: {t: 50, b: 35, l: 50, r: 20},
+                xaxis: { range: [0, 15], title: '生産量 x' },
+                yaxis: { range: [0, 70], title: '単位価格（万円）' },
+                legend: { orientation: 'h', y: 1.15, x: 0 },
+                hovermode: false,
+                annotations: [
+                    {
+                        x: 8, y: 44,
+                        text: 'A (独占価格: 44)',
+                        showarrow: true, arrowhead: 2, ax: 45, ay: -25,
+                        font: {color: '#dc2626'}
+                    },
+                    {
+                        x: 8, y: 28,
+                        text: 'B (MR=MC: 28)',
+                        showarrow: true, arrowhead: 2, ax: -65, ay: 15,
+                        font: {color: '#4f46e5'}
+                    },
+                    {
+                        x: 12, y: 36,
+                        text: 'C (最適: 36)',
+                        showarrow: true, arrowhead: 2, ax: 45, ay: 25,
+                        font: {color: '#1e293b'}
+                    }
+                ]
+            };
+
+            Plotly.react('graph-demand-mr-mc', [
+                traceSurplusLoss, 
+                traceMonopolyProfit, 
+                traceDemand, 
+                traceMR, 
+                traceMC, 
+                traceVertical2, 
+                currentPoints2
+            ], layoutDemandMR_MC, {displayModeBar: false});
+        }
+
+        slider.addEventListener('input', updateSimulation);
+        window.onload = updateSimulation;
+    </script>
+</body>
+</html>
