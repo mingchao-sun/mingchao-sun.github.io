@@ -15,4 +15,5 @@ April 2025 -
 - <a href="/files/IntroMicro_05_ElasticityInteractive.html" target="_blank">IntroMicro_05_Elasticity_Interactive</a> <br>
 - <a href="/files/IntroMicro_06_MarketSurplusInteractive.html" target="_blank">IntroMicro_06_Market_Surplus_Interactive</a> <br>
 - <a href="/files/IntroMicro_08_GeneralEquilibriumInteractive.html" target="_blank">IntroMicro_08_GeneralEquilibriumInteractive</a> <br>
-- <a href="/files/IntroMicro_09_SellerMonopolyTheory.html" target="_blank">IntroMicro_09_SellerMonopolyTheorye</a>
+- <a href="/files/IntroMicro_09_SellerMonopolyTheory.html" target="_blank">IntroMicro_09_SellerMonopolyTheorye</a> <br>
+- <a href="/files/IntroMicro_10_PublicGoods.html" target="_blank">IntroMicro_10_PublicGoods</a>

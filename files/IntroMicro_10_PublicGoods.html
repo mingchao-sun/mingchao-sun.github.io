@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第10回 市場の失敗（２）：公共財の最適供給</title>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: #eef3f7;
+        }
+        .math-style {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="p-3 md:p-8">
+
+    <header class="max-w-6xl mx-auto mb-5 bg-slate-800 text-white rounded-lg shadow-xl p-6 md:p-7">
+        <p class="text-blue-100 text-sm mb-2 tracking-wide">2026年度春学期　ミクロ経済学入門　「公共財の最適供給」補足資料</p>
+        <h1 class="text-2xl md:text-4xl font-bold leading-tight text-center">市場の失敗（２）：公共財の最適供給</h1>
+        <p class="text-slate-200 mt-3 text-sm md:text-base text-center">「誰もお金を払いたがらない財」が、社会に不可欠であり、どのように最適な量が決まるのかを体験的に解き明かします。</p>
+        <p class="text-blue-100 mt-3 text-center text-sm tracking-wide">東海大学政治経済学部経済学科　担当教員：孫明超</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto">
+
+        <!-- セクション1: 私的財と公共財の4分類マトリックス -->
+        <section class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mb-8">
+            <div class="border-b border-slate-100 pb-3 mb-6">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <span class="w-2 h-6 bg-indigo-600 rounded-full"></span>
+                    私的財と公共財のマトリックス（非競合性・非排除性）
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">財の2大性質「排除可能性」と「競合性」の組み合わせによる4分類を体験的に学びましょう。</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- マトリックス図（横軸・縦軸ヘッダー付きの3x3構成） -->
+                <div class="lg:col-span-7 grid grid-cols-[35px_1fr_1fr] md:grid-cols-[100px_1fr_1fr] gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/80 min-h-[350px] relative matrix-grid items-stretch select-none">
+                    
+                    <!-- Row 0: 空白 (左上) と 横軸ラベル (競合性) -->
+                    <div></div>
+                    <div class="bg-indigo-900/10 border border-indigo-900/20 text-indigo-950 text-center py-2 px-1 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center gap-1">
+                        <span>↔️ <b>競合しない</b><br class="hidden md:inline">（非競合性）</span>
+                    </div>
+                    <div class="bg-emerald-900/10 border border-emerald-900/20 text-emerald-950 text-center py-2 px-1 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center gap-1">
+                        <span>↔️ <b>競合する</b><br class="hidden md:inline">（競合性）</span>
+                    </div>
+
+                    <!-- Row 1: 縦軸ラベル (排除できる) と対応するセル -->
+                    <div class="bg-blue-900/10 border border-blue-900/20 text-blue-900 text-center py-2 px-1 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center [writing-mode:vertical-lr] md:[writing-mode:horizontal-tb] rotate-180 md:rotate-0">
+                        <span>↕️ <b>排除できる</b><br class="hidden md:inline">（排除可能性）</span>
+                    </div>
+
+                    <!-- 左上のセル -->
+                    <div id="box-club" onclick="selectMatrixBox('club')" class="cursor-pointer border-2 border-slate-200 bg-white hover:border-indigo-500 hover:shadow-md transition-all rounded-xl p-3 flex flex-col justify-between text-center md:text-left">
+                        <span class="text-[9px] md:text-xs font-bold text-indigo-600 uppercase">準公共財（クラブ財）</span>
+                        <div class="my-auto">
+                            <span class="text-2xl md:text-3xl">🛣️</span>
+                            <p class="font-bold text-xs md:text-sm text-slate-700 mt-1">有料道路・高速道路</p>
+                        </div>
+                    </div>
+
+                    <!-- 右上のセル -->
+                    <div id="box-private" onclick="selectMatrixBox('private')" class="cursor-pointer border-2 border-slate-200 bg-white hover:border-emerald-500 hover:shadow-md transition-all rounded-xl p-3 flex flex-col justify-between text-center md:text-left">
+                        <span class="text-[9px] md:text-xs font-bold text-emerald-600 uppercase">私的財</span>
+                        <div class="my-auto">
+                            <span class="text-2xl md:text-3xl">🍎</span>
+                            <p class="font-bold text-xs md:text-sm text-slate-700 mt-1">リンゴ・パン</p>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: 縦軸ラベル (排除できない) と対応するセル -->
+                    <div class="bg-rose-900/10 border border-rose-900/20 text-rose-900 text-center py-2 px-1 rounded-lg text-[10px] md:text-xs font-bold flex items-center justify-center [writing-mode:vertical-lr] md:[writing-mode:horizontal-tb] rotate-180 md:rotate-0">
+                        <span>↕️ <b>排除できない</b><br class="hidden md:inline">（非排除性）</span>
+                    </div>
+
+                    <!-- 左下のセル -->
+                    <div id="box-pure" onclick="selectMatrixBox('pure')" class="cursor-pointer border-2 border-slate-200 bg-white hover:border-purple-500 hover:shadow-md transition-all rounded-xl p-3 flex flex-col justify-between text-center md:text-left">
+                        <span class="text-[9px] md:text-xs font-bold text-purple-600 uppercase">純粋公共財</span>
+                        <div class="my-auto">
+                            <span class="text-2xl md:text-3xl">🛡️</span>
+                            <p class="font-bold text-xs md:text-sm text-slate-700 mt-1">外交・国防</p>
+                        </div>
+                    </div>
+
+                    <!-- 右下のセル -->
+                    <div id="box-common" onclick="selectMatrixBox('common')" class="cursor-pointer border-2 border-slate-200 bg-white hover:border-amber-500 hover:shadow-md transition-all rounded-xl p-3 flex flex-col justify-between text-center md:text-left">
+                        <span class="text-[9px] md:text-xs font-bold text-amber-600 uppercase">準公共財（コモンプール財）</span>
+                        <div class="my-auto">
+                            <span class="text-2xl md:text-3xl">🐟</span>
+                            <p class="font-bold text-xs md:text-sm text-slate-700 mt-1">海洋水産資源</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 詳細解説パネル -->
+                <div class="lg:col-span-5 bg-indigo-50/50 border border-indigo-100 rounded-xl p-6 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full">解説パネル</span>
+                        <h3 id="matrix-title" class="text-lg font-bold text-slate-800 mt-3">財をクリックして分類をチェック！</h3>
+                        <p id="matrix-desc" class="text-sm text-slate-600 mt-2 leading-relaxed">
+                            左側のマトリックス図をどれか選んでください。横軸の「競合性」と縦軸の「排除可能性」が、社会的にどのような現象を引き起こすのかを詳しく学ぶことができます。
+                        </p>
+                    </div>
+                    <div id="matrix-alert" class="mt-4 p-3 bg-white border border-indigo-100 rounded-lg text-xs text-slate-500 flex items-start gap-2">
+                        <span>💡</span>
+                        <span><b>排除可能性</b>：代金を支払わない人を消費から排除できるかどうか。<br><b>競合性</b>：一人が消費すると他人の消費分が減るかどうか。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- セクション2: 公共財の最適供給インタラクティブ・ラボ -->
+        <section class="bg-white border border-slate-200 rounded-2xl p-4 md:p-8 shadow-sm mb-8">
+            <div class="border-b border-slate-100 pb-4 mb-6 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-indigo-600 rounded-full"></span>
+                        公共財の供給シミュレーター：垂直加算と最適供給
+                    </h2>
+                    <p class="text-sm text-slate-500 mt-1">「お隣同士の家の前掃除サービス（費用：5000円/回）」をテーマに、市場供給と社会的最適の違いを学びます。</p>
+                </div>
+
+                <!-- モード切替タブ -->
+                <div class="bg-slate-100 p-1 rounded-xl flex border border-slate-200">
+                    <button id="btn-market" onclick="setMode('market')" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-white text-slate-800 shadow-sm">
+                        🚨 利己的な市場 (q = 0)
+                    </button>
+                    <button id="btn-gov" onclick="setMode('gov')" class="px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800">
+                        🏛️ 政府の計画供給 (q* = 2)
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- 左側：コントロールと状況変化 -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- スライダー -->
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/60">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                            <label class="text-sm font-bold text-slate-700 flex items-center gap-1.5 flex-wrap">
+                                <span>清掃回数（供給量） <span class="math-style">q</span>:</span>
+                                <span id="q-value-bubble" class="bg-indigo-600 text-white font-mono text-sm px-2.5 py-0.5 rounded-full whitespace-nowrap">1.0</span>
+                                <span id="q-status-badge" class="text-[11px] font-medium px-2 py-0.5 rounded whitespace-nowrap"></span>
+                            </label>
+                            <span class="text-xs text-slate-400 self-end sm:self-auto">最大 5.0</span>
+                        </div>
+                        <input type="range" id="q-slider" min="0.0" max="5.0" step="0.1" value="1.0" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-2">
+                            <span>低供給 (0.0)</span>
+                            <span>最適供給 (q* = 2)</span>
+                            <span>過大供給 (5.0)</span>
+                        </div>
+                    </div>
+
+                    <!-- ビジュアル街並みアニメーション -->
+                    <div class="bg-slate-900 text-white rounded-xl p-5 border border-slate-800 relative overflow-hidden h-[160px] flex flex-col justify-between">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent z-10"></div>
+                        
+                        <div class="flex justify-between items-end h-full relative z-20 gap-2">
+                            <!-- Aさんのお家 -->
+                            <div class="text-center w-28 flex-shrink-0">
+                                <div class="text-4xl mb-1">🏠</div>
+                                <span class="bg-blue-600 text-[10px] font-bold px-2 py-0.5 rounded whitespace-nowrap">Aさん（WTP: 高）</span>
+                            </div>
+
+                            <!-- 間の道路 -->
+                            <div class="flex-grow flex flex-col justify-end items-center mb-2 min-w-0">
+                                <div id="street-visual" class="text-xl md:text-2xl flex justify-center items-center gap-1 mb-1 whitespace-nowrap transition-all duration-300 tracking-wider"></div>
+                                <div class="w-full h-1 bg-slate-600 rounded"></div>
+                            </div>
+
+                            <!-- Bさんのお家 -->
+                            <div class="text-center w-28 flex-shrink-0">
+                                <div class="text-4xl mb-1">🏡</div>
+                                <span class="bg-rose-600 text-[10px] font-bold px-2 py-0.5 rounded whitespace-nowrap">Bさん（WTP: 低）</span>
+                            </div>
+                        </div>
+
+                        <!-- 状況テキスト -->
+                        <div class="relative z-20 mt-1">
+                            <p id="visual-status" class="text-xs font-bold text-center text-indigo-300"></p>
+                        </div>
+                    </div>
+
+                    <!-- 垂直加算計算パネル -->
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200/60 space-y-3.5">
+                        <h4 class="font-bold text-xs text-slate-400 uppercase tracking-wider mb-2">限界便益の垂直加算計算（円）</h4>
+                        
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                                Aさんの限界便益 (<span class="math-style">D<sub>A</sub> = 5000 - 1000q</span>)
+                            </span>
+                            <span id="calc-da" class="font-mono font-bold text-blue-600">--</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                Bさんの限界便益 (<span class="math-style">D<sub>B</sub> = 4000 - 1000q</span>)
+                            </span>
+                            <span id="calc-db" class="font-mono font-bold text-rose-600">--</span>
+                        </div>
+
+                        <div class="border-t border-slate-200 pt-3 flex justify-between items-center text-sm">
+                            <span class="font-bold text-slate-700">社会全体の総便益 (<span class="math-style">D<sub>A</sub> + D<sub>B</sub></span>)</span>
+                            <span id="calc-total-benefit" class="font-mono font-extrabold text-indigo-700 text-base">--</span>
+                        </div>
+
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-600 flex items-center gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                                清掃サービスの费用 (<span class="math-style">S = 5000</span>)
+                            </span>
+                            <span id="calc-cost" class="font-mono font-bold text-sky-600">--</span>
+                        </div>
+
+                        <div id="evaluation-banner" class="text-xs p-3 rounded-lg leading-relaxed mt-2"></div>
+                    </div>
+
+                </div>
+
+                <!-- 右側： Plotly による垂直加算グラフ -->
+                <div class="lg:col-span-7 space-y-4 w-full overflow-hidden">
+                    <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm w-full overflow-hidden">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600"></span>
+                            限界便益の「垂直加算」と最適配分グラフ
+                        </h3>
+                        
+                        <!-- グラフ描画エリア -->
+                        <div id="public-goods-graph" class="w-full h-[380px] bg-slate-50 rounded-lg"></div>
+
+                        <!-- HTMLによる外部凡例ブロック（重なり防止） -->
+                        <div class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200/60 space-y-2.5 text-xs md:text-sm text-slate-600">
+                            <div class="font-bold text-slate-700 mb-1 flex items-center gap-1">
+                                <span>📊</span> <span>グラフ凡例（1行ずつ表示）</span>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-0.5 border-t-2 border-dashed border-[#3b82f6] block"></span>
+                                    <span><b>Aさんの需要 (D<sub>A</sub>)</b> = 5000 - 1000q</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-0.5 border-t-2 border-dashed border-[#ef4444] block"></span>
+                                    <span><b>Bさんの需要 (D<sub>B</sub>)</b> = 4000 - 1000q</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-1 bg-[#818cf8] block"></span>
+                                    <span><b>社会全体の需要 (D<sub>A</sub> + D<sub>B</sub>)</b> = 9000 - 2000q</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-1 bg-[#06b6d4] block"></span>
+                                    <span><b>限界費用（清掃サービス価格 S = 5000）</b></span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 h-3 bg-[rgba(16,185,129,0.25)] border border-emerald-500/30 rounded block"></span>
+                                    <span><b>社会的純便益（総余剰）</b></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- セクション3: なぜ縦に足すのか？視覚的解説カード -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-indigo-600 text-2xl font-bold mb-3 block">🧐 Q1</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">私的財と公共財で、需要の足し算が違うのはなぜ？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    リンゴ（私的財）のような財は、Aさんが食べたらBさんは食べられません。そのため、ある「価格」に対して「それぞれ何個欲しいか」を<b>水平方向（数量の合計）</b>に足します。<br><br>
+                    しかし、掃除サービス（公共財）は、1回行えばその場にいる<b>全員が同時に同じ綺麗さを享受（非競合）</b>できます。よって、ある「供給量」に対して「社会全体の合計でいくら分の価値があるか」を求めるため、<b>垂直方向（便益の合計）</b>に足し算します。
+                </p>
+                <div class="mt-3 p-2.5 bg-indigo-50 border border-indigo-100 rounded-lg text-[11px] font-mono text-indigo-700">
+                    私的財：横方向の合算（数量の合計）<br>
+                    公共財：縦方向の合算（便益 of 全員の垂直合計）
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-rose-500 text-2xl font-bold mb-3 block">🐀 Q2</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">フリーライダー（ただ乗り）って何が問題なの？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    公共財は「お金を支払わない人も排除できない（非排除性）」という性質を持っています。
+                    そのため、個人が「誰か別の人のお金で綺麗にしてもらおう」と期待し、自分からは一向に支払いの意思を示さなくなってしまいます。<br><br>
+                    結果として、誰もお金を支払おうとせず、<b>市場メカニズムに任せると供給量が全くの「ゼロ」</b>になり、社会に必要なサービスが提供されなくなります。
+                </p>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <span class="text-emerald-600 text-2xl font-bold mb-3 block">🏛️ Q3</span>
+                <h4 class="font-bold text-slate-800 text-base mb-2">なぜ政府が強制的に税金で提供すべきなの？</h4>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    自発的な市場取引では「最適供給量 <span class="math-style">q<sup>*</sup> = 2</span>」に到達できません。
+                    この時、社会全体として獲得できるはずだったはずの「余剰（緑の領域）」が完全に失われてしまいます。<br><br>
+                    このため、政府が税金を<b>強制的に徴収</b>して費用を調達し、社会的に最も望ましい量（限界便益の合計＝限界費用となるポイント）を計画的に供給・整備する必要があるのです。
+                </p>
+            </div>
+        </section>
+
+        <!-- 講義要点チェック -->
+        <section class="bg-slate-800 text-white rounded-2xl p-6 md:p-8 shadow-md">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-indigo-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                第10回「公共財の最適供給」まとめ
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-white mb-2">1. サミュエルソン条件（最適供給条件）</h4>
+                    <p class="text-xs">
+                        公共財の最適な供給量は、各個人の限界便益（限界代替率 <span class="math-style">MRS</span>）の<b>合計</b>が、限界費用（限界技術代替率 <span class="math-style">MRT</span> または供給価格 <span class="math-style">S</span>）と一致する条件で決定されます。<br>
+                        <span class="math-style text-indigo-300 font-bold">∑ MRS = MRT</span>（本講義の例では、<span class="math-style text-indigo-300 font-bold">D<sub>A</sub> + D<sub>B</sub> = S</span>）<br>
+                        垂直に重ね合わせた合計需要曲線と供給線 <span class="math-style">S = 5000</span> の交点が、社会全体で純便益（緑の領域）を最大化する「最適な供給量 <span class="math-style">q<sup>*</sup> = 2</span>」となります。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2">2. なぜ市場に任せると「失敗」するのか</h4>
+                    <p class="text-xs">
+                        週1回の掃除サービス（費用5000円）に対し、Aさんの最大便益は4000円、Bさんは3000円です。<br>
+                        個別に見ると、誰もが「費用5000円 ＞ 自分の価値」となるため、自腹で購入しようとはしません。しかし、社会全体で見れば「4000円 ＋ 3000円 ＝ 7000円 ＞ 5000円（費用）」であり、<b>提供したほうが明らかに豊かになる</b>のです。<br>
+                        このギャップを埋めるのが「政府による強制課税と公共供給」の重要な役割です。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto text-center py-12 text-slate-400 text-xs">
+        2026年度春学期　ミクロ経済学入門　第10回「公共財の最適供給」補足資料　© 東海大学政治経済学部経済学科　孫明超
+    </footer>
+
+    <script>
+        const getDA = (q) => Math.max(0, 5000 - 1000 * q);
+        const getDB = (q) => Math.max(0, 4000 - 1000 * q);
+        const getTotalD = (q) => getDA(q) + getDB(q);
+        const getCost = (q) => 5000;
+
+        // UI要素
+        const slider = document.getElementById('q-slider');
+        const qBubble = document.getElementById('q-value-bubble');
+        const qStatusBadge = document.getElementById('q-status-badge');
+        const calcDA = document.getElementById('calc-da');
+        const calcDB = document.getElementById('calc-db');
+        const calcTotalBenefit = document.getElementById('calc-total-benefit');
+        const calcCost = document.getElementById('calc-cost');
+        
+        const streetVisual = document.getElementById('street-visual');
+        const visualStatus = document.getElementById('visual-status');
+        const evalBanner = document.getElementById('evaluation-banner');
+        
+        const btnMarket = document.getElementById('btn-market');
+        const btnGov = document.getElementById('btn-gov');
+
+        let currentMode = 'market'; 
+
+        // データ系列：各需要曲線が横軸と交わる点まで表示するため、0.0から5.0までプロット
+        const qSeries = Array.from({length: 51}, (_, i) => i * 0.1); 
+        const daSeries = qSeries.map(getDA);
+        const dbSeries = qSeries.map(getDB);
+        const totalDSeries = qSeries.map(getTotalD);
+        const sSeries = qSeries.map(getCost);
+
+        function selectMatrixBox(type) {
+            const boxes = ['club', 'private', 'pure', 'common'];
+            boxes.forEach(b => {
+                const element = document.getElementById(`box-${b}`);
+                element.className = "cursor-pointer border-2 border-slate-200 bg-white hover:shadow-md transition-all rounded-xl p-3 flex flex-col justify-between text-center md:text-left";
+            });
+
+            const targetBox = document.getElementById(`box-${type}`);
+            const titleEl = document.getElementById('matrix-title');
+            const descEl = document.getElementById('matrix-desc');
+
+            if (type === 'club') {
+                targetBox.className = "cursor-pointer border-2 border-indigo-500 bg-indigo-50/20 shadow-md rounded-xl p-3 flex flex-col justify-between text-center md:text-left";
+                titleEl.innerText = "準公共財（クラブ財）";
+                descEl.innerHTML = "<b>「排除可能だが、消費は競合しない」</b>財です。有料道路や映画館、ケーブルテレビなどが該当します。<br><br>料金を支払わない人を締め出すこと（排除可能性）は容易ですが、一度有料道路に入ってしまえば、よほどの混雑（競合の発生）がない限り、何人走ってもお互いの利用価値（非競合性）は損なわれません。";
+            } else if (type === 'private') {
+                targetBox.className = "cursor-pointer border-2 border-emerald-500 bg-emerald-50/20 shadow-md rounded-xl p-3 flex flex-col justify-between text-center md:text-left";
+                titleEl.innerText = "私的財";
+                descEl.innerHTML = "<b>「排除可能であり、かつ消費が競合する」</b>財です。一般的な食品（リンゴ、パン）や洋服、乗用車など、世の中の多くの商品がこれにあたります。<br><br>対価を支払わない人に売ることを制限でき、かつ誰かがそれを消費すると他の人は消費できなくなります。これは市場の競争メカニズムが最も効率的に機能する分類です。";
+            } else if (type === 'pure') {
+                targetBox.className = "cursor-pointer border-2 border-purple-500 bg-purple-50/20 shadow-md rounded-xl p-3 flex flex-col justify-between text-center md:text-left";
+                titleEl.innerText = "純粋公共財";
+                descEl.innerHTML = "<b>「排除不可能であり、かつ消費も競合しない」</b>財です。国防、外交、防犯街灯、一般道路、そして家の前のゴミ掃除などが該当します。<br><br>支払をしていない人をその防衛や綺麗さの便益から排除することは難しく、さらに他の人がいくら一緒にその安全や街の綺麗さを享受しても便益は減りません。ここがフリーライダー問題の温床となります。";
+            } else if (type === 'common') {
+                targetBox.className = "cursor-pointer border-2 border-amber-500 bg-amber-50/20 shadow-md rounded-xl p-3 flex flex-col justify-between text-center md:text-left";
+                titleEl.innerText = "準公共財（コモンプール財）";
+                descEl.innerHTML = "<b>「排除不可能だが、消費は競合する」</b>財です。海洋の魚や、混雑している一般道路などが該当します。<br><br>誰にでも開かれているため漁獲制限や通行禁止などの排除はできませんが、一人が多くの魚を獲りすぎると、他の人の獲れる量が減り（競合する）、最終的に全滅してしまう「共有地の悲劇」と呼ばれる失敗を引き起こします。";
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'market') {
+                btnMarket.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-white text-slate-800 shadow-sm border border-slate-200";
+                btnGov.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800";
+                slider.value = 0.0; 
+                slider.disabled = true; 
+            } else {
+                btnGov.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all bg-white text-slate-800 shadow-sm border border-slate-200";
+                btnMarket.className = "px-4 py-2 text-xs md:text-sm font-bold rounded-lg transition-all text-slate-500 hover:text-slate-800";
+                slider.disabled = false;
+                slider.value = 2.0; 
+            }
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            let q = parseFloat(slider.value);
+            
+            if (currentMode === 'market') {
+                qBubble.innerText = "0.0";
+                if (qStatusBadge) {
+                    qStatusBadge.innerText = "市場の自発的選択（供給ゼロ）";
+                    qStatusBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-rose-100 text-rose-700 whitespace-nowrap";
+                }
+                calcDA.innerText = `${getDA(0).toFixed(0)} 円`;
+                calcDB.innerText = `${getDB(0).toFixed(0)} 円`;
+                calcTotalBenefit.innerText = "0 円";
+                calcCost.innerText = "5000 円";
+
+                streetVisual.innerHTML = "🗑️🐀🗑️";
+                visualStatus.innerHTML = "<span class='text-rose-400 font-bold'>フリーライダー問題発生！</span><br>お互いが『あいつが綺麗にするだろう』と期待した結果、誰も掃除せずゴミだらけに。";
+                
+                evalBanner.className = "text-xs p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-800 leading-relaxed mt-2";
+                evalBanner.innerHTML = "⚠️ <b>市場の限界：</b> AさんもBさんも『週1回掃除してくれたら良いな（便益：4000円/3000円）』と思っていますが、1回5000円かかるため、一人では損をしてしまいます。結果、公共財は全く提供されなくなります。";
+                
+                drawCharts(0);
+            } else {
+                qBubble.innerText = q.toFixed(1);
+                if (qStatusBadge) {
+                    if (Math.abs(q - 2.0) < 0.15) {
+                        qStatusBadge.innerText = "社会的最適供給 (q* = 2)";
+                        qStatusBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 whitespace-nowrap";
+                    } else if (q < 2.0) {
+                        qStatusBadge.innerText = "過少供給";
+                        qStatusBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-700 whitespace-nowrap";
+                    } else {
+                        qStatusBadge.innerText = "過大供給";
+                        qStatusBadge.className = "text-[11px] font-semibold px-2 py-0.5 rounded bg-orange-100 text-orange-700 whitespace-nowrap";
+                    }
+                }
+                
+                const da = getDA(q);
+                const db = getDB(q);
+                const cost = 5000;
+
+                calcDA.innerText = `${da.toFixed(0)} 円`;
+                calcDB.innerText = `${db.toFixed(0)} 円`;
+                calcTotalBenefit.innerText = `${getTotalD(q).toFixed(0)} 円`;
+                calcCost.innerText = `${cost.toFixed(0)} 円`;
+
+                if (Math.abs(q - 2.0) < 0.15) {
+                    streetVisual.innerHTML = "✨🌸✨🌸";
+                    visualStatus.innerHTML = "<span class='text-emerald-400 font-bold'>社会的最適供給を達成！</span><br>週2回の清掃により、社会全体の余剰が最大化し、二人とも最高の環境を享受しています。";
+                    
+                    evalBanner.className = "text-xs p-3 bg-indigo-50 border border-indigo-200 rounded-lg text-indigo-800 leading-relaxed mt-2";
+                    evalBanner.innerHTML = "✨ <b>サミュエルソン条件クリア：</b> AさんとBさんの限界便益を足した合計（" + getTotalD(q).toFixed(0) + "円）が、供給コスト5000円とピッタリ一致しました！無駄のない最適水準です。";
+                } else if (q < 2.0) {
+                    streetVisual.innerHTML = "🧹✨🗑️";
+                    visualStatus.innerHTML = "供給不足ぎみです。もう少しだけ綺麗にできる価値がまだ社会にはあります。";
+                    
+                    evalBanner.className = "text-xs p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 leading-relaxed mt-2";
+                    evalBanner.innerHTML = "📦 <b>供給過少：</b> 合計限界便益 (" + getTotalD(q).toFixed(0) + "円) ＞ コスト (5000円) です。費用を上回る便益があるため、回数を増やした方が社会的にプラスです。";
+                } else {
+                    streetVisual.innerHTML = "✨✨✨✨✨";
+                    visualStatus.innerHTML = "過剰に供給されています。綺麗ですが、税金コストの方が高くなっています。";
+                    
+                    evalBanner.className = "text-xs p-3 bg-orange-50 border border-orange-200 rounded-lg text-orange-800 leading-relaxed mt-2";
+                    evalBanner.innerHTML = "🛑 <b>過大供給：</b> 合計限界便益 (" + getTotalD(q).toFixed(0) + "円) ＜ コスト (5000円) です。そこまで必死に掃除するほどの価値はなく、無駄な税金が使われています。";
+                }
+
+                drawCharts(q);
+            }
+        }
+
+        function drawCharts(currentQ) {
+            
+            // 需要曲線
+            const traceDA = {
+                x: qSeries, y: daSeries,
+                name: 'Aさんの需要 (D<sub>A</sub>)',
+                line: {color: '#3b82f6', width: 2, dash: 'dash'}
+            };
+            const traceDB = {
+                x: qSeries, y: dbSeries,
+                name: 'Bさんの需要 (D<sub>B</sub>)',
+                line: {color: '#ef4444', width: 2, dash: 'dash'}
+            };
+            const traceTotalD = {
+                x: qSeries, y: totalDSeries,
+                name: '社会全体の需要 (D<sub>A</sub> + D<sub>B</sub>)',
+                line: {color: '#818cf8', width: 4}
+            };
+
+            // 限界費用
+            const traceS = {
+                x: qSeries, y: sSeries,
+                name: '限界費用 (S=5000)',
+                line: {color: '#06b6d4', width: 3}
+            };
+
+            const dataToDraw = [traceDA, traceDB, traceTotalD, traceS];
+
+            const traceDemandIntercepts = {
+                x: [4.0, 5.0],
+                y: [0, 0],
+                mode: 'markers+text',
+                marker: {
+                    size: 9,
+                    color: ['#ef4444', '#4f46e5'],
+                    symbol: ['circle', 'diamond']
+                },
+                text: [
+                    'Bさん需要の横軸交点',
+                    'Aさん・社会全体需要の横軸交点'
+                ],
+                textposition: ['top left', 'top right'],
+                textfont: {size: 10, color: '#334155'},
+                hoverinfo: 'skip',
+                showlegend: false
+            };
+
+            dataToDraw.push(traceDemandIntercepts);
+
+            if (currentQ >= 0) {
+                const curDA = getDA(currentQ);
+                const curDB = getDB(currentQ);
+                const curTotal = getTotalD(currentQ);
+
+                const traceVerticalGuide = {
+                    x: [currentQ, currentQ],
+                    y: [0, curTotal],
+                    mode: 'lines',
+                    line: {color: '#475569', width: 1.5, dash: 'dot'},
+                    showlegend: false
+                };
+
+                const traceDAPoint = {
+                    x: [currentQ], y: [curDA],
+                    mode: 'markers',
+                    marker: {size: 10, color: '#3b82f6'},
+                    name: 'Aの便益',
+                    showlegend: false
+                };
+
+                const traceDBPoint = {
+                    x: [currentQ], y: [curDB],
+                    mode: 'markers',
+                    marker: {size: 10, color: '#ef4444'},
+                    name: 'Bの便益',
+                    showlegend: false
+                };
+
+                const traceTotalPoint = {
+                    x: [currentQ], y: [curTotal],
+                    mode: 'markers',
+                    marker: {size: 12, color: '#4f46e5', symbol: 'diamond'},
+                    name: '合計便益',
+                    showlegend: false
+                };
+
+                // 総余剰（社会的純便益）の塗りつぶし範囲をq=0.0からq=2.0まで縦軸に完全密着
+                const surplusX = qSeries.filter(q => q <= 2.0);
+                const surplusYTotal = surplusX.map(getTotalD);
+                const surplusYS = surplusX.map(() => 5000);
+
+                const traceSurplusFill = {
+                    x: [...surplusX, ...[...surplusX].reverse()],
+                    y: [...surplusYTotal, ...surplusYS.reverse()],
+                    fill: 'toself',
+                    fillcolor: 'rgba(16, 185, 129, 0.25)',
+                    line: {color: 'transparent'},
+                    name: '社会的純便益（総余剰）',
+                    type: 'scatter',
+                    showlegend: false
+                };
+
+                dataToDraw.unshift(traceSurplusFill); 
+                dataToDraw.push(traceVerticalGuide, traceDAPoint, traceDBPoint, traceTotalPoint);
+            }
+
+            const layout = {
+                margin: {t: 20, b: 60, l: 65, r: 20}, // マージンを調整し横軸名が絶対に見切れないように
+                xaxis: { 
+                    range: [0, 5.25], 
+                    dtick: 0.5,
+                    title: {
+                        text: '清掃サービスの数量 q (週あたり回数)',
+                        standoff: 15
+                    }
+                },
+                yaxis: { 
+                    range: [0, 10000], 
+                    dtick: 1000,
+                    title: '限界便益 / 費用 (円)' 
+                },
+                showlegend: false, // HTMLによる外部凡例を使用するためPlotly独自の凡例は非表示
+                hovermode: false,
+                annotations: [
+                    {
+                        x: 2.0, y: 5000,
+                        text: '最適供給点 (q*=2)',
+                        showarrow: true, arrowhead: 2, ax: 50, ay: -30,
+                        font: {color: '#1e293b', size: 11}
+                    }
+                ]
+            };
+
+            Plotly.react('public-goods-graph', dataToDraw, layout, {responsive: true, displayModeBar: false});
+        }
+
+        slider.addEventListener('input', updateSimulation);
+        
+        // 初期ロード
+        window.onload = () => {
+            selectMatrixBox('pure');
+            setMode('market'); 
+        };
+    </script>
+</body>
+</html>
