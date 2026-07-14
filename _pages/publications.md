@@ -9,8 +9,11 @@ author_profile: true
 
 1. Evaluating the effectiveness of non-punitive approaches on fare evasion: A time series analysis using smart card data. (with Satoshi Kawanishi).
 2. Identification of fare evasion based on smart card data. (with Satoshi Kawanishi).
-3. Impact of exposure to open defecation on child health.
-4. Impact of exposure to violence on child health.
+3. The Dynamics of Competitive Dominance in Elite Badminton.
+4. Visa Fees as a Migration Policy Instrument: Reputation Building and Gradual Immigration Liberalization.
+5. Migration Networks and Labor-Market Adjustment: Evidence on Institutional Bias and Migrant Labor Elasticities.
+6. Diaspora Networks and the Allocation of Crisis Migration.
+
 
 
 ### Publications (peer reviewed)
