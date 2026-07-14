@@ -9,10 +9,10 @@ author_profile: true
 
 1. Evaluating the effectiveness of non-punitive approaches on fare evasion: A time series analysis using smart card data. (with Satoshi Kawanishi).
 2. Identification of fare evasion based on smart card data. (with Satoshi Kawanishi).
-3. The Dynamics of Competitive Dominance in Elite Badminton.
-4. Visa Fees as a Migration Policy Instrument: Reputation Building and Gradual Immigration Liberalization.
-5. Migration Networks and Labor-Market Adjustment: Evidence on Institutional Bias and Migrant Labor Elasticities.
-6. Diaspora Networks and the Allocation of Crisis Migration.
+3. The dynamics of competitive dominance in elite badminton.
+4. Visa fees as a migration policy instrument: Reputation building and gradual immigration liberalization.
+5. Migration networks and labor-market adjustment: Evidence on institutional bias and migrant labor elasticities.
+6. Diaspora networks and the allocation of crisis migration.
 
 
 
