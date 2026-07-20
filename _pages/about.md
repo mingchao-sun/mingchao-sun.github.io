@@ -30,13 +30,11 @@ redirect_from:
 <br>
 Thank you for visiting my website! My name is Mingchao Sun (孫明超). I am a Junior Associate Professor at the <a href="https://www.u-tokai.ac.jp/ud-political-science-and-economics/dpt-economics/" target="_blank">School of Political Science and Economics, Tokai University</a>.
 
-I am an applied microeconomist and computational social scientist whose research focuses on human behavior, social networks, and institutions using large-scale behavioral and transactional data. My work combines economics, data science, and computational methods to study migration, transportation systems, social capital, and sports analytics.
+My research combines economic theory, empirical analysis, and original data to understand how institutions, information, and social interactions shape human behavior and economic outcomes. My work spans migration, labor markets, transportation systems, social capital, and other areas of economics.
 
-A central theme of my research is social capital and its role in shaping socioeconomic outcomes across different populations, including immigrants, ethnic minorities, women, and labor market participants. I am also interested in developing behavioral and computational approaches to measuring social capital.
+I develop both theoretical and empirical research, drawing on large-scale behavioral, transactional, spatial, and administrative data. A growing part of my work focuses on building original datasets and computational tools that enable new questions to be studied in economics.
 
-I work with diverse data sources, including transportation smart-card records, large-scale sports match databases, government statistics, spatial data, and surveys. My recent research examines fare evasion behavior using railway IC card transaction data in Japan and develops longitudinal badminton match datasets for reproducible research on competitive performance and ranking dynamics.
-
-Methodologically, I am interested in causal inference, high-dimensional panel data analysis, spatial analysis, and reproducible computational workflows. In teaching, I have experience instructing introductory microeconomics, introductory macroeconomics, econometrics, and data analysis.
+Current projects include migration and institutional design, behavioral responses to transportation policies, digital twins for economic experiments, and longitudinal sports databases.
 
 I also have a <a href="https://researchmap.jp/mingchao_sun" target="_blank">web page</a> in Japanese.
 
